@@ -64,7 +64,7 @@ namespace tests
 
         #region SettingsManager v4
 
-        Dictionary<string, setting> settingsList = new Dictionary<string, setting>();
+        List<setting> settingsList = new List<setting>();
 
         class setting
         {
@@ -85,13 +85,14 @@ namespace tests
 
         public void generateSettings()
         {
-            settingsList.Add("Window settings", new setting(0) { index = 0, width = "680", height = "680" });
-            settingsList.Add("Boot settings", new setting(1) { index = 1, minimize = "false", onTop = "true" });
+            settingsList.Add(new setting(0) { index = 0, width = "680", height = "680" });
+            settingsList.Add(new setting(1) { index = 1, minimize = "false", onTop = "true" });
         }
 
         private string getName(setting settings)
         {
-            switch (settings.type)
+            // Return the name from index
+            switch (settings.index)
             {
                 case 0:
                     return "Window settings";
@@ -102,18 +103,18 @@ namespace tests
             }
         }
 
-        EsseivaN.Controls.SettingsManager_v3<setting> settingsManager;
+        EsseivaN.Controls.SettingsManager<setting> settingsManager;
         // New file
         private void button3_Click(object sender, EventArgs e)
         {
             // Create new file
-            settingsManager = new EsseivaN.Controls.SettingsManager_v3<setting>(getName);
+            settingsManager = new EsseivaN.Controls.SettingsManager<setting>(getName);
 
             generateSettings();
 
             foreach (var item in settingsList)
             {
-                settingsManager.addSetting(item.Value);
+                settingsManager.addSetting(item);
             }
         }
 
@@ -166,7 +167,7 @@ namespace tests
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                settingsManager = new EsseivaN.Controls.SettingsManager_v3<setting>(getName);
+                settingsManager = new EsseivaN.Controls.SettingsManager<setting>(getName);
                 settingsManager.load(openFileDialog1.FileName);
             }
         }

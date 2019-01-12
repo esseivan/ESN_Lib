@@ -83,9 +83,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SettingsManager_v3.cs" />
-    <Compile Include="SettingsManager_v2.cs" />
-    <Compile Include="SettingsManager.cs" />
+    <Compile Include="SettingsManager_v4.cs" />
     <Compile Include="TextboxWatermark.cs">
       <SubType>Component</SubType>
     </Compile>

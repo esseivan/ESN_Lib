@@ -1,132 +1,224 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace EsseivaN.Controls
 {
-    public class SettingsManager
+    /// <summary>
+    /// Manage settings using json
+    /// </summary>
+    public class SettingsManager<T>
     {
-        private string SettingsPath;
-        private Dictionary<string, Setting> SettingsList;
+        /// <summary>
+        /// List of settings
+        /// </summary>
+        private List<T> settingsList;
 
-        private SettingsManager()
+        /// <summary>
+        /// List of json settings
+        /// </summary>
+        private Dictionary<string, T> settingsJsonList;
+        
+        /// <summary>
+        /// Get name function
+        /// </summary>
+        public Func<T, string> getName { get; set; }
+
+        /// <summary>
+        /// Default getName function
+        /// </summary>
+        /// <returns>value.toString()</returns>
+        public string defaultGetNameFunc(T value)
         {
+            return value.ToString();
         }
 
-        public SettingsManager(string FilePath)
+        /// <summary>
+        /// Create a new settings manager with default getName function (Not recommended)
+        /// </summary>
+        public SettingsManager()
         {
-            SettingsPath = FilePath;
-            SettingsList = new Dictionary<string, Setting>();
+            settingsList = new List<T>();
+            getName = defaultGetNameFunc;
         }
 
-        public void SaveSettings()
+        /// <summary>
+        /// Create a new settings manager with custom getName function
+        /// </summary>
+        /// <param name="getNameFunc">Function to get the name of the setting</param>
+        public SettingsManager(Func<T, string> getNameFunc)
         {
-            string json = JsonConvert.SerializeObject(SettingsList, Formatting.Indented);
-            File.WriteAllText(SettingsPath, json);
+            settingsList = new List<T>();
+            getName = getNameFunc;
         }
 
-        public void RetrieveSettings()
+        /// <summary>
+        /// Save settings to specified file
+        /// </summary>
+        public void save(string Path)
         {
-            SettingsList = JsonConvert.DeserializeObject<Dictionary<string, Setting>>(File.ReadAllText(SettingsPath));
+            File.WriteAllText(Path, generateFileData());
         }
 
-        public void AddSetting(string Key, object Value)
+        /// <summary>
+        /// Generate file data to be saved in file
+        /// </summary>
+        public string generateFileData()
         {
-            Setting setting = new Setting();
-            setting.SetData(Value);
-            if (SettingsList.ContainsKey(Key))
+            if (settingsList == null)
+                return string.Empty;
+
+            settingsJsonList = new Dictionary<string, T>();
+
+            // Convert list
+            foreach (T item in settingsList)
             {
-                SettingsList[Key] = setting;
+                settingsJsonList.Add(getName(item), item);
+            }
+
+            return serialize(settingsJsonList);
+        }
+
+        /// <summary>
+        /// Load settings from specified path
+        /// </summary>
+        public void load(string Path)
+        {
+            // Load settings from raw data
+            settingsJsonList = deserialize(File.ReadAllText(Path));
+            settingsList = settingsJsonList.Values.ToList();
+
+            if (settingsList == null)
+            {
+                settingsList = new List<T>();
+            }
+        }
+        
+        /// <summary>
+        /// Check if the specified setting is already existing
+        /// </summary>
+        private T checkExisting(T value)
+        {
+            return checkExisting(getName(value));
+        }
+
+        /// <summary>
+        /// Check if the specified setting is already existing
+        /// </summary>
+        private T checkExisting(string name)
+        {
+            return settingsList.Where((s) => getName(s) == name).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Get current setting
+        /// </summary>
+        public T getSetting(string Key)
+        {
+            return checkExisting(Key);
+        }
+
+        /// <summary>
+        /// Get all settings
+        /// </summary>
+        public List<T> getSettings()
+        {
+            return settingsList;
+        }
+
+        /// <summary>
+        /// Add specified setting
+        /// </summary>
+        public void addSetting(T Value)
+        {
+            if (Value == null)
+            {
+                return;
+            }
+
+            if (getName(Value) == string.Empty)
+            {
+                return;
+            }
+
+            // Check if entry existing
+            T setting = getSetting(getName(Value));
+            if (setting == null)
+            {
+                // Not existing, add new
+                settingsList.Add(Value);
             }
             else
             {
-                SettingsList.Add(Key, setting);
+                // Existing, replacing
+                int index = settingsList.IndexOf(setting);
+                settingsList[index] = Value;
             }
         }
-
-        public void AddSettingRange(Dictionary<string, object> data)
+        
+        /// <summary>
+        /// Add range of settings
+        /// </summary>
+        public void addSettingRange(List<T> data)
         {
             foreach (var item in data)
             {
-                AddSetting(item.Key, item.Value);
+                addSetting(item);
             }
         }
 
-        public void AddSettingRange(string data)
+        /// <summary>
+        /// Add range of settings
+        /// </summary>
+        public void addSettingRange(T[] data)
         {
-            AddSettingRange(Deserialize(data));
+            foreach (var item in data)
+            {
+                addSetting(item);
+            }
         }
 
-        public object GetSetting(string Key)
+        /// <summary>
+        /// Add range of settings from json raw text
+        /// </summary>
+        public void addSettingRange(string data)
         {
-            if (SettingsList.ContainsKey(Key))
+            Dictionary<string, T> list = deserialize(data);
+
+            foreach (var item in list)
             {
-                return SettingsList[Key].GetData();
-            }
-            else
-            {
-                return null;
+                addSetting(item.Value);
             }
         }
 
-        public T GetSetting<T>(string Key)
+        /// <summary>
+        /// Remove setting from name
+        /// </summary>
+        public void removeSetting(string name)
         {
-            if (SettingsList.ContainsKey(Key))
+            T setting = checkExisting(name);
+            if (setting != null)
             {
-                return SettingsList[Key].GetData<T>();
-            }
-            else
-            {
-                return (T)(object)null;
+                settingsList.Remove(setting);
             }
         }
 
-        public Dictionary<string, object> GetAllSettings()
+        /// <summary>
+        /// deserialize data
+        /// </summary>
+        private static Dictionary<string, T> deserialize(string data)
         {
-            Dictionary<string, object> result = new Dictionary<string, object>();
-            foreach (var item in SettingsList)
-            {
-                result.Add(item.Key, item.Value.GetData());
-            }
-            return result;
+            return JsonConvert.DeserializeObject<Dictionary<string, T>>(data);
         }
 
-        public void RemoveSetting(string Key)
-        {
-            if (SettingsList.ContainsKey(Key))
-            {
-                SettingsList.Remove(Key);
-            }
-        }
-
-        public static Dictionary<string, object> Deserialize(string data)
-        {
-            return JsonConvert.DeserializeObject<Dictionary<string, object>>(data);
-        }
-
-        public static string Serialize(Dictionary<string, object> data)
+        /// <summary>
+        /// serialize data
+        /// </summary>
+        private static string serialize(Dictionary<string, T> data)
         {
             return JsonConvert.SerializeObject(data, Formatting.Indented);
-        }
-
-        private class Setting
-        {
-            public object Data { get; set; }
-
-            public T GetData<T>()
-            {
-                return (T)Data;
-            }
-
-            public object GetData()
-            {
-                return Data;
-            }
-
-            public void SetData(object Data)
-            {
-                this.Data = Data;
-            }
         }
     }
 }
