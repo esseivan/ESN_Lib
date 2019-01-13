@@ -32,7 +32,11 @@ using System.Xml;
  *	<Feed>
  *	<version>1.1.0</version>
  *	<url>http://www.website.com/softwares/publish.html</url>
+ *	<silent>http://www.website.com/softwares/silentInstaller.msi</silent>
+ *  <name>productName</name>
  *	</Feed>
+ *	
+ *	Silent installer is used to run a quick update
  */
 
 namespace EsseivaN.Controls

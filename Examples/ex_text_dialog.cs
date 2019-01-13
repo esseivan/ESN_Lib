@@ -16,5 +16,10 @@ namespace Examples
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            textDialog1.ShowDialog(richTextBox1.Text);
+        }
     }
 }

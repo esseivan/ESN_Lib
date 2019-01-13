@@ -101,8 +101,14 @@
     <EmbeddedResource Include="ex_dialogInput.resx">
       <DependentUpon>ex_dialogInput.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ex_settings_manager.resx">
+      <DependentUpon>ex_settings_manager.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ex_textbox_watermark.resx">
       <DependentUpon>ex_textbox_watermark.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ex_text_dialog.resx">
+      <DependentUpon>ex_text_dialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ex_text_panel.resx">
       <DependentUpon>ex_text_panel.cs</DependentUpon>

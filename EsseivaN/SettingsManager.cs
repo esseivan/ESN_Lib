@@ -17,6 +17,11 @@ namespace EsseivaN.Controls
         private List<T> settingsList;
 
         /// <summary>
+        /// List of names from loaded file
+        /// </summary>
+        private Dictionary<string, T> nameList;
+
+        /// <summary>
         /// List of json settings
         /// </summary>
         private Dictionary<string, T> settingsJsonList;
@@ -89,10 +94,16 @@ namespace EsseivaN.Controls
             // Load settings from raw data
             settingsJsonList = deserialize(File.ReadAllText(Path));
             settingsList = settingsJsonList.Values.ToList();
+            nameList = settingsJsonList;
 
             if (settingsList == null)
             {
                 settingsList = new List<T>();
+            }
+
+            if(nameList == null)
+            {
+                nameList = new Dictionary<string, T>();
             }
         }
         
@@ -126,6 +137,14 @@ namespace EsseivaN.Controls
         public List<T> getSettings()
         {
             return settingsList;
+        }
+
+        /// <summary>
+        /// Get all names from loaded setting
+        /// </summary>
+        public Dictionary<string, T> getNames()
+        {
+            return nameList;
         }
 
         /// <summary>

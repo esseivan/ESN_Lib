@@ -28,18 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.mL1 = new System.Windows.Forms.ComboBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.mL2 = new System.Windows.Forms.ComboBox();
-            this.mL3 = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.mMsg = new EsseivaN.Controls.TextboxWatermark();
-            this.mTitle = new EsseivaN.Controls.TextboxWatermark();
-            this.mB3 = new EsseivaN.Controls.TextboxWatermark();
-            this.mB2 = new EsseivaN.Controls.TextboxWatermark();
-            this.mB1 = new EsseivaN.Controls.TextboxWatermark();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.button10 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
@@ -47,153 +35,17 @@
             this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.button7 = new System.Windows.Forms.Button();
-            this.textboxWatermark3 = new EsseivaN.Controls.TextboxWatermark();
             this.button6 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
-            this.textboxWatermark2 = new EsseivaN.Controls.TextboxWatermark();
-            this.textboxWatermark1 = new EsseivaN.Controls.TextboxWatermark();
-            this.button4 = new System.Windows.Forms.Button();
+            this.btnLoad = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.groupBox1.SuspendLayout();
+            this.textboxWatermark3 = new EsseivaN.Controls.TextboxWatermark();
+            this.textboxWatermark2 = new EsseivaN.Controls.TextboxWatermark();
+            this.textboxWatermark1 = new EsseivaN.Controls.TextboxWatermark();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(12, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(260, 23);
-            this.button1.TabIndex = 10;
-            this.button1.Text = "Download update";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // mL1
-            // 
-            this.mL1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.mL1.FormattingEnabled = true;
-            this.mL1.Location = new System.Drawing.Point(145, 18);
-            this.mL1.Name = "mL1";
-            this.mL1.Size = new System.Drawing.Size(121, 21);
-            this.mL1.TabIndex = 13;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(6, 171);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 20;
-            this.button2.Text = "Show messagebox";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // mL2
-            // 
-            this.mL2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.mL2.FormattingEnabled = true;
-            this.mL2.Location = new System.Drawing.Point(145, 71);
-            this.mL2.Name = "mL2";
-            this.mL2.Size = new System.Drawing.Size(121, 21);
-            this.mL2.TabIndex = 15;
-            // 
-            // mL3
-            // 
-            this.mL3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.mL3.FormattingEnabled = true;
-            this.mL3.Location = new System.Drawing.Point(145, 124);
-            this.mL3.Name = "mL3";
-            this.mL3.Size = new System.Drawing.Size(121, 21);
-            this.mL3.TabIndex = 17;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 79);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(10, 13);
-            this.label1.TabIndex = 21;
-            this.label1.Text = "-";
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.mMsg);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.mL1);
-            this.groupBox1.Controls.Add(this.mTitle);
-            this.groupBox1.Controls.Add(this.mL2);
-            this.groupBox1.Controls.Add(this.button2);
-            this.groupBox1.Controls.Add(this.mB3);
-            this.groupBox1.Controls.Add(this.mL3);
-            this.groupBox1.Controls.Add(this.mB2);
-            this.groupBox1.Controls.Add(this.mB1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 41);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(274, 203);
-            this.groupBox1.TabIndex = 22;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "DialogInput";
-            // 
-            // mMsg
-            // 
-            this.mMsg.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.mMsg.Location = new System.Drawing.Point(6, 19);
-            this.mMsg.Name = "mMsg";
-            this.mMsg.Size = new System.Drawing.Size(121, 20);
-            this.mMsg.TabIndex = 11;
-            this.mMsg.Text = "Message";
-            this.mMsg.TextColor = System.Drawing.SystemColors.ControlText;
-            this.mMsg.WatermarkColor = System.Drawing.SystemColors.GrayText;
-            this.mMsg.WatermarkText = "Message";
-            // 
-            // mTitle
-            // 
-            this.mTitle.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.mTitle.Location = new System.Drawing.Point(6, 45);
-            this.mTitle.Name = "mTitle";
-            this.mTitle.Size = new System.Drawing.Size(121, 20);
-            this.mTitle.TabIndex = 12;
-            this.mTitle.Text = "Title";
-            this.mTitle.TextColor = System.Drawing.SystemColors.ControlText;
-            this.mTitle.WatermarkColor = System.Drawing.SystemColors.GrayText;
-            this.mTitle.WatermarkText = "Title";
-            // 
-            // mB3
-            // 
-            this.mB3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.mB3.Location = new System.Drawing.Point(145, 151);
-            this.mB3.Name = "mB3";
-            this.mB3.Size = new System.Drawing.Size(121, 20);
-            this.mB3.TabIndex = 18;
-            this.mB3.Text = "_Btn3_";
-            this.mB3.TextColor = System.Drawing.SystemColors.ControlText;
-            this.mB3.WatermarkColor = System.Drawing.Color.Red;
-            this.mB3.WatermarkText = "Button 3";
-            // 
-            // mB2
-            // 
-            this.mB2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.mB2.Location = new System.Drawing.Point(145, 98);
-            this.mB2.Name = "mB2";
-            this.mB2.Size = new System.Drawing.Size(121, 20);
-            this.mB2.TabIndex = 16;
-            this.mB2.Text = "_Btn2_";
-            this.mB2.TextColor = System.Drawing.SystemColors.ControlText;
-            this.mB2.WatermarkColor = System.Drawing.SystemColors.GrayText;
-            this.mB2.WatermarkText = "Button 2";
-            // 
-            // mB1
-            // 
-            this.mB1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.mB1.Location = new System.Drawing.Point(145, 45);
-            this.mB1.Name = "mB1";
-            this.mB1.Size = new System.Drawing.Size(121, 20);
-            this.mB1.TabIndex = 14;
-            this.mB1.Text = "_Btn1_";
-            this.mB1.TextColor = System.Drawing.SystemColors.ControlText;
-            this.mB1.WatermarkColor = System.Drawing.SystemColors.GrayText;
-            this.mB1.WatermarkText = "Button 1";
             // 
             // groupBox2
             // 
@@ -208,9 +60,9 @@
             this.groupBox2.Controls.Add(this.button5);
             this.groupBox2.Controls.Add(this.textboxWatermark2);
             this.groupBox2.Controls.Add(this.textboxWatermark1);
-            this.groupBox2.Controls.Add(this.button4);
+            this.groupBox2.Controls.Add(this.btnLoad);
             this.groupBox2.Controls.Add(this.button3);
-            this.groupBox2.Location = new System.Drawing.Point(292, 12);
+            this.groupBox2.Location = new System.Drawing.Point(12, 12);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(451, 232);
             this.groupBox2.TabIndex = 23;
@@ -273,17 +125,6 @@
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
-            // textboxWatermark3
-            // 
-            this.textboxWatermark3.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.textboxWatermark3.Location = new System.Drawing.Point(122, 127);
-            this.textboxWatermark3.Name = "textboxWatermark3";
-            this.textboxWatermark3.Size = new System.Drawing.Size(110, 20);
-            this.textboxWatermark3.TabIndex = 4;
-            this.textboxWatermark3.TextColor = System.Drawing.SystemColors.ControlText;
-            this.textboxWatermark3.WatermarkColor = System.Drawing.SystemColors.GrayText;
-            this.textboxWatermark3.WatermarkText = "Read value";
-            // 
             // button6
             // 
             this.button6.Location = new System.Drawing.Point(122, 98);
@@ -303,6 +144,41 @@
             this.button5.Text = "Add Setting";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // btnLoad
+            // 
+            this.btnLoad.Location = new System.Drawing.Point(6, 48);
+            this.btnLoad.Name = "btnLoad";
+            this.btnLoad.Size = new System.Drawing.Size(110, 23);
+            this.btnLoad.TabIndex = 1;
+            this.btnLoad.Text = "Load file";
+            this.btnLoad.UseVisualStyleBackColor = true;
+            this.btnLoad.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(6, 19);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(110, 23);
+            this.button3.TabIndex = 0;
+            this.button3.Text = "New file";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // textboxWatermark3
+            // 
+            this.textboxWatermark3.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.textboxWatermark3.Location = new System.Drawing.Point(122, 127);
+            this.textboxWatermark3.Name = "textboxWatermark3";
+            this.textboxWatermark3.Size = new System.Drawing.Size(110, 20);
+            this.textboxWatermark3.TabIndex = 4;
+            this.textboxWatermark3.TextColor = System.Drawing.SystemColors.ControlText;
+            this.textboxWatermark3.WatermarkColor = System.Drawing.SystemColors.GrayText;
+            this.textboxWatermark3.WatermarkText = "Read value";
             // 
             // textboxWatermark2
             // 
@@ -326,43 +202,15 @@
             this.textboxWatermark1.WatermarkColor = System.Drawing.SystemColors.GrayText;
             this.textboxWatermark1.WatermarkText = "Key";
             // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(6, 48);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(110, 23);
-            this.button4.TabIndex = 1;
-            this.button4.Text = "Load file";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(6, 19);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(110, 23);
-            this.button3.TabIndex = 0;
-            this.button3.Text = "New file";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1185, 553);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.button1);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
@@ -370,23 +218,11 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ComboBox mL1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.ComboBox mL2;
-        private System.Windows.Forms.ComboBox mL3;
-        private EsseivaN.Controls.TextboxWatermark mB1;
-        private EsseivaN.Controls.TextboxWatermark mB2;
-        private EsseivaN.Controls.TextboxWatermark mB3;
-        private EsseivaN.Controls.TextboxWatermark mMsg;
-        private EsseivaN.Controls.TextboxWatermark mTitle;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btnLoad;
         private EsseivaN.Controls.TextboxWatermark textboxWatermark2;
         private EsseivaN.Controls.TextboxWatermark textboxWatermark1;
         private System.Windows.Forms.Button button5;

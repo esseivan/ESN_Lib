@@ -1,20 +1,136 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Examples
 {
     public partial class ex_settings_manager : Form
     {
+        List<setting> settingsList = new List<setting>();
+        Dictionary<int, string> settingsNames = new Dictionary<int, string>();
+
+        EsseivaN.Controls.SettingsManager<setting> settingsManager;
+
+        class setting
+        {
+            public int index;
+            public string data1;
+            public string data2;
+
+            public setting(int index)
+            {
+                this.index = index;
+            }
+        }
+
+        // Function to show name
+        private string getName(setting settings)
+        {
+            return settingsNames?[settings.index];
+        }
+
         public ex_settings_manager()
         {
             InitializeComponent();
+        }
+
+        private void btnNew_Click(object sender, EventArgs e)
+        {
+            // Create new file
+            settingsManager = new EsseivaN.Controls.SettingsManager<setting>(getName);
+
+            btnGetAll.PerformClick();
+        }
+
+        private void btnLoad_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                settingsManager = new EsseivaN.Controls.SettingsManager<setting>(getName);
+                settingsManager.load(openFileDialog1.FileName);
+
+                var t = settingsManager.getNames();
+                settingsNames.Clear();
+                foreach (var item in t)
+                {
+                    settingsNames.Add(item.Value.index, item.Key);
+                }
+
+                btnGetAll.PerformClick();
+            }
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                if (settingsManager == null)
+                {
+                    return;
+                }
+
+                settingsManager.save(saveFileDialog1.FileName);
+            }
+        }
+
+        private void btnDel_Click(object sender, EventArgs e)
+        {
+            settingsManager.removeSetting(txtIndex.Text);
+            btnGetAll.PerformClick();
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            if (settingsManager == null)
+            {
+                return;
+            }
+
+            if (int.TryParse(txtIndex.Text, out int index))
+            {
+                settingsNames[index] = txtName.Text;
+                settingsManager.addSetting(new setting(index) { data1 = txtData1.Text, data2 = txtData2.Text });
+                btnGetAll.PerformClick();
+            }
+        }
+
+        private void btnAddAll_Click(object sender, EventArgs e)
+        {
+            settingsManager.addSettingRange(richTextBox1.Text);
+            btnGetAll.PerformClick();
+        }
+
+        private void btnGetAll_Click(object sender, EventArgs e)
+        {
+            richTextBox2.Text = settingsManager.generateFileData();
+        }
+
+        private void btnGet_Click(object sender, EventArgs e)
+        {
+            if (settingsManager == null)
+            {
+                return;
+            }
+
+            if (int.TryParse(txtIndex.Text, out int index))
+            {
+                txtName.Text = txtData1.Text = txtData2.Text = string.Empty;
+                
+                if(settingsNames.ContainsKey(index))
+                {
+                    setting setting = settingsManager.getSetting(settingsNames[index]);
+                    if (setting == null)
+                    {
+                        txtName.Text = txtData1.Text = txtData2.Text = string.Empty;
+                    }
+                    else
+                    {
+                        txtName.Text = getName(setting);
+                        txtData1.Text = setting.data1.ToString();
+                        txtData2.Text = setting.data2.ToString();
+                    }
+                }
+            }
         }
     }
 }
