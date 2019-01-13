@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
@@ -43,22 +40,18 @@ namespace EsseivaN.Controls
 {
     public class UpdateChecker : Component
     {
-        private string fileUrl = "";
-        private CheckUpdateResult result = new CheckUpdateResult();
-        private string productVersion;
-
         /// <summary>
         /// Website where is located the file
         /// </summary>
-        public string FileUrl { get => fileUrl; set => fileUrl = value; }
+        public string FileUrl { get; set; } = "";
         /// <summary>
         /// Result of the check
         /// </summary>
-        public CheckUpdateResult Result { get => result; }
+        public CheckUpdateResult Result { get; private set; } = new CheckUpdateResult();
         /// <summary>
         /// Actual version
         /// </summary>
-        public string ProductVersion { get => productVersion; set => productVersion = value; }
+        public string ProductVersion { get; set; }
 
 
         public UpdateChecker()
@@ -67,7 +60,7 @@ namespace EsseivaN.Controls
 
         public UpdateChecker(string FileUrl, string ProductVersion)
         {
-            fileUrl = FileUrl;
+            this.FileUrl = FileUrl;
             this.ProductVersion = ProductVersion;
         }
 
@@ -84,7 +77,7 @@ namespace EsseivaN.Controls
         /// </summary>
         public bool CheckUpdates(string FileUrl, string ProductVersion)
         {
-            fileUrl = FileUrl;
+            this.FileUrl = FileUrl;
             this.ProductVersion = ProductVersion;
             return UpdateCheck();
         }
@@ -95,7 +88,7 @@ namespace EsseivaN.Controls
         public bool NeedUpdate()
         {
             UpdateCheck();
-            return result.NeedUpdate;
+            return Result.NeedUpdate;
         }
 
         /// <summary>
@@ -103,10 +96,10 @@ namespace EsseivaN.Controls
         /// </summary>
         public bool NeedUpdate(string FileUrl, string ProductVersion)
         {
-            fileUrl = FileUrl;
+            this.FileUrl = FileUrl;
             this.ProductVersion = ProductVersion;
             UpdateCheck();
-            return result.NeedUpdate;
+            return Result.NeedUpdate;
         }
 
         /// <summary>
@@ -114,55 +107,62 @@ namespace EsseivaN.Controls
         /// </summary>
         private bool UpdateCheck()
         {
-            result = new CheckUpdateResult();
+            Result = new CheckUpdateResult();
 
             try
             {
+                // Read file
                 WebClient client = new WebClient();
                 Stream stream = client.OpenRead(FileUrl);
                 StreamReader reader = new StreamReader(stream);
                 string content = reader.ReadToEnd();
 
+                // Create xml
                 XmlDocument doc = new XmlDocument();
                 doc.LoadXml(content);
 
+                // Get tag version
                 XmlNodeList versionNode = doc.GetElementsByTagName("version");
                 if (versionNode.Count != 0)
                 {
-                    result.lastVersion = new Version(versionNode[0].InnerText);
-                    result.currentVersion = new Version(ProductVersion);
+                    Result.lastVersion = new Version(versionNode[0].InnerText);
+                    Result.currentVersion = new Version(ProductVersion);
 
-                    if (result.lastVersion > result.currentVersion)
+                    // Check versions
+                    if (Result.lastVersion > Result.currentVersion)
                     {   // Update available
-                        result.needUpdate = true;
+                        Result.needUpdate = true;
 
+                        // Get the download path
                         XmlNodeList urlNode = doc.GetElementsByTagName("url");
                         if (urlNode.Count != 0)
                         {
-                            result.updateURL = urlNode[0].InnerText;
+                            Result.updateURL = urlNode[0].InnerText;
                         }
 
+                        // Get the silent update path
                         urlNode = doc.GetElementsByTagName("silent");
                         if (urlNode.Count != 0)
                         {
-                            result.silentUpdateURL = urlNode[0].InnerText;
+                            Result.silentUpdateURL = urlNode[0].InnerText;
                         }
 
+                        // Get the filename
                         urlNode = doc.GetElementsByTagName("name");
                         if (urlNode.Count != 0)
                         {
-                            result.filename = urlNode[0].InnerText;
+                            Result.filename = urlNode[0].InnerText;
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                result.errorOccured = true;
-                result.error = ex;
+                Result.errorOccured = true;
+                Result.error = ex;
                 return false;
             }
-            return result.NeedUpdate;
+            return Result.NeedUpdate;
         }
 
         public class CheckUpdateResult
@@ -184,8 +184,6 @@ namespace EsseivaN.Controls
             public bool ErrorOccured { get => errorOccured; }
             public string SilentUpdateURL { get => silentUpdateURL; }
 
-            public string GetPath() => silentUpdateURL;
-
             /// <summary>
             /// Open the website
             /// </summary>
@@ -199,12 +197,20 @@ namespace EsseivaN.Controls
             /// </summary>
             public async Task<bool> DownloadUpdate()
             {
+                return await DownloadUpdate(@"C:\temp\");
+            }
+
+            /// <summary>
+            /// Download and run the update
+            /// </summary>
+            public async Task<bool> DownloadUpdate(string downloadPath)
+            {
                 WebClient webClient = new WebClient();
-                await webClient.DownloadFileTaskAsync(new Uri(SilentUpdateURL), @"C:\temp\" + filename + ".msi");
-                FileInfo info = new FileInfo(@"C:\temp\" + filename + ".msi");
+                await webClient.DownloadFileTaskAsync(new Uri(SilentUpdateURL), downloadPath + filename + ".msi");
+                FileInfo info = new FileInfo(downloadPath + filename + ".msi");
                 if (info.Length != 0)
                 {
-                    Process.Start(@"C:\temp\" + filename + ".msi");
+                    Process.Start(downloadPath + filename + ".msi");
                     return true;
                 }
                 else

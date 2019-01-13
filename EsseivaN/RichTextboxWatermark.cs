@@ -1,11 +1,11 @@
 ﻿using System;
+using Model = System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using Model = System.ComponentModel;
 
 namespace EsseivaN.Controls
 {
-    public class TextboxWatermark : TextBox
+    public class RichTextboxWatermark : RichTextBox
     {
         private string watermarkText = "Type here...";
         private bool watermarkActive = false;
@@ -14,17 +14,7 @@ namespace EsseivaN.Controls
 
         [Model.Browsable(true), Model.Description("Watermark Text to be displayed"), Model.Category("Watermark"),]
         public string WatermarkText
-        {
-            get
-            {
-                return watermarkText;
-            }
-            set
-            {
-                watermarkText = value;
-                Invalidate();
-            }
-        }
+        { get { return watermarkText; } set { watermarkText = value; Invalidate(); } }
 
         [Model.Browsable(true), Model.Description("Watermark Text to be displayed"), Model.Category("Watermark")]
         public Color WatermarkColor
@@ -34,7 +24,7 @@ namespace EsseivaN.Controls
         public Color TextColor
         { get { return textColor; } set { textColor = value; Invalidate(); } }
 
-        public TextboxWatermark()
+        public RichTextboxWatermark()
         {
         }
 
@@ -50,9 +40,7 @@ namespace EsseivaN.Controls
                 base.Text = WatermarkText;
             }
             else
-            {
                 ForeColor = textColor;
-            }
         }
 
         [Model.Browsable(true), Model.Description("The text associated with the control"), Model.Category("Appearance")]
@@ -60,10 +48,7 @@ namespace EsseivaN.Controls
         {
             get
             {
-                if (watermarkActive && watermarkText != string.Empty)
-                    return string.Empty;
-                else
-                    return base.Text;
+                return watermarkActive ? string.Empty : base.Text;
             }
             set
             {
@@ -81,7 +66,7 @@ namespace EsseivaN.Controls
                 return watermarkActive ? 0 : base.TextLength;
             }
         }
-
+        
         protected override void OnInvalidated(InvalidateEventArgs e)
         {
             if (watermarkActive)
@@ -91,14 +76,14 @@ namespace EsseivaN.Controls
             }
             base.OnInvalidated(e);
         }
-        
+
         public override void ResetText()
         {
             watermarkActive = true;
             ForeColor = WatermarkColor;
             base.Text = WatermarkText;
         }
-
+        
         protected override void OnMouseDown(MouseEventArgs e)
         {
             if (watermarkActive)
