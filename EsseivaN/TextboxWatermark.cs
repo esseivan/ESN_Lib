@@ -18,15 +18,15 @@ namespace EsseivaN.Controls
 
         [Model.Browsable(true), Model.Description("Watermark Text to be displayed"), Model.Category("Watermark"),]
         public string WatermarkText
-        { get { return watermarkText; } set { watermarkText = value; } }
+        { get { return watermarkText; } set { watermarkText = value; Invalidate(); } }
 
         [Model.Browsable(true), Model.Description("Watermark Text to be displayed"), Model.Category("Watermark")]
         public Color WatermarkColor
-        { get { return watermarkColor; } set { watermarkColor = value; } }
+        { get { return watermarkColor; } set { watermarkColor = value; Invalidate(); } }
 
         [Model.Browsable(true), Model.Description("Normal Text color"), Model.Category("Appearance")]
         public Color TextColor
-        { get { return textColor; } set { textColor = value; } }
+        { get { return textColor; } set { textColor = value; Invalidate(); } }
 
         public TextboxWatermark()
         {
@@ -47,7 +47,7 @@ namespace EsseivaN.Controls
                 ForeColor = textColor;
         }
 
-        [Model.Browsable(true), Model.Description("Normal Text color"), Model.Category("Appearance")]
+        [Model.Browsable(true), Model.Description("The text associated with the control"), Model.Category("Appearance")]
         public override string Text
         {
             get
@@ -70,6 +70,16 @@ namespace EsseivaN.Controls
                 return watermarkActive ? 0 : base.TextLength;
             }
         }
+        
+        protected override void OnInvalidated(InvalidateEventArgs e)
+        {
+            if (watermarkActive)
+            {
+                ForeColor = WatermarkColor;
+                base.Text = WatermarkText;
+            }
+            base.OnInvalidated(e);
+        }
 
         public override void ResetText()
         {
@@ -77,19 +87,7 @@ namespace EsseivaN.Controls
             ForeColor = WatermarkColor;
             base.Text = WatermarkText;
         }
-
-        protected override void OnGotFocus(EventArgs e)
-        {
-            base.OnGotFocus(e);
-
-            //if (WatermarkActive)
-            //{
-            //    WatermarkActive = false;
-            //    ForeColor = defaultColor;
-            //    base.Text = string.Empty;
-            //}
-        }
-
+        
         protected override void OnMouseDown(MouseEventArgs e)
         {
             if (watermarkActive)
@@ -115,6 +113,7 @@ namespace EsseivaN.Controls
 
             base.OnKeyDown(e);
 
+            // Do the keydown then check text
             Application.DoEvents();
 
             if (base.Text == string.Empty)

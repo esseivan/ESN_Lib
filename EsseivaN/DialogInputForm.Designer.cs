@@ -28,150 +28,150 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.layout = new System.Windows.Forms.TableLayoutPanel();
-            this.lblQuestion = new System.Windows.Forms.Label();
-            this.mButton_2 = new System.Windows.Forms.Button();
-            this.mButton_Cancel = new System.Windows.Forms.Button();
-            this.mTextbox_Input = new System.Windows.Forms.TextBox();
-            this.mButton_1 = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.layout.SuspendLayout();
+            this.label_text = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.txtInput = new System.Windows.Forms.TextBox();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // layout
+            // label_text
             // 
-            this.layout.AutoSize = true;
-            this.layout.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.layout.ColumnCount = 4;
-            this.layout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.layout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.layout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.layout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.layout.Controls.Add(this.lblQuestion, 1, 1);
-            this.layout.Controls.Add(this.mButton_2, 2, 3);
-            this.layout.Controls.Add(this.mButton_Cancel, 2, 4);
-            this.layout.Controls.Add(this.mTextbox_Input, 1, 5);
-            this.layout.Controls.Add(this.mButton_1, 2, 2);
-            this.layout.Controls.Add(this.label1, 1, 6);
-            this.layout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layout.Location = new System.Drawing.Point(0, 0);
-            this.layout.Name = "layout";
-            this.layout.RowCount = 8;
-            this.layout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.layout.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.layout.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.layout.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.layout.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.layout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.layout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.layout.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.layout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.layout.Size = new System.Drawing.Size(284, 162);
-            this.layout.TabIndex = 1;
+            this.label_text.AutoEllipsis = true;
+            this.label_text.AutoSize = true;
+            this.label_text.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label_text.Location = new System.Drawing.Point(23, 23);
+            this.label_text.Margin = new System.Windows.Forms.Padding(3);
+            this.label_text.Name = "label_text";
+            this.label_text.Size = new System.Drawing.Size(238, 54);
+            this.label_text.TabIndex = 0;
             // 
-            // lblQuestion
+            // button2
             // 
-            this.lblQuestion.AutoEllipsis = true;
-            this.lblQuestion.AutoSize = true;
-            this.lblQuestion.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblQuestion.Location = new System.Drawing.Point(23, 23);
-            this.lblQuestion.Margin = new System.Windows.Forms.Padding(3);
-            this.lblQuestion.Name = "lblQuestion";
-            this.layout.SetRowSpan(this.lblQuestion, 3);
-            this.lblQuestion.Size = new System.Drawing.Size(158, 54);
-            this.lblQuestion.TabIndex = 0;
+            this.button2.AutoSize = true;
+            this.button2.Location = new System.Drawing.Point(153, 3);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(38, 23);
+            this.button2.TabIndex = 11;
+            this.button2.Text = "btn2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.Button2_Click);
             // 
-            // mButton_2
+            // button1
             // 
-            this.mButton_2.AutoSize = true;
-            this.mButton_2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mButton_2.Location = new System.Drawing.Point(187, 53);
-            this.mButton_2.Name = "mButton_2";
-            this.mButton_2.Size = new System.Drawing.Size(74, 24);
-            this.mButton_2.TabIndex = 11;
-            this.mButton_2.Text = "btn2";
-            this.mButton_2.UseVisualStyleBackColor = true;
-            this.mButton_2.Visible = false;
-            this.mButton_2.Click += new System.EventHandler(this.mButton_2_Click);
+            this.button1.AutoSize = true;
+            this.button1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.button1.Location = new System.Drawing.Point(109, 3);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(38, 23);
+            this.button1.TabIndex = 12;
+            this.button1.Text = "btn1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
-            // mButton_Cancel
+            // button3
             // 
-            this.mButton_Cancel.AutoSize = true;
-            this.mButton_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.mButton_Cancel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mButton_Cancel.Location = new System.Drawing.Point(187, 83);
-            this.mButton_Cancel.Name = "mButton_Cancel";
-            this.mButton_Cancel.Size = new System.Drawing.Size(74, 24);
-            this.mButton_Cancel.TabIndex = 12;
-            this.mButton_Cancel.Text = "Cancel";
-            this.mButton_Cancel.UseVisualStyleBackColor = true;
-            this.mButton_Cancel.Click += new System.EventHandler(this.mButton_Cancel_Click);
+            this.button3.AutoSize = true;
+            this.button3.Location = new System.Drawing.Point(197, 3);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(38, 23);
+            this.button3.TabIndex = 10;
+            this.button3.Text = "btn3";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.Button3_CLick);
             // 
-            // mTextbox_Input
+            // tableLayoutPanel1
             // 
-            this.layout.SetColumnSpan(this.mTextbox_Input, 2);
-            this.mTextbox_Input.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mTextbox_Input.Location = new System.Drawing.Point(23, 113);
-            this.mTextbox_Input.Name = "mTextbox_Input";
-            this.mTextbox_Input.Size = new System.Drawing.Size(238, 20);
-            this.mTextbox_Input.TabIndex = 1;
+            this.tableLayoutPanel1.AutoSize = true;
+            this.tableLayoutPanel1.ColumnCount = 3;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Controls.Add(this.label_text, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.txtInput, 1, 5);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 7;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(284, 201);
+            this.tableLayoutPanel1.TabIndex = 13;
             // 
-            // mButton_1
+            // tableLayoutPanel2
             // 
-            this.mButton_1.AutoSize = true;
-            this.mButton_1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mButton_1.Location = new System.Drawing.Point(187, 23);
-            this.mButton_1.Name = "mButton_1";
-            this.mButton_1.Size = new System.Drawing.Size(74, 24);
-            this.mButton_1.TabIndex = 10;
-            this.mButton_1.Text = "btn1";
-            this.mButton_1.UseVisualStyleBackColor = true;
-            this.mButton_1.Click += new System.EventHandler(this.mButton_1_Click);
+            this.tableLayoutPanel2.AutoSize = true;
+            this.tableLayoutPanel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tableLayoutPanel2.ColumnCount = 4;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel2.Controls.Add(this.button2, 2, 0);
+            this.tableLayoutPanel2.Controls.Add(this.button1, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.button3, 3, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(23, 103);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(238, 29);
+            this.tableLayoutPanel2.TabIndex = 1;
             // 
-            // label1
+            // txtInput
             // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.SystemColors.Control;
-            this.label1.Location = new System.Drawing.Point(23, 143);
-            this.label1.Margin = new System.Windows.Forms.Padding(3);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(0, 13);
-            this.label1.TabIndex = 0;
+            this.txtInput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtInput.Location = new System.Drawing.Point(23, 158);
+            this.txtInput.Name = "txtInput";
+            this.txtInput.Size = new System.Drawing.Size(238, 20);
+            this.txtInput.TabIndex = 2;
             // 
             // DialogInputForm
             // 
-            this.AcceptButton = this.mButton_1;
+            this.AcceptButton = this.button3;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.CancelButton = this.mButton_Cancel;
-            this.ClientSize = new System.Drawing.Size(284, 162);
-            this.ControlBox = false;
-            this.Controls.Add(this.layout);
+            this.CancelButton = this.button1;
+            this.ClientSize = new System.Drawing.Size(284, 201);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(300, 170);
             this.Name = "DialogInputForm";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Enter input";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DialogInputForm_FormClosing);
             this.Load += new System.EventHandler(this.DialogInputForm_Load);
-            this.layout.ResumeLayout(false);
-            this.layout.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TableLayoutPanel layout;
-        private System.Windows.Forms.Label lblQuestion;
-        private System.Windows.Forms.Button mButton_2;
-        private System.Windows.Forms.TextBox mTextbox_Input;
-        private System.Windows.Forms.Button mButton_Cancel;
-        private System.Windows.Forms.Button mButton_1;
-		private System.Windows.Forms.Label label1;
-	}
+        private System.Windows.Forms.Label label_text;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.TextBox txtInput;
+    }
 }

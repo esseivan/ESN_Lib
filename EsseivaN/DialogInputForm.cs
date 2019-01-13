@@ -13,245 +13,150 @@ using System.Windows.Forms;
 
 namespace EsseivaN.Controls
 {
-	internal partial class DialogInputForm : Form
-	{
-		#region Declarations
+    public partial class DialogInputForm : Form
+    {
+        private static Dialog.DialogResult Result;
+        private static Dialog.ButtonType Btn1, Btn2, Btn3;
+        private static string Btn1_t, Btn2_t, Btn3_t;
+        public string Input { get; set; }
 
-		// User's input
-		private static string value;
-		public string Value
-		{
-			get
-			{
-				return value;
-			}
-		}
+        const double MaximumSizeRatio = 2d / 3d;
 
-		// Saved window's location
-		private static Point WindowLocation;
-		public Point lastLocation { get => WindowLocation; }
+        #region initialization
 
-		// Wheter to keep last window's position or not
-		private static bool FreezeWindow = false;
+        /// <summary>
+        /// Dialog input window
+        /// </summary>
+        public DialogInputForm()
+        {
+            InitializeComponent();
+        }
 
-		// Wheter this is the first run or not
-		public bool FirstRun = true;
+        public static void SetButton(Dialog.Button button, string text)
+        {
+            switch (button)
+            {
+                case Dialog.Button.Button1:
+                    Btn1_t = text;
+                    break;
+                case Dialog.Button.Button2:
+                    Btn2_t = text;
+                    break;
+                case Dialog.Button.Button3:
+                    Btn3_t = text;
+                    break;
+                case Dialog.Button.All:
+                    Btn1_t = Btn2_t = Btn3_t = text;
+                    break;
+                default:
+                    break;
+            }
+        }
 
-		public DialogInput.ButtonType button1 = DialogInput.ButtonType.OK;
-		public DialogInput.ButtonType button2 = DialogInput.ButtonType.Ignore;
-		public DialogInput.CancelButtonType buttonCancel = DialogInput.CancelButtonType.Cancel;
-		private DialogInput.DialogResult button1Result;
-		private DialogInput.DialogResult button2Result;
-		private DialogInput.DialogResult buttonCancelResult;
-		private DialogInput.DialogResult result = DialogInput.DialogResult.None;
+        public static void RemoveButton(Dialog.Button button)
+        {
+            switch (button)
+            {
+                case Dialog.Button.Button1:
+                    Btn1_t = string.Empty;
+                    break;
+                case Dialog.Button.Button2:
+                    Btn2_t = string.Empty;
+                    break;
+                case Dialog.Button.Button3:
+                    Btn3_t = string.Empty;
+                    break;
+                case Dialog.Button.All:
+                    Btn1_t = Btn2_t = Btn3_t = string.Empty;
+                    break;
+                default:
+                    break;
+            }
+        }
 
-		public bool FR = false;
+        public static Dialog.DialogInputResult ShowDialog(string Message, string Title, string DefaultInput, Dialog.ButtonType Button1, Dialog.ButtonType Button2, Dialog.ButtonType Button3)
+        {
+            Btn1 = Button1;
+            Btn2 = Button2;
+            Btn3 = Button3;
 
-		#endregion
+            DialogInputForm dialogForm = new DialogInputForm();
+            dialogForm.txtInput.Text = DefaultInput;
 
-		#region initialization
+            // Button 1
+            if (Btn1 == Dialog.ButtonType.None)
+                dialogForm.button1.Visible = false;
+            else if (Btn1 >= Dialog.ButtonType.Custom1)
+                dialogForm.button1.Text = Btn1_t;
+            else
+                dialogForm.button1.Text = Btn1.ToString();
 
-		/// <summary>
-		/// Dialog input window
-		/// </summary>
-		public DialogInputForm()
-		{
-			InitializeComponent();
-		}
+            // Button 2
+            if (Btn2 == Dialog.ButtonType.None)
+                dialogForm.button2.Visible = false;
+            else if (Btn2 >= Dialog.ButtonType.Custom1)
+                dialogForm.button2.Text = Btn2_t;
+            else
+                dialogForm.button2.Text = Btn2.ToString();
 
-		/// <summary>
-		/// Initialize window
-		/// </summary>
-		/// <param name="Question">Question</param>
-		/// <param name="Title">Title</param>
-		/// <param name="DefaultInput">Default input</param>
-		/// <param name="WindowPosition">Window's position</param>
-		public void Initialize(string Question = "Enter input", string Title = "Dialog input", string DefaultInput = "")
-		{
-			// Question
-			lblQuestion.Text = Question;
+            // Button 3
+            if (Btn3 == Dialog.ButtonType.None)
+                dialogForm.button3.Visible = false;
+            else if (Btn3 >= Dialog.ButtonType.Custom1)
+                dialogForm.button3.Text = Btn3_t;
+            else
+                dialogForm.button3.Text = Btn3.ToString();
 
-			// Title
-			this.Text = Title;
+            Result = Dialog.DialogResult.None;
 
-			// Default input
-			this.mTextbox_Input.Text = DefaultInput;
-		}
+            dialogForm.Text = Title;
+            dialogForm.label_text.Text = Message;
 
-		/// <summary>
-		/// Set the window's position
-		/// </summary>
-		/// <param name="PosX">X Position</param>
-		/// <param name="PosY">Y Position</param>
-		public void WindowPosition(int PosX, int PosY)
-		{
-			this.StartPosition = FormStartPosition.Manual;
-			WindowLocation = new Point(PosX, PosY);
-		}
+            dialogForm.ShowDialog();
+            return new Dialog.DialogInputResult(dialogForm.Input, Result);
+        }
 
-		/// <summary>
-		/// Set the window's position
-		/// </summary>
-		/// <param name="WindowPosition">Window's position type</param>
-		public void WindowPosition(DialogInput.WindowPositions WindowPosition)
-		{
-			switch (WindowPosition)
-			{
-				case DialogInput.WindowPositions.CenterAlways:
-					{   // Keep the window at center
-						this.StartPosition = FormStartPosition.CenterScreen;
-						FreezeWindow = true;
-						break;
-					}
-				case DialogInput.WindowPositions.CenterFirstRun:
-					{   // Place the window at center the first time
-						this.StartPosition = FormStartPosition.CenterScreen;
-						FreezeWindow = false;
-						break;
-					}
-				case DialogInput.WindowPositions.DefaultAlways:
-					{   // Place the window at default location
-						this.StartPosition = FormStartPosition.WindowsDefaultLocation;
-						FreezeWindow = true;
-						break;
-					}
-				case DialogInput.WindowPositions.DefaultFirstRun:
-					{   // Place the window at default location the first time
-						this.StartPosition = FormStartPosition.WindowsDefaultLocation;
-						FreezeWindow = false;
-						break;
-					}
-				case DialogInput.WindowPositions.Manual:
-					{   // Place the window at default location the first time
-						this.StartPosition = FormStartPosition.Manual;
-						FreezeWindow = false;
-						break;
-					}
-				default:
-					{   // Place the window at center the first time
-						this.StartPosition = FormStartPosition.CenterScreen;
-						FreezeWindow = false;
-						break;
-					}
-			}
-		}
+        #endregion
 
-		/// <summary>
-		/// Define window's size
-		/// <para>Default and minimum size is 300x170</para>
-		/// </summary>
-		/// <param name="Width">Width</param>
-		/// <param name="Height">Height</param>
-		public void SetSize(short Width, short Height)
-		{   // Si supérieur aux limites
-			if ((Width > this.MinimumSize.Width) && (Height > this.MinimumSize.Height))
-			{
-				this.Size = new Size(Width, Height);
-			}
-		}
+        #region Main
 
-		public new DialogInput.DialogResult ShowDialog()
-		{
-			result = DialogInput.DialogResult.None;
-			base.ShowDialog();
-			return result;
-		}
+        // Execute on load
+        private void DialogInputForm_Load(object sender, EventArgs e)
+        {
+            int width = Screen.PrimaryScreen.WorkingArea.Width;
+            int height = Screen.PrimaryScreen.WorkingArea.Height;
 
-		#endregion
+            this.MaximumSize = this.label_text.MaximumSize = new Size((int)(width * MaximumSizeRatio), (int)(height * MaximumSizeRatio));
 
-		#region Main
+            int posX = (width / 2 - this.Size.Width / 2);
+            int posY = (height / 2 - this.Size.Height / 2);
 
-		// Execute on load
-		private void DialogInputForm_Load(object sender, EventArgs e)
-		{
-			if (FirstRun)
-			{
-				FirstRun = false;
+            this.Location = new Point(posX, posY);
+        }
 
-				//if (!FreezeWindow)
-				//    StartPosition = FormStartPosition.Manual;
-			}
-			else
-			{
-				// Set window's position at last one
-				if (!FreezeWindow)
-					this.Location = WindowLocation;
-			}
-			// Clear input
-			value = "";
-			// Set buttons
-			setButtons();
-		}
+        #endregion
 
-		private void setButtons()
-		{
-			mButton_1.Visible = true;
-			mButton_2.Visible = true;
-			mButton_Cancel.Visible = true;
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            Result = (Dialog.DialogResult)Btn1;
+            Close();
+        }
 
-			button1Result = button2Result = buttonCancelResult = DialogInput.DialogResult.None;
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            Result = (Dialog.DialogResult)Btn2;
+            Close();
+        }
 
-			// Button 1
-			if (button1 == DialogInput.ButtonType.None)
-				mButton_1.Visible = false;
-			else
-			{
-				button1Result = (DialogInput.DialogResult)button1;
-				mButton_1.Text = FR ? ((DialogInput.ButtonTypeFR)button1).ToString() : button1.ToString();
-			}
+        private void Button3_CLick(object sender, EventArgs e)
+        {
+            Result = (Dialog.DialogResult)Btn3;
+            Close();
+        }
 
-			// Button 2
-			if (button2 == DialogInput.ButtonType.None)
-				mButton_2.Visible = false;
-			else
-			{
-				button2Result = (DialogInput.DialogResult)button2;
-				mButton_2.Text = FR ? ((DialogInput.ButtonTypeFR)button2).ToString() : button2.ToString();
-			}
-
-			// Cancel button
-			if (buttonCancel == DialogInput.CancelButtonType.None)
-				mButton_Cancel.Visible = false;
-			else
-			{
-				buttonCancelResult = (DialogInput.DialogResult)buttonCancel;
-				mButton_Cancel.Text = FR ? ((DialogInput.ButtonTypeFR)buttonCancel).ToString() : buttonCancel.ToString();
-			}
-
-		}
-
-		// Execute when a button is clicked
-		private void mButton_2_Click(object sender, EventArgs e)
-		{
-			result = button2Result;
-			Close();
-		}
-
-		#endregion
-
-		private void mButton_1_Click(object sender, EventArgs e)
-		{
-			result = button1Result;
-			Close();
-		}
-
-		private void mButton_Cancel_Click(object sender, EventArgs e)
-		{
-			result = buttonCancelResult;
-			Close();
-		}
-
-		private void DialogInputForm_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			// Save the value
-			value = mTextbox_Input.Text;
-			// Initialize for the next call
-			mTextbox_Input.Clear();
-			mTextbox_Input.Focus();
-			// Save window's position for the next call
-			WindowLocation = this.Location;
-
-			result = result == DialogInput.DialogResult.None ? DialogInput.DialogResult.Cancel : result;
-		}
-	}
+        private void DialogInputForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Input = txtInput.Text;
+        }
+    }
 }

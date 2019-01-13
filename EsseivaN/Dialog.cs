@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
-using EsseivaN.Controls;
+﻿using System.ComponentModel;
 
 namespace EsseivaN.Controls
 {
@@ -63,10 +55,30 @@ namespace EsseivaN.Controls
             All = 255
         }
 
+        public struct DialogInputResult
+        {
+            public string input;
+            public DialogResult dialogResult;
+
+            public DialogInputResult(string input)
+            {
+                this.input = input;
+                this.dialogResult = DialogResult.None;
+            }
+
+            public DialogInputResult(string input, DialogResult dialogResult)
+            {
+                this.input = input;
+                this.dialogResult = dialogResult;
+            }
+        }
+
         private Dialog()
         {
 
         }
+
+        // Dialog
 
         public static DialogResult ShowDialog(string Message)
         {
@@ -93,12 +105,18 @@ namespace EsseivaN.Controls
             return ShowDialog_Core(Message, Title, Button1, Button2, Button3);
         }
 
-        public static void SetButton(Button button, string text)
+        /// <summary>
+        /// Set custom button
+        /// </summary>
+        public static void Dialog_SetButton(Button button, string text)
         {
             DialogForm.SetButton(button, text);
         }
 
-        public static void RemoveButton(Button button)
+        /// <summary>
+        /// Remove custom button
+        /// </summary>
+        public static void Dialog_RemoveButton(Button button)
         {
             DialogForm.RemoveButton(button);
         }
@@ -106,6 +124,61 @@ namespace EsseivaN.Controls
         private static DialogResult ShowDialog_Core(string message, string title, ButtonType btn1, ButtonType btn2, ButtonType btn3)
         {
             return DialogForm.ShowDialog(message, title, btn1, btn2, btn3);
+        }
+
+
+
+        // DialogInput
+
+        public static DialogInputResult ShowDialogInput(string message)
+        {
+            return ShowDialogInput_core(message, "Information", "", ButtonType.OK, ButtonType.Cancel, ButtonType.None);
+        }
+
+        public static DialogInputResult ShowDialogInput(string message, string title)
+        {
+            return ShowDialogInput_core(message, title, "", ButtonType.OK, ButtonType.Cancel, ButtonType.None);
+        }
+
+        public static DialogInputResult ShowDialogInput(string message, string title, string defaultInput)
+        {
+            return ShowDialogInput_core(message, title, defaultInput, ButtonType.OK, ButtonType.Cancel, ButtonType.None);
+        }
+
+        public static DialogInputResult ShowDialogInput(string message, string title, string defaultInput, ButtonType btn1)
+        {
+            return ShowDialogInput_core(message, title, defaultInput, btn1, ButtonType.Cancel, ButtonType.None);
+        }
+
+        public static DialogInputResult ShowDialogInput(string message, string title, string defaultInput, ButtonType btn1, ButtonType btn2)
+        {
+            return ShowDialogInput_core(message, title, defaultInput, btn1, btn2, ButtonType.None);
+        }
+
+        public static DialogInputResult ShowDialogInput(string message, string title, string defaultInput, ButtonType btn1, ButtonType btn2, ButtonType btn3)
+        {
+            return ShowDialogInput_core(message, title, defaultInput, btn1, btn2, btn3);
+        }
+
+        /// <summary>
+        /// Set custom button
+        /// </summary>
+        public static void DialogInput_SetButton(Button button, string text)
+        {
+            DialogInputForm.SetButton(button, text);
+        }
+
+        /// <summary>
+        /// Remove custom button
+        /// </summary>
+        public static void DialogInput_RemoveButton(Button button)
+        {
+            DialogInputForm.RemoveButton(button);
+        }
+
+        private static DialogInputResult ShowDialogInput_core(string message, string title, string defaultInput, ButtonType btn1, ButtonType btn2, ButtonType btn3)
+        {
+            return DialogInputForm.ShowDialog(message, title, defaultInput, btn1, btn2, btn3);
         }
     }
 }

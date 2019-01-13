@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace EsseivaN.Controls
 {
-    internal partial class DialogForm : Form
+    public partial class DialogForm : Form
     {
         private static Dialog.DialogResult Result;
         private static Dialog.ButtonType Btn1, Btn2, Btn3;

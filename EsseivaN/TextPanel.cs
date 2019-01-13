@@ -53,6 +53,8 @@ namespace EsseivaN.Controls
         }
 
         public event EventHandler Clipboard_Delete;
+        public event EventHandler Clipboard_Load;
+        public event EventHandler Clipboard_Show;
 
         public TextPanel()
         {
@@ -70,16 +72,17 @@ namespace EsseivaN.Controls
         // Get clipboard back
         private void btn_load_Click(object sender, EventArgs e)
         {
-            
             Clipboard.SetDataObject(label.Text);
+
+            //bubble the event up to the parent
+            this.Clipboard_Load?.Invoke(label.Text, e);
         }
 
         // Delete clipboard
         private void btn_delete_Click(object sender, EventArgs e)
         {
             //bubble the event up to the parent
-            if (this.Clipboard_Delete != null)
-                this.Clipboard_Delete(label.Text, e);
+            this.Clipboard_Delete?.Invoke(label.Text, e);
         }
 
         // Show exact content
@@ -88,6 +91,9 @@ namespace EsseivaN.Controls
             TextDialog frmDialog = new TextDialog();
             frmDialog.ShowDialog(label.Text);
             frmDialog.Dispose();
+
+            //bubble the event up to the parent
+            this.Clipboard_Show?.Invoke(label.Text, e);
         }
     }
 }

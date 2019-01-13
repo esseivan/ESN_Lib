@@ -53,16 +53,16 @@ namespace tests
         private void button2_Click(object sender, EventArgs e)
         {
             var t = ((EsseivaN.Controls.Dialog.ButtonType[])Enum.GetValues(typeof(EsseivaN.Controls.Dialog.ButtonType)));
-            EsseivaN.Controls.Dialog.SetButton(EsseivaN.Controls.Dialog.Button.Button1, mB1.Text);
-            EsseivaN.Controls.Dialog.SetButton(EsseivaN.Controls.Dialog.Button.Button2, mB2.Text);
-            EsseivaN.Controls.Dialog.SetButton(EsseivaN.Controls.Dialog.Button.Button3, mB3.Text);
+            EsseivaN.Controls.Dialog.Dialog_SetButton(EsseivaN.Controls.Dialog.Button.Button1, mB1.Text);
+            EsseivaN.Controls.Dialog.Dialog_SetButton(EsseivaN.Controls.Dialog.Button.Button2, mB2.Text);
+            EsseivaN.Controls.Dialog.Dialog_SetButton(EsseivaN.Controls.Dialog.Button.Button3, mB3.Text);
             label1.Text = string.Empty;
             label1.Text = EsseivaN.Controls.Dialog.ShowDialog(mMsg.Text, mTitle.Text, t[mL1.SelectedIndex], t[mL2.SelectedIndex], t[mL3.SelectedIndex]).ToString();
         }
 
         #endregion
 
-        #region SettingsManager v4
+        #region SettingsManager
 
         List<setting> settingsList = new List<setting>();
 
@@ -89,6 +89,7 @@ namespace tests
             settingsList.Add(new setting(1) { index = 1, minimize = "false", onTop = "true" });
         }
 
+        // Function to show name
         private string getName(setting settings)
         {
             // Return the name from index
@@ -192,136 +193,6 @@ namespace tests
 
 
         #endregion
-
-        #region SettingsManager v3
-
-        //Dictionary<string, setting> settingsList = new Dictionary<string, setting>();
-
-        //class setting
-        //{
-        //    public int index;
-        //    public int type;
-        //    // type 0 : Window settings
-        //    public string width;
-        //    public string height;
-        //    // type 1 : Boot settings
-        //    public string minimize;
-        //    public string onTop;
-
-        //    public setting(int type)
-        //    {
-        //        this.type = type;
-        //    }
-        //}
-
-        //public void generateSettings()
-        //{
-        //    settingsList.Add("Window settings", new setting(0) { index = 0, width = "680", height = "680" });
-        //    settingsList.Add("Boot settings", new setting(1) { index = 1, minimize = "false", onTop = "true" });
-        //}
-
-        //private string getName(setting settings)
-        //{
-        //    switch (settings.type)
-        //    {
-        //        case 0:
-        //            return "Window settings";
-        //        case 1:
-        //            return "Boot settings";
-        //        default:
-        //            return "Unknown";
-        //    }
-        //}
-
-        //EsseivaN.Controls.SettingsManager_v3<setting> settingsManager;
-        //// New file
-        //private void button3_Click(object sender, EventArgs e)
-        //{
-        //    // Create new file
-        //    settingsManager = new EsseivaN.Controls.SettingsManager_v3<setting>(getName);
-
-        //    generateSettings();
-
-        //    foreach (var item in settingsList)
-        //    {
-        //        settingsManager.addSetting(item.Value);
-        //    }
-        //}
-
-        //// Add setting to selected combobox
-        //private void button5_Click(object sender, EventArgs e)
-        //{
-        //    if (settingsManager == null)
-        //    {
-        //        return;
-        //    }
-
-        //    settingsManager.addSetting(new setting(0) { width = textboxWatermark1.Text, height = textboxWatermark2.Text });
-        //}
-
-        //// Get setting
-        //private void button6_Click(object sender, EventArgs e)
-        //{
-        //    if (settingsManager == null)
-        //    {
-        //        return;
-        //    }
-
-        //    setting setting = settingsManager.getSetting(textboxWatermark1.Text);
-        //    if (setting == null)
-        //    {
-        //        textboxWatermark3.Text = string.Empty;
-        //    }
-        //    else
-        //    {
-        //        textboxWatermark3.Text = setting.type.ToString();
-        //    }
-        //}
-
-        //// Save file
-        //private void button7_Click(object sender, EventArgs e)
-        //{
-        //    if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-        //    {
-        //        if (settingsManager == null)
-        //        {
-        //            return;
-        //        }
-
-        //        settingsManager.save(saveFileDialog1.FileName);
-        //    }
-        //}
-
-        //// Open file
-        //private void button4_Click(object sender, EventArgs e)
-        //{
-        //    if (openFileDialog1.ShowDialog() == DialogResult.OK)
-        //    {
-        //        settingsManager = new EsseivaN.Controls.SettingsManager_v3<setting>(getName);
-        //        settingsManager.load(openFileDialog1.FileName);
-        //    }
-        //}
-
-        //// Add all settings
-        //private void button8_Click(object sender, EventArgs e)
-        //{
-        //    settingsManager.addSettingRange(richTextBox1.Text);
-        //}
-
-        //// Get all settings
-        //private void button9_Click(object sender, EventArgs e)
-        //{
-        //    richTextBox2.Text = settingsManager.generateFileData();
-        //}
-
-        //// Remove settings
-        //private void button10_Click(object sender, EventArgs e)
-        //{
-        //    settingsManager.removeSetting(textboxWatermark1.Text);
-        //}
-
-
-        #endregion
-
+        
     }
 }
