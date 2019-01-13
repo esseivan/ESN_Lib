@@ -8,96 +8,100 @@ namespace EsseivaN.Tools
     {
         public static void Main(string[] args)
         {
-            string filePath,
-                productName,
+            if (args.Length != 1)
+            {
+                Console.WriteLine("Invalid arguments");
+                Console.WriteLine("Example of use :");
+                Console.WriteLine("<config file full path>");
+                return;
+            }
+
+            string fileVersionPath,
+                templateBaseName,
+                productBaseName,
+                zipBaseName,
                 installerName,
-                folderPath,
+                silentInstallerName,
+                binFolderPath,
+                webFolderPath,
                 version;
 
             DateTime date;
 
-            filePath = productName = installerName = folderPath = string.Empty;
-
-            for (int i = 0; i < args.Length;)
-            {
-                switch (args[i++])
-                {
-                    case "/f":
-                    case "/F":
-                    case "-F":
-                    case "-f":  // Path of file to determine product version and date
-                        filePath = args[i++].Replace("\"", "");
-                        break;
-                    case "/pn":
-                    case "/PN":
-                    case "-PN":
-                    case "-pn": // Product name
-                        productName = args[i++].Replace("\"", "");
-                        break;
-                    case "/in":
-                    case "/IN":
-                    case "-IN":
-                    case "-in": // Installer name
-                        installerName = args[i++].Replace("\"", "");
-                        break;
-                    case "/fo":
-                    case "/FO":
-                    case "-FO":
-                    case "-fo": // Full folder path to get the output
-                        folderPath = args[i++].Replace("\"", "");
-                        break;
-                    default:
-                        Console.WriteLine("Invalid arguments");
-                        Console.WriteLine("Example of use :");
-                        Console.WriteLine("<path> -e <exe path> -pn <product name> -in <installer name> -fo <folder path>");
-                        break;
-                }
-            }
-
-            // Check that all is set
-            if (filePath == string.Empty || productName == string.Empty || installerName == string.Empty || folderPath == string.Empty)
-            {
-                return;
-            }
-
-            // Read the config file
-            string configPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\config.cfg";
+            // Get config/
+            string configPath = args[0];
             string data = File.ReadAllText(configPath);
             data = data.Replace("\r", "");
             string[] datas = data.Split('\n');
+
+            if (datas.Length < 8)
+            {
+                Console.WriteLine("Invalid config file");
+                return;
+            }
+
+            // Path of the file to read version and date (from binFolderPath)
+            fileVersionPath = datas[0].Replace("\"", "");
+
+            // Path of the bin release folder (from the config base)
+            binFolderPath = datas[1].Replace("\"", "");
+
+            // template name
+            templateBaseName = datas[2].Replace("\"", "");
+
+            // product name, used for the version.xml file
+            productBaseName = datas[3].Replace("\"", "");
+
+            // zip name
+            zipBaseName = datas[4].Replace("\"", "");
+
+            // Path of the web folder (from the config base)
+            webFolderPath = datas[5].Replace("\"", "");
+
+            // Installer file name (without extension)
+            installerName = datas[6].Replace("\"", "");
+
+            // Silent installer file name (without extension)
+            silentInstallerName = datas[7].Replace("\"", "");
+
+            // Read the general config file
+            configPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\config.cfg";
+            data = File.ReadAllText(configPath);
+            data = data.Replace("\r", "");
+            datas = data.Split('\n');
             // Base destination path
-            string destPath = datas[0].Replace("\"", "");
+            string baseDestinationPath = datas[0].Replace("\"", "");
             // templates file
-            string templatesPath = datas[1].Replace("\"", "");
+            string websiteWorkspacePath = datas[1].Replace("\"", "");
             // post run cmd
             string postRun = datas[2].Replace("\"", "");
 
             // Get the creation time
-            FileInfo fileInfo = new FileInfo(filePath);
+            FileInfo fileInfo = new FileInfo(fileVersionPath);
             date = fileInfo.LastWriteTime;
             Console.WriteLine("Creation date : " + date);
 
             // Get the version
-            FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(filePath);
+            FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(fileVersionPath);
             version = fileVersionInfo.ProductVersion;
             Console.WriteLine("Version : " + version);
 
             // Create a zipped file of the output
-            string zip_dest = $@"{destPath}{productName}\{productName}.zip";
-            string zip_source = folderPath + "\\";
+            string zip_dest = $@"{baseDestinationPath}{webFolderPath}\{zipBaseName}.zip";
+            string zip_source = binFolderPath + @"\";
             Console.WriteLine("Deleting previous zip file : " + zip_dest);
             Console.WriteLine("Creating zip file from : " + zip_source + "\n\t to : " + zip_dest);
             File.Delete(zip_dest);
             System.IO.Compression.ZipFile.CreateFromDirectory(zip_source, zip_dest);
 
             // Version.xml
-            string version_dest = $@"{destPath}{productName}\version.xml";
-            string version_template = $"{templatesPath}version_template.xml";
+            string version_dest = $@"{baseDestinationPath}{webFolderPath}\version.xml";
+            string version_template = $@"{websiteWorkspacePath}\version_template.xml";
             Console.WriteLine("Modifying version file : " + version_dest + "\n\t by : " + version_template);
-            File.WriteAllText(version_dest, File.ReadAllText(version_template).Replace("{VERSION}", version).Replace("{PATH}", productName));
+            File.WriteAllText(version_dest, File.ReadAllText(version_template).Replace("{VERSION}", version).Replace("{PATH}", webFolderPath.Replace(@"\", "/")).Replace("{NAME}", productBaseName).Replace("{SILENTFILENAME}", silentInstallerName));
 
             // File sizes
-            string installer_dest = $@"{destPath}{productName}\{installerName}";
+            string installer_dest = $@"{baseDestinationPath}{webFolderPath}\{installerName}";
             Console.WriteLine("Getting file size of " + installer_dest);
             FileSize unit = 0;
             double FileSize = new FileInfo(installer_dest).Length;
@@ -119,15 +123,15 @@ namespace EsseivaN.Tools
             string ZipSizeString = $"{FileSize}{unit.ToString()}";
 
             // Publish page
-            string template_source = $@"{templatesPath}{productName}_template.txt";
-            string template_new = $@"{templatesPath}{productName}.txt";
+            string template_source = $@"{websiteWorkspacePath}{templateBaseName}_template.txt";
+            string template_new = $@"{websiteWorkspacePath}{templateBaseName}.txt";
             Console.WriteLine("Copying template : " + template_source + "\n\t to : " + template_new);
             File.Copy(template_source, template_new, true);
             File.WriteAllText(template_new, File.ReadAllText(template_new).Replace("{VERSION}", version).Replace("{FILESIZE}", FileSizeString).Replace("{ZIPSIZE}", ZipSizeString).Replace("{DATE}", date.ToString("yyyy/MM/dd")));
 
             // Upload
             Process.Start("CMD", postRun).WaitForExit();
-            Console.WriteLine($"POST BUILD {productName.ToUpper()} SUCCESS");
+            Console.WriteLine($"POST BUILD {productBaseName.ToUpper()} SUCCESS");
         }
         enum FileSize
         {
