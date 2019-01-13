@@ -127,7 +127,7 @@ namespace EsseivaN.Tools
 
             // Upload
             Process.Start("CMD", postRun).WaitForExit();
-            Console.WriteLine($"POST BUILD Libraries SUCCESS");
+            Console.WriteLine($"POST BUILD {productName.ToUpper()} SUCCESS");
         }
         enum FileSize
         {
