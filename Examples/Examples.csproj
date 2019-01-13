@@ -155,6 +155,10 @@
       <Project>{3a24ec05-3a28-4a69-ab5d-e8eb4c86a9c5}</Project>
       <Name>EsseivaN</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PostBuild_manager\PostBuild_manager.csproj">
+      <Project>{c82600d6-15fb-4d6e-acbb-05cd44aaee7e}</Project>
+      <Name>PostBuild_manager</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -21,14 +21,15 @@ namespace Examples
         {
             listBox1.Items.AddRange(new string[]
             {
-                "Dialog",               // 0    ok
-                "Dialog Input",         // 1    ok
-                "Settings Manager",     // 2    
-                "TextBox Watermark",    // 3    ok
-                "Text Dialog",          // 4    
-                "Text Panel",           // 5    ok
-                "Update Checker",       // 6    ok
-                "Watermark",            // 7    ok
+                "Dialog",               // 0
+                "Dialog Input",         // 1
+                "Settings Manager",     // 2
+                "TextBox Watermark",    // 3
+                "Text Dialog",          // 4
+                "Text Panel",           // 5
+                "Update Checker",       // 6
+                "Watermark",            // 7
+                "PostBuild",            // 8
             });
         }
 
@@ -59,6 +60,9 @@ namespace Examples
                     break;
                 case 7:
                     new ex_watermark().ShowDialog();
+                    break;
+                case 8:
+                    EsseivaN.Tools.PostBuild.Main(Environment.GetCommandLineArgs());
                     break;
                 default:
                     break;

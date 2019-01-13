@@ -15,6 +15,12 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_3C6CC862C00CA9BA3FEC5CD4304316CB"
+        "OwnerKey" = "8:_A9F88F15634F46C4A87F040055949BFE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_A9F88F15634F46C4A87F040055949BFE"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -29,6 +35,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_A9F88F15634F46C4A87F040055949BFE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_3C6CC862C00CA9BA3FEC5CD4304316CB"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -132,6 +144,37 @@
         }
         "File"
         {
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3C6CC862C00CA9BA3FEC5CD4304316CB"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_3C6CC862C00CA9BA3FEC5CD4304316CB"
+                    {
+                    "Name" = "8:Newtonsoft.Json.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Newtonsoft.Json.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_51A60315A6524C8B8360D419AAA47AFD"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C23E888C687D887A27965F44BA5D54BA"
             {
             "AssemblyRegister" = "3:1"
@@ -139,6 +182,11 @@
             "AssemblyAsmDisplayName" = "8:System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
                 "ScatterAssemblies"
                 {
+                    "_C23E888C687D887A27965F44BA5D54BA"
+                    {
+                    "Name" = "8:System.Net.Http.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:System.Net.Http.dll"
             "TargetName" = "8:"
@@ -225,15 +273,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Libraries"
-        "ProductCode" = "8:{06D23FC2-F650-43F0-B60B-0138F451CEB5}"
-        "PackageCode" = "8:{967F8085-2EDB-4BD8-BDD1-A93480829D71}"
+        "ProductCode" = "8:{9BA65491-8204-4350-B9EB-2DA36F063F42}"
+        "PackageCode" = "8:{DA79C421-ABFC-4D0E-9F38-86BFD4EC121D}"
         "UpgradeCode" = "8:{FF74FF9A-D905-4407-8F8C-ED918B224769}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.1.1"
+        "ProductVersion" = "8:1.2.0"
         "Manufacturer" = "8:EsseivaN"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -249,7 +297,7 @@
         "UseSystemSearchPath" = "11:TRUE"
         "TargetPlatform" = "3:0"
         "PreBuildEvent" = "8:"
-        "PostBuildEvent" = "8:copy \"$(BuiltOuputPath)\" \"C:\\EsseivaN\\apps\"\r\ncopy \"$(BuiltOuputPath)\" \"C:\\WorkSpace\\Personnal\\website\\html\\files\\libraries\""
+        "PostBuildEvent" = "8:copy \"$(BuiltOuputPath)\" \"C:\\EsseivaN\\apps\"\r\ncopy \"$(BuiltOuputPath)\" \"C:\\WorkSpace\\Personnal\\website\\html\\files\\libraries\"\r\n\"C:\\EsseivaN\\tools\\PostBuild\\PostBuild.exe\" -f \"C:\\WorkSpace\\Personnal\\Librairies\\EsseivaN\\bin\\Release\\EsseivaN_Library.dll\" -pn \"Libraries\" -in \"Libraries.msi\" -fo \"C:\\WorkSpace\\Personnal\\Librairies\\EsseivaN\\bin\\Release\""
         "RunPostBuildEvent" = "3:0"
         }
         "Registry"
@@ -690,7 +738,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_A9F88F15634F46C4A87F040055949BFE"
             {
-            "SourcePath" = "8:..\\EsseivaN\\obj\\Debug\\EsseivaN_Library.dll"
+            "SourcePath" = "8:..\\EsseivaN\\obj\\Release\\EsseivaN_Library.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_51A60315A6524C8B8360D419AAA47AFD"
