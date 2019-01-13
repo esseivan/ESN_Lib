@@ -69,7 +69,7 @@ namespace EsseivaN.Controls
             {
                 watermarkActive = (value == string.Empty);
                 ForeColor = watermarkActive ? WatermarkColor : textColor;
-                base.Text = value ?? WatermarkText;
+                base.Text = value;
             }
         }
 
@@ -113,7 +113,7 @@ namespace EsseivaN.Controls
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            e.Handled = true;
+            //e.Handled = true;
 
             if (watermarkActive)
             {

@@ -28,6 +28,7 @@ namespace Examples
                 "Text Dialog",          // 4    
                 "Text Panel",           // 5    ok
                 "Update Checker",       // 6    ok
+                "Watermark",            // 7    ok
             });
         }
 
@@ -55,6 +56,9 @@ namespace Examples
                     break;
                 case 6:
                     new ex_update_checker().ShowDialog();
+                    break;
+                case 7:
+                    new ex_watermark().ShowDialog();
                     break;
                 default:
                     break;

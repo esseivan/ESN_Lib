@@ -26,12 +26,6 @@ namespace Examples
         private void textboxWatermark3_TextChanged(object sender, EventArgs e)
         {
             textboxWatermark1.WatermarkText = richTextboxWatermark1.WatermarkText = textboxWatermark3.Text;
-            label1.Text = textboxWatermark1.Text;
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            label1.Text = textboxWatermark1.Text;
         }
     }
 }

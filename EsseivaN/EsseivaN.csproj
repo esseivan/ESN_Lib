@@ -87,6 +87,7 @@
     <Compile Include="TextboxWatermark.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Watermark.cs" />
     <Compile Include="TextDialog.cs">
       <SubType>Component</SubType>
     </Compile>

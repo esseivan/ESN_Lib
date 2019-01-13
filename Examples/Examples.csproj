@@ -81,6 +81,12 @@
     <Compile Include="ex_update_checker.Designer.cs">
       <DependentUpon>ex_update_checker.cs</DependentUpon>
     </Compile>
+    <Compile Include="ex_watermark.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ex_watermark.Designer.cs">
+      <DependentUpon>ex_watermark.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -115,6 +121,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ex_update_checker.resx">
       <DependentUpon>ex_update_checker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ex_watermark.resx">
+      <DependentUpon>ex_watermark.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
