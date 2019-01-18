@@ -151,9 +151,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EsseivaN\EsseivaN.csproj">
+    <ProjectReference Include="..\EsseivaN_Lib\EsseivaN_Lib.csproj">
       <Project>{3a24ec05-3a28-4a69-ab5d-e8eb4c86a9c5}</Project>
-      <Name>EsseivaN</Name>
+      <Name>EsseivaN_Lib</Name>
     </ProjectReference>
     <ProjectReference Include="..\PostBuild_manager\PostBuild_manager.csproj">
       <Project>{c82600d6-15fb-4d6e-acbb-05cd44aaee7e}</Project>

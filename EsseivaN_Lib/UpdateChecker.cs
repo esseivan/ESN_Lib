@@ -36,7 +36,7 @@ using System.Xml;
  *	Silent installer is used to run a quick update
  */
 
-namespace EsseivaN.Controls
+namespace EsseivaN_Lib.Controls
 {
     public class UpdateChecker : Component
     {

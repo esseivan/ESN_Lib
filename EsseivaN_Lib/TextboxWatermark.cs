@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using Model = System.ComponentModel;
 
-namespace EsseivaN.Controls
+namespace EsseivaN_Lib.Controls
 {
     public class TextboxWatermark : TextBox
     {

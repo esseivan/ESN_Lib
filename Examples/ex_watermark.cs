@@ -17,14 +17,14 @@ namespace Examples
             InitializeComponent();
         }
 
-        EsseivaN.Controls.Watermark watermark_combobox;
-        EsseivaN.Controls.Watermark watermark_numeric;
-        EsseivaN.Controls.Watermark watermark_textbox;
+        EsseivaN_Lib.Controls.Watermark watermark_combobox;
+        EsseivaN_Lib.Controls.Watermark watermark_numeric;
+        EsseivaN_Lib.Controls.Watermark watermark_textbox;
         private void ex_watermark_Load(object sender, EventArgs e)
         {
-            watermark_combobox = new EsseivaN.Controls.Watermark();
-            watermark_numeric = new EsseivaN.Controls.Watermark();
-            watermark_textbox = new EsseivaN.Controls.Watermark();
+            watermark_combobox = new EsseivaN_Lib.Controls.Watermark();
+            watermark_numeric = new EsseivaN_Lib.Controls.Watermark();
+            watermark_textbox = new EsseivaN_Lib.Controls.Watermark();
 
             watermark_textbox.getText = getText_textbox;
             watermark_textbox.setText = setText_textbox;

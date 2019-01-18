@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace EsseivaN.Controls
+namespace EsseivaN_Lib.Controls
 {
     public partial class TextPanel : UserControl
     {

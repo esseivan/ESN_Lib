@@ -36,14 +36,14 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.btnGet = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
-            this.txtData2 = new EsseivaN.Controls.TextboxWatermark();
-            this.txtData1 = new EsseivaN.Controls.TextboxWatermark();
+            this.txtData2 = new EsseivaN_Lib.Controls.TextboxWatermark();
+            this.txtData1 = new EsseivaN_Lib.Controls.TextboxWatermark();
             this.btnLoad = new System.Windows.Forms.Button();
             this.btnNew = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.txtIndex = new EsseivaN.Controls.TextboxWatermark();
-            this.txtName = new EsseivaN.Controls.TextboxWatermark();
+            this.txtIndex = new EsseivaN_Lib.Controls.TextboxWatermark();
+            this.txtName = new EsseivaN_Lib.Controls.TextboxWatermark();
             this.SuspendLayout();
             // 
             // btnDel
@@ -226,13 +226,13 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnGet;
         private System.Windows.Forms.Button btnAdd;
-        private EsseivaN.Controls.TextboxWatermark txtData2;
-        private EsseivaN.Controls.TextboxWatermark txtData1;
+        private EsseivaN_Lib.Controls.TextboxWatermark txtData2;
+        private EsseivaN_Lib.Controls.TextboxWatermark txtData1;
         private System.Windows.Forms.Button btnLoad;
         private System.Windows.Forms.Button btnNew;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
-        private EsseivaN.Controls.TextboxWatermark txtIndex;
-        private EsseivaN.Controls.TextboxWatermark txtName;
+        private EsseivaN_Lib.Controls.TextboxWatermark txtIndex;
+        private EsseivaN_Lib.Controls.TextboxWatermark txtName;
     }
 }

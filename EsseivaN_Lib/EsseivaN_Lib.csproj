@@ -7,8 +7,8 @@
     <ProjectGuid>{3A24EC05-3A28-4A69-AB5D-E8EB4C86A9C5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EsseivaN</RootNamespace>
-    <AssemblyName>EsseivaN_Library</AssemblyName>
+    <RootNamespace>EsseivaN_Lib</RootNamespace>
+    <AssemblyName>EsseivaN_Lib</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>

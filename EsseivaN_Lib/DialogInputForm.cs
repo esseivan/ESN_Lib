@@ -11,7 +11,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace EsseivaN.Controls
+namespace EsseivaN_Lib.Controls
 {
     public partial class DialogInputForm : Form
     {

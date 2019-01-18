@@ -62,7 +62,7 @@ namespace Examples
                     new ex_watermark().ShowDialog();
                     break;
                 case 8:
-                    EsseivaN.Tools.PostBuild.Main(Environment.GetCommandLineArgs());
+                    EsseivaN_Lib.Tools.PostBuild.Main(Environment.GetCommandLineArgs());
                     break;
                 default:
                     break;

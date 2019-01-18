@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EsseivaN", "EsseivaN\EsseivaN.csproj", "{3A24EC05-3A28-4A69-AB5D-E8EB4C86A9C5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EsseivaN_Lib", "EsseivaN_Lib\EsseivaN_Lib.csproj", "{3A24EC05-3A28-4A69-AB5D-E8EB4C86A9C5}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Libraries", "Libraries\Libraries.vdproj", "{343388DD-A5DD-437F-8632-D6DC3BEF7EF3}"
 EndProject

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace EsseivaN.Controls
+namespace EsseivaN_Lib.Controls
 {
     public class Watermark
     {

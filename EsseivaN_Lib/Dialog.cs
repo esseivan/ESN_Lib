@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace EsseivaN.Controls
+namespace EsseivaN_Lib.Controls
 {
     public class Dialog : Component
     {
