@@ -36,7 +36,7 @@ using System.Xml;
  *	Silent installer is used to run a quick update
  */
 
-namespace EsseivaN_Lib.Controls
+namespace EsseivaN.Tools
 {
     public class UpdateChecker : Component
     {
@@ -210,7 +210,8 @@ namespace EsseivaN_Lib.Controls
                 FileInfo info = new FileInfo(downloadPath + filename + ".msi");
                 if (info.Length != 0)
                 {
-                    Process.Start(downloadPath + filename + ".msi");
+                    var process = Process.Start(downloadPath + filename + ".msi");
+                    await Task.Delay(300);
                     return true;
                 }
                 else

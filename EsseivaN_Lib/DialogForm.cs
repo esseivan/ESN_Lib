@@ -10,8 +10,9 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using EsseivaN.Tools;
 
-namespace EsseivaN_Lib.Controls
+namespace EsseivaN.Controls
 {
     public partial class DialogForm : Form
     {

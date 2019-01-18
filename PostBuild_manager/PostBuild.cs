@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 
-namespace EsseivaN_Lib.Tools
+namespace EsseivaN.Tools
 {
     public class PostBuild
     {
@@ -34,7 +34,7 @@ namespace EsseivaN_Lib.Tools
             // Check if file exists
             if (!File.Exists(configPath))
             {
-                Console.Error.WriteLine("Invalid config file path !");
+                Console.Error.WriteLine("Invalid config file path ! : " + configPath);
                 Exit(ExitCodes.InvalidPath_Config);
                 return;
             }
@@ -44,9 +44,9 @@ namespace EsseivaN_Lib.Tools
             {
                 data = File.ReadAllText(configPath);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Console.Error.WriteLine("Unable to read config file !");
+                Console.Error.WriteLine("Unable to read config file ! : " + ex);
                 Exit(ExitCodes.UnableRead_Config);
                 return;
             }
@@ -59,7 +59,7 @@ namespace EsseivaN_Lib.Tools
                 return;
             }
 
-            // Path of the file to read version and date (from binFolderPath)
+            // Path of the file to read version and date
             fileVersionPath = datas[0].Replace("\"", "");
 
             // Path of the bin release folder (from the config base)
@@ -88,7 +88,7 @@ namespace EsseivaN_Lib.Tools
             // Check if file exists
             if (!File.Exists(configPath))
             {
-                Console.Error.WriteLine("Invalid general config file path !");
+                Console.Error.WriteLine("Invalid general config file path ! : " + configPath);
                 Exit(ExitCodes.InvalidPath_GeneralConfig);
                 return;
             }
@@ -97,9 +97,9 @@ namespace EsseivaN_Lib.Tools
             {
                 data = File.ReadAllText(configPath);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Console.Error.WriteLine("Unable to read general config file !");
+                Console.Error.WriteLine("Unable to read general config file ! : " + ex);
                 Exit(ExitCodes.UnableRead_GeneralConfig);
                 return;
             }
@@ -107,7 +107,7 @@ namespace EsseivaN_Lib.Tools
             datas = data.Split('\n');
             if (datas.Length < 3)
             {
-                Console.WriteLine("Invalid general config file");
+                Console.WriteLine("Invalid general config file !");
                 Exit(ExitCodes.Invalid_GeneralConfig);
                 return;
             }
@@ -121,15 +121,22 @@ namespace EsseivaN_Lib.Tools
             // Get the creation time and version
             if (!File.Exists(fileVersionPath))
             {
-                Console.Error.WriteLine("Invalid file version path !");
+                Console.Error.WriteLine("Invalid file version path ! : " + fileVersionPath);
                 Exit(ExitCodes.InvalidPath_FileVersion);
                 return;
             }
             FileInfo fileInfo = new FileInfo(fileVersionPath);
             date = fileInfo.LastWriteTime;
             Console.WriteLine("Creation date : " + date);
-            FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(fileVersionPath);
-            version = fileVersionInfo.ProductVersion;
+            if (File.Exists(binFolderPath + "\\version.txt"))
+            {
+                version = File.ReadAllText(binFolderPath + "\\version.txt").Split('\n')[0];
+            }
+            else
+            {
+                FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(fileVersionPath);
+                version = fileVersionInfo.ProductVersion;
+            }
             Console.WriteLine("Version : " + version);
 
             // Create a zipped file of the output
@@ -137,7 +144,7 @@ namespace EsseivaN_Lib.Tools
             string zip_source = binFolderPath + @"\";
             if (!Directory.Exists(zip_source))
             {
-                Console.Error.WriteLine("Invalid zip source directory !");
+                Console.Error.WriteLine("Invalid zip source directory ! : " + zip_source);
                 Exit(ExitCodes.InvalidPath_ZipSource);
                 return;
             }
@@ -152,9 +159,9 @@ namespace EsseivaN_Lib.Tools
             {
                 System.IO.Compression.ZipFile.CreateFromDirectory(zip_source, zip_dest);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Console.Error.WriteLine("Unable to create zip file !");
+                Console.Error.WriteLine("Unable to create zip file ! : " + ex);
                 Exit(ExitCodes.UnableWrite_ZipDest);
                 return;
             }
@@ -164,7 +171,7 @@ namespace EsseivaN_Lib.Tools
             string version_template = $@"{websiteWorkspacePath}\version_template.xml";
             if (!File.Exists(version_template))
             {
-                Console.Error.WriteLine("Invalid version template file path !");
+                Console.Error.WriteLine("Invalid version template file path ! : " + version_template);
                 Exit(ExitCodes.InvalidPath_VersionTemplate);
                 return;
             }
@@ -173,9 +180,9 @@ namespace EsseivaN_Lib.Tools
             {
                 File.WriteAllText(version_dest, File.ReadAllText(version_template).Replace("{VERSION}", version).Replace("{PATH}", webFolderPath.Replace(@"\", "/")).Replace("{NAME}", productBaseName).Replace("{SILENTFILENAME}", silentInstallerName));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Console.Error.WriteLine("Unable to create modified version file !");
+                Console.Error.WriteLine("Unable to create modified version file ! : " + ex);
                 Exit(ExitCodes.UnableWrite_Version);
                 return;
             }
@@ -184,7 +191,7 @@ namespace EsseivaN_Lib.Tools
             string installer_dest = $@"{baseDestinationPath}{webFolderPath}\{installerName}";
             if (!File.Exists(installer_dest))
             {
-                Console.Error.WriteLine("Invalid installer destionation path !");
+                Console.Error.WriteLine("Invalid installer destionation path ! : " + installer_dest);
                 Exit(ExitCodes.InvalidPath_Installer);
                 return;
             }
@@ -200,7 +207,7 @@ namespace EsseivaN_Lib.Tools
 
             if (!File.Exists(zip_dest))
             {
-                Console.Error.WriteLine("Invalid zip destionation path !");
+                Console.Error.WriteLine("Invalid zip destionation path ! : " + zip_dest);
                 Exit(ExitCodes.InvalidPath_ZipDest);
                 return;
             }
@@ -219,7 +226,7 @@ namespace EsseivaN_Lib.Tools
             string template_new = $@"{websiteWorkspacePath}{templateBaseName}.txt";
             if (!File.Exists(template_source))
             {
-                Console.Error.WriteLine("Invalid publish template path !");
+                Console.Error.WriteLine("Invalid publish template path ! : " + template_source);
                 Exit(ExitCodes.InvalidPath_PublishTemplate);
                 return;
             }
@@ -230,9 +237,9 @@ namespace EsseivaN_Lib.Tools
                 File.WriteAllText(template_new, File.ReadAllText(template_new).Replace("{VERSION}", version).Replace("{FILESIZE}", FileSizeString).Replace("{ZIPSIZE}", ZipSizeString).Replace("{DATE}", date.ToString("yyyy/MM/dd")));
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Console.Error.WriteLine("Unable to create modified publish file !");
+                Console.Error.WriteLine("Unable to create modified publish file ! : " + ex);
                 Exit(ExitCodes.UnableWrite_Publish);
                 return;
             }
@@ -240,7 +247,7 @@ namespace EsseivaN_Lib.Tools
             // Upload
             Process uploadProcess = Process.Start("CMD", postRun);
             uploadProcess.WaitForExit();
-            if(uploadProcess.ExitCode == 0)
+            if (uploadProcess.ExitCode == 0)
             {
                 Console.WriteLine($"POST BUILD {productBaseName.ToUpper()} SUCCESS");
             }

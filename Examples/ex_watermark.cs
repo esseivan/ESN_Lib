@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EsseivaN.Tools;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,14 +18,14 @@ namespace Examples
             InitializeComponent();
         }
 
-        EsseivaN_Lib.Controls.Watermark watermark_combobox;
-        EsseivaN_Lib.Controls.Watermark watermark_numeric;
-        EsseivaN_Lib.Controls.Watermark watermark_textbox;
+        Watermark watermark_combobox;
+        Watermark watermark_numeric;
+        Watermark watermark_textbox;
         private void ex_watermark_Load(object sender, EventArgs e)
         {
-            watermark_combobox = new EsseivaN_Lib.Controls.Watermark();
-            watermark_numeric = new EsseivaN_Lib.Controls.Watermark();
-            watermark_textbox = new EsseivaN_Lib.Controls.Watermark();
+            watermark_combobox = new Watermark();
+            watermark_numeric = new Watermark();
+            watermark_textbox = new Watermark();
 
             watermark_textbox.getText = getText_textbox;
             watermark_textbox.setText = setText_textbox;

@@ -1,4 +1,4 @@
-﻿namespace EsseivaN_Lib.Controls
+﻿namespace EsseivaN.Controls
 {
     partial class DialogForm
     {

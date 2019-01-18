@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EsseivaN.Tools;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -9,7 +10,7 @@ namespace Examples
         List<setting> settingsList = new List<setting>();
         Dictionary<int, string> settingsNames = new Dictionary<int, string>();
 
-        EsseivaN_Lib.Controls.SettingsManager<setting> settingsManager;
+        EsseivaN.Tools.SettingsManager<setting> settingsManager;
 
         class setting
         {
@@ -37,7 +38,7 @@ namespace Examples
         private void btnNew_Click(object sender, EventArgs e)
         {
             // Create new file
-            settingsManager = new EsseivaN_Lib.Controls.SettingsManager<setting>(getName);
+            settingsManager = new SettingsManager<setting>(getName);
 
             btnGetAll.PerformClick();
         }
@@ -46,7 +47,7 @@ namespace Examples
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                settingsManager = new EsseivaN_Lib.Controls.SettingsManager<setting>(getName);
+                settingsManager = new SettingsManager<setting>(getName);
                 settingsManager.load(openFileDialog1.FileName);
 
                 var t = settingsManager.getNames();

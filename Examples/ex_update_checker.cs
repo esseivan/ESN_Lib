@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EsseivaN.Tools;
+using System;
 using System.Windows.Forms;
 
 namespace Examples
@@ -18,7 +19,7 @@ namespace Examples
                 return;
             }
 
-            EsseivaN_Lib.Controls.UpdateChecker updateChecker = new EsseivaN_Lib.Controls.UpdateChecker(textboxWatermark2.Text, textboxWatermark1.Text);
+            UpdateChecker updateChecker = new UpdateChecker(textboxWatermark2.Text, textboxWatermark1.Text);
             if (updateChecker.CheckUpdates())
             {
                 if (System.Windows.Forms.MessageBox.Show("Update available\nDownload ?", "Update available", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question) == DialogResult.Yes)

@@ -1,10 +1,10 @@
-﻿using System.ComponentModel;
+﻿using EsseivaN.Controls;
+using System.ComponentModel;
 
-namespace EsseivaN_Lib.Controls
+namespace EsseivaN.Tools
 {
     public class Dialog : Component
     {
-
         /// <summary>
         /// Type of buttons
         /// </summary>
@@ -63,7 +63,7 @@ namespace EsseivaN_Lib.Controls
             public DialogInputResult(string input)
             {
                 this.input = input;
-                this.dialogResult = DialogResult.None;
+                dialogResult = DialogResult.None;
             }
 
             public DialogInputResult(string input, DialogResult dialogResult)
@@ -75,7 +75,6 @@ namespace EsseivaN_Lib.Controls
 
         private Dialog()
         {
-
         }
 
         // Dialog
@@ -125,8 +124,6 @@ namespace EsseivaN_Lib.Controls
         {
             return DialogForm.ShowDialog(message, title, btn1, btn2, btn3);
         }
-
-
 
         // DialogInput
 

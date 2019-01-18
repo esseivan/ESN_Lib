@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace EsseivaN_Lib.Controls
+namespace EsseivaN.Tools
 {
     /// <summary>
     /// Manage settings using json

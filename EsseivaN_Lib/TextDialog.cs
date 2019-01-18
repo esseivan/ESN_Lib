@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace EsseivaN_Lib.Controls
+namespace EsseivaN.Controls
 {
     public class TextDialog : Component
     {

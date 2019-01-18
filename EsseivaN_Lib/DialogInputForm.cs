@@ -7,11 +7,12 @@
  * use the result in the software
  */
 
+using EsseivaN.Tools;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace EsseivaN_Lib.Controls
+namespace EsseivaN.Controls
 {
     public partial class DialogInputForm : Form
     {
