@@ -28,11 +28,13 @@ namespace ManualUpdateChecker
 
             var task = CheckUpdate(updateChecker);
 
-            int state = 0;
+            int state = 2;
             while(!(task.IsCompleted || task.IsCanceled))
             {
                 Console.WriteLine("Downloading." + (state == 1 ? ("."):(state == 2 ? ".." : "")));
-                Thread.Sleep(300);
+                if (++state == 3)
+                    state = 0;
+                Thread.Sleep(100);
                 Console.SetCursorPosition(0, Console.CursorTop - 1);
             }
         }
