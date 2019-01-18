@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 
-namespace EsseivaN.Tools
+namespace EsseivaN_Lib.Tools
 {
     public class PostBuild
     {
@@ -13,6 +13,7 @@ namespace EsseivaN.Tools
                 Console.WriteLine("Invalid arguments");
                 Console.WriteLine("Example of use :");
                 Console.WriteLine("<config file full path>");
+                Exit(ExitCodes.InvalidArguments);
                 return;
             }
 
@@ -28,15 +29,33 @@ namespace EsseivaN.Tools
 
             DateTime date;
 
-            // Get config/
+            // Get config
             string configPath = args[0];
-            string data = File.ReadAllText(configPath);
+            // Check if file exists
+            if (!File.Exists(configPath))
+            {
+                Console.Error.WriteLine("Invalid config file path !");
+                Exit(ExitCodes.InvalidPath_Config);
+                return;
+            }
+            string data = string.Empty;
+            // Try reading content
+            try
+            {
+                data = File.ReadAllText(configPath);
+            }
+            catch (Exception)
+            {
+                Console.Error.WriteLine("Unable to read config file !");
+                Exit(ExitCodes.UnableRead_Config);
+                return;
+            }
             data = data.Replace("\r", "");
             string[] datas = data.Split('\n');
-
             if (datas.Length < 8)
             {
                 Console.WriteLine("Invalid config file");
+                Exit(ExitCodes.Invalid_Config);
                 return;
             }
 
@@ -66,9 +85,32 @@ namespace EsseivaN.Tools
 
             // Read the general config file
             configPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\config.cfg";
-            data = File.ReadAllText(configPath);
+            // Check if file exists
+            if (!File.Exists(configPath))
+            {
+                Console.Error.WriteLine("Invalid general config file path !");
+                Exit(ExitCodes.InvalidPath_GeneralConfig);
+                return;
+            }
+            // Try reading content
+            try
+            {
+                data = File.ReadAllText(configPath);
+            }
+            catch (Exception)
+            {
+                Console.Error.WriteLine("Unable to read general config file !");
+                Exit(ExitCodes.UnableRead_GeneralConfig);
+                return;
+            }
             data = data.Replace("\r", "");
             datas = data.Split('\n');
+            if (datas.Length < 3)
+            {
+                Console.WriteLine("Invalid general config file");
+                Exit(ExitCodes.Invalid_GeneralConfig);
+                return;
+            }
             // Base destination path
             string baseDestinationPath = datas[0].Replace("\"", "");
             // templates file
@@ -76,12 +118,16 @@ namespace EsseivaN.Tools
             // post run cmd
             string postRun = datas[2].Replace("\"", "");
 
-            // Get the creation time
+            // Get the creation time and version
+            if (!File.Exists(fileVersionPath))
+            {
+                Console.Error.WriteLine("Invalid file version path !");
+                Exit(ExitCodes.InvalidPath_FileVersion);
+                return;
+            }
             FileInfo fileInfo = new FileInfo(fileVersionPath);
             date = fileInfo.LastWriteTime;
             Console.WriteLine("Creation date : " + date);
-
-            // Get the version
             FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(fileVersionPath);
             version = fileVersionInfo.ProductVersion;
             Console.WriteLine("Version : " + version);
@@ -89,19 +135,59 @@ namespace EsseivaN.Tools
             // Create a zipped file of the output
             string zip_dest = $@"{baseDestinationPath}{webFolderPath}\{zipBaseName}.zip";
             string zip_source = binFolderPath + @"\";
+            if (!Directory.Exists(zip_source))
+            {
+                Console.Error.WriteLine("Invalid zip source directory !");
+                Exit(ExitCodes.InvalidPath_ZipSource);
+                return;
+            }
             Console.WriteLine("Deleting previous zip file : " + zip_dest);
             Console.WriteLine("Creating zip file from : " + zip_source + "\n\t to : " + zip_dest);
-            File.Delete(zip_dest);
-            System.IO.Compression.ZipFile.CreateFromDirectory(zip_source, zip_dest);
+            if (File.Exists(zip_dest))
+            {
+                File.Delete(zip_dest);
+            }
+
+            try
+            {
+                System.IO.Compression.ZipFile.CreateFromDirectory(zip_source, zip_dest);
+            }
+            catch (Exception)
+            {
+                Console.Error.WriteLine("Unable to create zip file !");
+                Exit(ExitCodes.UnableWrite_ZipDest);
+                return;
+            }
 
             // Version.xml
             string version_dest = $@"{baseDestinationPath}{webFolderPath}\version.xml";
             string version_template = $@"{websiteWorkspacePath}\version_template.xml";
+            if (!File.Exists(version_template))
+            {
+                Console.Error.WriteLine("Invalid version template file path !");
+                Exit(ExitCodes.InvalidPath_VersionTemplate);
+                return;
+            }
             Console.WriteLine("Modifying version file : " + version_dest + "\n\t by : " + version_template);
-            File.WriteAllText(version_dest, File.ReadAllText(version_template).Replace("{VERSION}", version).Replace("{PATH}", webFolderPath.Replace(@"\", "/")).Replace("{NAME}", productBaseName).Replace("{SILENTFILENAME}", silentInstallerName));
+            try
+            {
+                File.WriteAllText(version_dest, File.ReadAllText(version_template).Replace("{VERSION}", version).Replace("{PATH}", webFolderPath.Replace(@"\", "/")).Replace("{NAME}", productBaseName).Replace("{SILENTFILENAME}", silentInstallerName));
+            }
+            catch (Exception)
+            {
+                Console.Error.WriteLine("Unable to create modified version file !");
+                Exit(ExitCodes.UnableWrite_Version);
+                return;
+            }
 
             // File sizes
             string installer_dest = $@"{baseDestinationPath}{webFolderPath}\{installerName}";
+            if (!File.Exists(installer_dest))
+            {
+                Console.Error.WriteLine("Invalid installer destionation path !");
+                Exit(ExitCodes.InvalidPath_Installer);
+                return;
+            }
             Console.WriteLine("Getting file size of " + installer_dest);
             FileSize unit = 0;
             double FileSize = new FileInfo(installer_dest).Length;
@@ -112,6 +198,12 @@ namespace EsseivaN.Tools
             }
             string FileSizeString = $"{FileSize}{unit.ToString()}";
 
+            if (!File.Exists(zip_dest))
+            {
+                Console.Error.WriteLine("Invalid zip destionation path !");
+                Exit(ExitCodes.InvalidPath_ZipDest);
+                return;
+            }
             Console.WriteLine("Getting file size of " + zip_dest);
             unit = 0;
             FileSize = new FileInfo(zip_dest).Length;
@@ -125,21 +217,87 @@ namespace EsseivaN.Tools
             // Publish page
             string template_source = $@"{websiteWorkspacePath}{templateBaseName}_template.txt";
             string template_new = $@"{websiteWorkspacePath}{templateBaseName}.txt";
+            if (!File.Exists(template_source))
+            {
+                Console.Error.WriteLine("Invalid publish template path !");
+                Exit(ExitCodes.InvalidPath_PublishTemplate);
+                return;
+            }
             Console.WriteLine("Copying template : " + template_source + "\n\t to : " + template_new);
-            File.Copy(template_source, template_new, true);
-            File.WriteAllText(template_new, File.ReadAllText(template_new).Replace("{VERSION}", version).Replace("{FILESIZE}", FileSizeString).Replace("{ZIPSIZE}", ZipSizeString).Replace("{DATE}", date.ToString("yyyy/MM/dd")));
+            try
+            {
+                File.Copy(template_source, template_new, true);
+                File.WriteAllText(template_new, File.ReadAllText(template_new).Replace("{VERSION}", version).Replace("{FILESIZE}", FileSizeString).Replace("{ZIPSIZE}", ZipSizeString).Replace("{DATE}", date.ToString("yyyy/MM/dd")));
+
+            }
+            catch (Exception)
+            {
+                Console.Error.WriteLine("Unable to create modified publish file !");
+                Exit(ExitCodes.UnableWrite_Publish);
+                return;
+            }
 
             // Upload
-            Process.Start("CMD", postRun).WaitForExit();
-            Console.WriteLine($"POST BUILD {productBaseName.ToUpper()} SUCCESS");
+            Process uploadProcess = Process.Start("CMD", postRun);
+            uploadProcess.WaitForExit();
+            if(uploadProcess.ExitCode == 0)
+            {
+                Console.WriteLine($"POST BUILD {productBaseName.ToUpper()} SUCCESS");
+            }
+            else
+            {
+                Console.WriteLine("Unable to upload : ExitCode : " + uploadProcess.ExitCode);
+                Exit(ExitCodes.Upload_Error_Start + uploadProcess.ExitCode);
+                return;
+            }
         }
+
+        private static void Exit(int exitCode)
+        {
+            Environment.ExitCode = exitCode;
+            Environment.Exit(Environment.ExitCode);
+        }
+
+        private static void Exit(ExitCodes exitCode)
+        {
+            Exit((int)exitCode);
+        }
+
         enum FileSize
         {
             B = 0,
-            KB = 1,
+            kB = 1,
             MB = 2,
             GB = 3,
             TB = 4,
+        }
+
+        enum ExitCodes
+        {
+            Unknown = 99,
+            InvalidArguments = 1,
+
+            InvalidPath_Config = 100,
+            InvalidPath_GeneralConfig = 101,
+            InvalidPath_FileVersion = 102,
+            InvalidPath_ZipSource = 103,
+            InvalidPath_ZipDest = 104,
+            InvalidPath_VersionTemplate = 105,
+            InvalidPath_Installer = 106,
+            InvalidPath_PublishTemplate = 107,
+
+            UnableRead_Config = 200,
+            UnableRead_GeneralConfig = 201,
+
+            UnableWrite_ZipDest = 300,
+            UnableWrite_Version = 301,
+            UnableWrite_Publish = 302,
+
+            Invalid_Config = 300,
+            Invalid_GeneralConfig = 301,
+
+            Upload_Error_Start = 1000,
+
         }
     }
 }
