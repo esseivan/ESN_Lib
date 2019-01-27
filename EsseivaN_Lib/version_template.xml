@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Feed>
+<version>{VERSION}</version>
+<url>http://www.esseivan.ch/files/{PATH}/publish.html</url>
+<silent>http://www.esseivan.ch/files/{PATH}/{SILENTFILENAME}</silent>
+<name>{NAME}</name>
+</Feed>
