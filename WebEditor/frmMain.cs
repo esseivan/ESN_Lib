@@ -205,17 +205,19 @@ namespace WebsiteEditor
 
         public void ImportFile(string FileName)
         {
-            string content = File.ReadAllText(FileName);
+            // Read file and remove \r caracters
+            string content = File.ReadAllText(FileName).Replace("\r","");
 
-            content = content.Replace("###END PARAMETER###\r\n", ((char)0x1e).ToString());
-            string[] importedParams = content.Split((char)0x1e).Where(x => (x != string.Empty) && (x.Contains("###BEGIN PARAMETER###\r\n"))).ToArray();
+            // Set the end caracter as 0x1e
+            content = content.Replace("###END PARAMETER###\n", ((char)0x1e).ToString());
+            string[] importedParams = content.Split((char)0x1e).Where(x => (x != string.Empty) && (x.Contains("###BEGIN PARAMETER###\n"))).ToArray();
 
             if (importedParams.Length != 0)
             {
                 foreach (string importedParm in importedParams)
                 {
                     Parameters newParameters = new Parameters();
-                    string[] Values = importedParm.Replace("###BEGIN PARAMETER###\r\n", string.Empty).Replace("\r\n", ((char)0x1e).ToString()).Split((char)0x1e).Where(x => x != String.Empty).ToArray();
+                    string[] Values = importedParm.Replace("###BEGIN PARAMETER###\n", string.Empty).Replace("\n", ((char)0x1e).ToString()).Split((char)0x1e).Where(x => x != String.Empty).ToArray();
 
                     short HtmlCount = 0;
 
@@ -277,7 +279,10 @@ namespace WebsiteEditor
                     if (parameter.HtmlFilesOutput[i] != string.Empty)
                         content += $"5#{parameter.HtmlFilesOutput[i]}\r\n";
                 }
-                content += $"3#{parameter.ContentFile}\r\n";
+                for (short i = 0; i < parameter.ContentFile.Count; i++)
+                {
+                    content += $"3#{parameter.ContentFile[i]}\r\n";
+                }
                 content += $"4#{parameter.VarInFile.ToString()}\r\n";
                 content += "###END PARAMETER###\r\n";
             }
@@ -435,7 +440,7 @@ namespace WebsiteEditor
 
             public override string ToString()
             {
-                return $"Replace {string.Join(";", Vars)} in {string.Join(";", HtmlFiles)} {(VarInFile ? "by variables in" : "by content of")} {ContentFile} - Output to {OutputDir}";
+                return $"Replace {string.Join(";", Vars)} in {string.Join(" ; ", HtmlFiles)} {(VarInFile ? "by variables in" : "by content of")} {string.Join(" ; ", ContentFile)} - Output to {OutputDir}";
             }
         }
 
