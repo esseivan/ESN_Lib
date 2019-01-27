@@ -1,0 +1,21 @@
+Config file format :
+
+###BEGIN PARAMETER###															// Required header
+0#C:\WorkSpace\Personnal\website\html\files\softwares\geolocator				// Default output folder
+1#{VERSION}																		// Tags to be replaced
+1#{DESCRIPTION}
+1#{PRODUCTNAME}
+1#{PRODUCTDIR}
+1#{FILENAME}
+1#{HEADER}
+1#{NAVIGATION}
+1#{FOOTERS}
+1#{BTN_INSTALLER}
+1#{BTN_PORTABLE}
+2#C:\WorkSpace\Personnal\website\workspace\publish_template.html				// Replace content of <> file
+5#C:\WorkSpace\Personnal\website\html\files\softwares\geolocator\publish.html	// Save the replace file as <>
+3#C:\WorkSpace\Personnal\website\workspace\content\geolocator.txt				// Search the tags in <>
+3#C:\WorkSpace\Personnal\website\workspace\content\pageContent.txt
+4#True																			// 
+###END PARAMETER###																// Required footer
+																				// Required end cr
