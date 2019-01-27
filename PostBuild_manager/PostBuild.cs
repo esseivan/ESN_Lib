@@ -128,9 +128,9 @@ namespace EsseivaN.Tools
             FileInfo fileInfo = new FileInfo(fileVersionPath);
             date = fileInfo.LastWriteTime;
             Console.WriteLine("Creation date : " + date);
-            if (File.Exists(binFolderPath + "\\version.txt"))
+            if (File.Exists(binFolderPath + "\\config_version.txt"))
             {
-                version = File.ReadAllText(binFolderPath + "\\version.txt").Split('\n')[0];
+                version = File.ReadAllText(binFolderPath + "\\config_version.txt").Replace("\r","").Split('\n')[0];
             }
             else
             {
