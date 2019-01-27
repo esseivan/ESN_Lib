@@ -18,24 +18,26 @@ Dialog with/out input. Title, message, buttons count, buttons text can be change
 
 ### Some more quite useless stuff
 
+
+
 ## SettingsManager
 Allow the store of array list in a file, then retrieve it
 
-## Manual Update Checker : ManualUpdateChecker
+## Manual Update Checker
 Similar to the update checker in c# library but it doesn't require to be run by the app itself
 It needs an additionnal file named "version.txt" contaning only the version (e.g. "1.2.0"), no line end
 
-## Content replacer : ContentReplacer
+## Content replacer
 Replace text in specified file by either the content of another file or the specified text
 
-## WebEditor : WebEditor
+## WebEditor
 Replace variables in specified file by either the same variable found in another file or the specified text
 Template config can be found in WebEditor folder
 
-## SFTP Upload : SFTP_Upload
+## SFTP Upload
 Tool to easily upload folder content to a sftp target
 
-## PostBuild manager : PostBuild_manager
+## PostBuild manager
 Postbuild to do the work once the project is built
 It create a zip of the output, edit the files for the publish page, modify the version file for the updateChecker
 
@@ -49,6 +51,8 @@ More bug fixes
 Some features added
 
 ## 1.0.0 - Initial public release
+
+
 
 Esseiva Nicolas
 nicolas.esseiva@gmail.com
