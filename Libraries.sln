@@ -17,9 +17,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostBuild_manager", "PostBu
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9A01C544-CE58-4EB0-B4E4-CD5D97081DB6}"
 	ProjectSection(SolutionItems) = preProject
+		output\config_version.txt = output\config_version.txt
 		postbuild_config.log = postbuild_config.log
 		postbuild_config_howToUse.log = postbuild_config_howToUse.log
-		output\version.txt = output\version.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFTP_Upload", "SFTP_Upload\SFTP_Upload.csproj", "{736E1C45-3AF0-447F-85B2-3CE103C1C5E1}"
