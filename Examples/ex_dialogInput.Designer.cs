@@ -29,9 +29,11 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.mInput = new System.Windows.Forms.TextBox();
             this.mMsg = new EsseivaN.Controls.TextboxWatermark();
             this.label1 = new System.Windows.Forms.Label();
             this.mL1 = new System.Windows.Forms.ComboBox();
+            this.mDInput = new EsseivaN.Controls.TextboxWatermark();
             this.mTitle = new EsseivaN.Controls.TextboxWatermark();
             this.mL2 = new System.Windows.Forms.ComboBox();
             this.button2 = new System.Windows.Forms.Button();
@@ -39,8 +41,6 @@
             this.mL3 = new System.Windows.Forms.ComboBox();
             this.mB2 = new EsseivaN.Controls.TextboxWatermark();
             this.mB1 = new EsseivaN.Controls.TextboxWatermark();
-            this.mDInput = new EsseivaN.Controls.TextboxWatermark();
-            this.mInput = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,6 +64,14 @@
             this.groupBox1.TabIndex = 24;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "DialogInput";
+            // 
+            // mInput
+            // 
+            this.mInput.Location = new System.Drawing.Point(6, 124);
+            this.mInput.Name = "mInput";
+            this.mInput.ReadOnly = true;
+            this.mInput.Size = new System.Drawing.Size(121, 20);
+            this.mInput.TabIndex = 22;
             // 
             // mMsg
             // 
@@ -94,6 +102,18 @@
             this.mL1.Name = "mL1";
             this.mL1.Size = new System.Drawing.Size(121, 21);
             this.mL1.TabIndex = 13;
+            // 
+            // mDInput
+            // 
+            this.mDInput.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.mDInput.Location = new System.Drawing.Point(6, 71);
+            this.mDInput.Name = "mDInput";
+            this.mDInput.Size = new System.Drawing.Size(121, 20);
+            this.mDInput.TabIndex = 13;
+            this.mDInput.Text = "Default input";
+            this.mDInput.TextColor = System.Drawing.SystemColors.ControlText;
+            this.mDInput.WatermarkColor = System.Drawing.SystemColors.GrayText;
+            this.mDInput.WatermarkText = "Title";
             // 
             // mTitle
             // 
@@ -170,26 +190,6 @@
             this.mB1.TextColor = System.Drawing.SystemColors.ControlText;
             this.mB1.WatermarkColor = System.Drawing.SystemColors.GrayText;
             this.mB1.WatermarkText = "Button 1";
-            // 
-            // mDInput
-            // 
-            this.mDInput.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.mDInput.Location = new System.Drawing.Point(6, 71);
-            this.mDInput.Name = "mDInput";
-            this.mDInput.Size = new System.Drawing.Size(121, 20);
-            this.mDInput.TabIndex = 12;
-            this.mDInput.Text = "Default input";
-            this.mDInput.TextColor = System.Drawing.SystemColors.ControlText;
-            this.mDInput.WatermarkColor = System.Drawing.SystemColors.GrayText;
-            this.mDInput.WatermarkText = "Title";
-            // 
-            // mInput
-            // 
-            this.mInput.Location = new System.Drawing.Point(6, 124);
-            this.mInput.Name = "mInput";
-            this.mInput.ReadOnly = true;
-            this.mInput.Size = new System.Drawing.Size(121, 20);
-            this.mInput.TabIndex = 22;
             // 
             // ex_dialogInput
             // 

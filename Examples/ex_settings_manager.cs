@@ -12,6 +12,7 @@ namespace Examples
 
         EsseivaN.Tools.SettingsManager<setting> settingsManager;
 
+        // The class to save
         class setting
         {
             public int index;

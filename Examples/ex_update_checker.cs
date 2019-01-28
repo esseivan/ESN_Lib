@@ -27,6 +27,8 @@ namespace Examples
                     //if (await updateChecker.Result.DownloadUpdate())
                     //{
                     //    Application.Exit();
+                    //// The silent installer should run the app with the following arguments : "INSTALLED"
+                    //// Meaning that the app should restart itself in order to finish the installer process
                     //}
                     //else
                     //{

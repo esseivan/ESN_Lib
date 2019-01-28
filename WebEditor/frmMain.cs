@@ -492,12 +492,16 @@ namespace WebsiteEditor
                 {
                     if (listHtml2.GetItemChecked(i))
                     {
-                        Dialog.DialogInputResult result = Dialog.ShowDialogInput(message: "Enter a new name for : " + htmlFilesOutput.Values.ElementAt(i),
-                            title: "Enter filename",
-                            defaultInput: "",
-                            btn1: Dialog.ButtonType.Skip,
-                            btn2: Dialog.ButtonType.OK,
-                            btn3: Dialog.ButtonType.Cancel);
+                        Dialog.DialogConfig dialogConfig = new Dialog.DialogConfig()
+                        {
+                            Message = "Enter a new name for : " + htmlFilesOutput.Values.ElementAt(i),
+                            Title = "Enter filename",
+                            DefaultInput = "",
+                            Button1 = Dialog.ButtonType.Skip,
+                            Button2 = Dialog.ButtonType.OK,
+                            Button3 = Dialog.ButtonType.Cancel,
+                        };
+                        var result = DialogInput.ShowDialog(dialogConfig);
 
                         if (result.dialogResult == Dialog.DialogResult.OK)
                         {

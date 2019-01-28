@@ -33,20 +33,20 @@ namespace EsseivaN.Controls
             InitializeComponent();
         }
 
-        public static void SetButton(Dialog.Button button, string text)
+        public static void SetButton(int button, string text)
         {
             switch (button)
             {
-                case Dialog.Button.Button1:
+                case 1:
                     Btn1_t = text;
                     break;
-                case Dialog.Button.Button2:
+                case 2:
                     Btn2_t = text;
                     break;
-                case Dialog.Button.Button3:
+                case 3:
                     Btn3_t = text;
                     break;
-                case Dialog.Button.All:
+                case 255:
                     Btn1_t = Btn2_t = Btn3_t = text;
                     break;
                 default:
@@ -54,20 +54,20 @@ namespace EsseivaN.Controls
             }
         }
 
-        public static void RemoveButton(Dialog.Button button)
+        public static void RemoveButton(int button)
         {
             switch (button)
             {
-                case Dialog.Button.Button1:
+                case 1:
                     Btn1_t = string.Empty;
                     break;
-                case Dialog.Button.Button2:
+                case 2:
                     Btn2_t = string.Empty;
                     break;
-                case Dialog.Button.Button3:
+                case 3:
                     Btn3_t = string.Empty;
                     break;
-                case Dialog.Button.All:
+                case 255:
                     Btn1_t = Btn2_t = Btn3_t = string.Empty;
                     break;
                 default:
@@ -75,7 +75,7 @@ namespace EsseivaN.Controls
             }
         }
 
-        public static Dialog.DialogInputResult ShowDialog(string Message, string Title, string DefaultInput, Dialog.ButtonType Button1, Dialog.ButtonType Button2, Dialog.ButtonType Button3)
+        public static DialogInput.DialogInputResult ShowDialog(string Message, string Title, string DefaultInput, Dialog.ButtonType Button1, Dialog.ButtonType Button2, Dialog.ButtonType Button3)
         {
             Btn1 = Button1;
             Btn2 = Button2;
@@ -114,7 +114,7 @@ namespace EsseivaN.Controls
             dialogForm.label_text.Text = Message;
 
             dialogForm.ShowDialog();
-            return new Dialog.DialogInputResult(dialogForm.Input, Result);
+            return new DialogInput.DialogInputResult(dialogForm.Input, Result);
         }
 
         #endregion

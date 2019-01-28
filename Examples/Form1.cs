@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Examples
@@ -19,6 +14,23 @@ namespace Examples
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            string[] args = Environment.GetCommandLineArgs();
+
+            if (args.Contains("INSTALLED"))
+            {
+                // Keep precedent arguments
+                string args_line = string.Empty;
+                if (args.Length > 1)
+                {
+                    args_line = string.Join(" ", args).Replace(" INSTALLED", "");
+                }
+
+                // Restart the exe without the "INSTALLED" argument
+                Process.Start(System.Reflection.Assembly.GetExecutingAssembly().Location, args_line);
+                Close();
+                return;
+            }
+
             listBox1.Items.AddRange(new string[]
             {
                 "Dialog",               // 0

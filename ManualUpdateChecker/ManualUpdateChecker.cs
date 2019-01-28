@@ -74,7 +74,7 @@ namespace ManualUpdateChecker
             {
                 //MessageBox.Show(System.Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString());
                 update.CheckUpdates();
-                if (update.Result.ErrorOccured)
+                if (update.Result.ErrorOccurred)
                 {
                     if (!silent)
                         MessageBox.Show(update.Result.Error.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -87,21 +87,25 @@ namespace ManualUpdateChecker
                 {   // Update available
                     var result = update.Result;
 
-                    Dialog.Dialog_SetButton(Dialog.Button.Button1, "Visit website");
-                    Dialog.Dialog_SetButton(Dialog.Button.Button2, "Download and install");
-                    Dialog.Dialog_SetButton(Dialog.Button.Button3, "Cancel");
-                    Dialog.DialogResult dr = Dialog.ShowDialog($"Update is available, do you want to download ?\nCurrent : {result.CurrentVersion}\nLast : {result.LastVersion}",
-                        "Update available",
-                        Dialog.ButtonType.Custom1,
-                        Dialog.ButtonType.Custom2,
-                        Dialog.ButtonType.Custom3);
+                    Dialog.DialogConfig dialogConfig = new Dialog.DialogConfig()
+                    {
+                        Button1 = Dialog.ButtonType.Custom1,
+                        CustomButton1Text = "Visit website",
+                        Button2 = Dialog.ButtonType.Custom2,
+                        CustomButton2Text = "Download and install",
+                        Button3 = Dialog.ButtonType.Cancel,
+                        Message = $"Update is available, do you want to download ?\nCurrent : {result.CurrentVersion}\nLast : {result.LastVersion}",
+                        Title = "Update available",
+                    };
 
-                    if (dr == Dialog.DialogResult.Custom1)
+                    var dialogResult = MessageDialog.ShowDialog(dialogConfig);
+
+                    if (dialogResult == Dialog.DialogResult.Custom1)
                     {
                         // Visit website
                         result.OpenUpdateWebsite();
                     }
-                    else if (dr == Dialog.DialogResult.Custom2)
+                    else if (dialogResult == Dialog.DialogResult.Custom2)
                     {
                         // Download and install
                         if (await result.DownloadUpdate())

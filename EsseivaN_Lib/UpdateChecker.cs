@@ -165,6 +165,9 @@ namespace EsseivaN.Tools
             return Result.NeedUpdate;
         }
 
+        /// <summary>
+        /// Result of an update check
+        /// </summary>
         public class CheckUpdateResult
         {
             internal string silentUpdateURL;
@@ -176,12 +179,33 @@ namespace EsseivaN.Tools
             internal bool errorOccured = false;
             internal string filename;
 
+            /// <summary>
+            /// The current version
+            /// </summary>
             public Version CurrentVersion { get => currentVersion; }
+            /// <summary>
+            /// The last release version
+            /// </summary>
             public Version LastVersion { get => lastVersion; }
+            /// <summary>
+            /// Wheter the current version is lower to the release version
+            /// </summary>
             public bool NeedUpdate { get => needUpdate; }
+            /// <summary>
+            /// The URL of the publish page
+            /// </summary>
             public string UpdateURL { get => updateURL; }
+            /// <summary>
+            /// Indicate if an error occurred
+            /// </summary>
+            public bool ErrorOccurred { get => errorOccured; }
+            /// <summary>
+            /// The error that occurred
+            /// </summary>
             public Exception Error { get => error; }
-            public bool ErrorOccured { get => errorOccured; }
+            /// <summary>
+            /// The URL of the silent installer
+            /// </summary>
             public string SilentUpdateURL { get => silentUpdateURL; }
 
             /// <summary>

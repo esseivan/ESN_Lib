@@ -142,7 +142,6 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Enter input";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DialogInputForm_FormClosing);
             this.Load += new System.EventHandler(this.DialogInputForm_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();

@@ -14,11 +14,20 @@ namespace Examples
         private void button2_Click(object sender, EventArgs e)
         {
             var t = ((Dialog.ButtonType[])Enum.GetValues(typeof(Dialog.ButtonType)));
-            Dialog.Dialog_SetButton(Dialog.Button.Button1, mB1.Text);
-            Dialog.Dialog_SetButton(Dialog.Button.Button2, mB2.Text);
-            Dialog.Dialog_SetButton(Dialog.Button.Button3, mB3.Text);
+            Dialog.DialogConfig dialogConfig = new Dialog.DialogConfig()
+            {
+                CustomButton1Text = mB1.Text,
+                CustomButton2Text = mB2.Text,
+                CustomButton3Text = mB3.Text,
+                Message = mMsg.Text,
+                Title = mTitle.Text,
+                Button1 = t[mL1.SelectedIndex],
+                Button2 = t[mL2.SelectedIndex],
+                Button3 = t[mL3.SelectedIndex],
+            };
+
             label1.Text = string.Empty;
-            label1.Text = Dialog.ShowDialog(mMsg.Text, mTitle.Text, t[mL1.SelectedIndex], t[mL2.SelectedIndex], t[mL3.SelectedIndex]).ToString();
+            label1.Text = MessageDialog.ShowDialog(dialogConfig).ToString();
         }
 
         private void ex_dialogInput_Load(object sender, EventArgs e)
