@@ -47,7 +47,12 @@ It create a zip of the output, edit the files for the publish page, modify the v
 For any issue or features to be implemented, you can contact me or report in the issue tab
 
 # Changelog
-## 1.1.0 - ?
+## 1.1.1
+### Changes
+Dialog classes separated in 2 classes
+Bug fixes
+
+## 1.1.0
 ### Changes
 Bug fixes
 More bug fixes
