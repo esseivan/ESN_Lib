@@ -36,6 +36,9 @@ Template config can be found in WebEditor folder
 
 ## SFTP Upload
 Tool to easily upload folder content to a sftp target
+It uses the WinSCP library. To reduce the size of releases, it is not included is the default release.
+You can download manually at https://winscp.net/eng/docs/library_install
+Then copy WinSCP.exe and WinSCP_net.dll to the ProgramFiles (x86)\EsseivaN\SFTP_Upload folder
 
 ## PostBuild manager
 Postbuild to do the work once the project is built

@@ -441,7 +441,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:EsseivaN_Lib, Version=1.2.2.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:EsseivaN_Lib, Version=1.2.3.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_906A42677AD77E18D6BFB8CD172D4C34"
@@ -653,7 +653,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:EsseivaN Products"
         "ProductCode" = "8:{9212E2B0-12DF-4313-A434-A0DF7FF346D9}"
-        "PackageCode" = "8:{4FB7B9C6-9698-474B-A4DC-8E6B08638E09}"
+        "PackageCode" = "8:{57F8099B-9FBC-4D5E-82D9-EBA70CEA5364}"
         "UpgradeCode" = "8:{8CFF7A05-F262-4383-A8D4-7ED86CB7DA21}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -1187,7 +1187,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:FALSE"
+            "Exclude" = "11:TRUE"
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             "ProjectOutputGroupRegister" = "3:1"
