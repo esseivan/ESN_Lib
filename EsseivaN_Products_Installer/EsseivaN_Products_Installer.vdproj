@@ -340,7 +340,7 @@
             "SourcePath" = "8:WinSCPnet.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_08F934D1A0A94B0A859BEC3A9BF2210B"
+            "Folder" = "8:_D9B64C7106764C7C8AAC13E2A7EC8B76"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -371,7 +371,7 @@
             "SourcePath" = "8:EsseivaN_Lib.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_DEF2957844E147D792E6CBECFE7AD669"
+            "Folder" = "8:_9C40CB32E07649DD88E57B7614C72032"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -402,7 +402,7 @@
             "SourcePath" = "8:System.IO.Compression.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_3B51B82B21C24E9F893D5C3EC12501A5"
+            "Folder" = "8:_B2B8A51E894F4820A2764E37D90F0A74"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -433,7 +433,7 @@
             "SourcePath" = "8:System.Net.Http.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_DEF2957844E147D792E6CBECFE7AD669"
+            "Folder" = "8:_9C40CB32E07649DD88E57B7614C72032"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -453,7 +453,7 @@
             "SourcePath" = "8:..\\output\\config_version.txt"
             "TargetName" = "8:config_version.txt"
             "Tag" = "8:"
-            "Folder" = "8:_51A60315A6524C8B8360D419AAA47AFD"
+            "Folder" = "8:_C4D492504CD24A84B335559E94C0B527"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -484,7 +484,7 @@
             "SourcePath" = "8:Newtonsoft.Json.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_DEF2957844E147D792E6CBECFE7AD669"
+            "Folder" = "8:_9C40CB32E07649DD88E57B7614C72032"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -515,7 +515,7 @@
             "SourcePath" = "8:System.IO.Compression.FileSystem.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_3B51B82B21C24E9F893D5C3EC12501A5"
+            "Folder" = "8:_B2B8A51E894F4820A2764E37D90F0A74"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -557,59 +557,70 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
-                    "{9EF0B969-E518-4E46-987F-47570745A589}:_08F934D1A0A94B0A859BEC3A9BF2210B"
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_C4D492504CD24A84B335559E94C0B527"
                     {
-                    "Name" = "8:SFTP_Upload"
+                    "Name" = "8:EsseivaN Products"
                     "AlwaysCreate" = "11:FALSE"
                     "Condition" = "8:"
                     "Transitive" = "11:FALSE"
-                    "Property" = "8:_D0C40F8796E7440AB999CFAD53959525"
+                    "Property" = "8:_3438E5477B3C42F68C1F3EEE099F367A"
                         "Folders"
                         {
-                        }
-                    }
-                    "{9EF0B969-E518-4E46-987F-47570745A589}:_3B51B82B21C24E9F893D5C3EC12501A5"
-                    {
-                    "Name" = "8:PostBuild"
-                    "AlwaysCreate" = "11:FALSE"
-                    "Condition" = "8:"
-                    "Transitive" = "11:FALSE"
-                    "Property" = "8:_E42A5AFD360743E78638083B588CDFB0"
-                        "Folders"
-                        {
-                        }
-                    }
-                    "{9EF0B969-E518-4E46-987F-47570745A589}:_75D3F30C06444D7CB1C6AB88E0565F1C"
-                    {
-                    "Name" = "8:WebEditor"
-                    "AlwaysCreate" = "11:FALSE"
-                    "Condition" = "8:"
-                    "Transitive" = "11:FALSE"
-                    "Property" = "8:_FC8B8EF8E68B44278F1E14EF5CA954E1"
-                        "Folders"
-                        {
-                        }
-                    }
-                    "{9EF0B969-E518-4E46-987F-47570745A589}:_9B2832F34D2C44548F50FDAF255E2B60"
-                    {
-                    "Name" = "8:EsseivaN_Lib"
-                    "AlwaysCreate" = "11:FALSE"
-                    "Condition" = "8:"
-                    "Transitive" = "11:FALSE"
-                    "Property" = "8:_F456F815F19B4F75874E219542147281"
-                        "Folders"
-                        {
-                        }
-                    }
-                    "{9EF0B969-E518-4E46-987F-47570745A589}:_DEF2957844E147D792E6CBECFE7AD669"
-                    {
-                    "Name" = "8:ContentReplacer"
-                    "AlwaysCreate" = "11:FALSE"
-                    "Condition" = "8:"
-                    "Transitive" = "11:FALSE"
-                    "Property" = "8:_71D4BB812B41415F97CB968E16642C4F"
-                        "Folders"
-                        {
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_180742F44C78421C8D0969E1BE37D896"
+                            {
+                            "Name" = "8:WebEditor"
+                            "AlwaysCreate" = "11:FALSE"
+                            "Condition" = "8:"
+                            "Transitive" = "11:FALSE"
+                            "Property" = "8:_FC8B8EF8E68B44278F1E14EF5CA954E1"
+                                "Folders"
+                                {
+                                }
+                            }
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_7EDEA7AE7FB84212B155A2A877DCEAE9"
+                            {
+                            "Name" = "8:EsseivaN_Lib"
+                            "AlwaysCreate" = "11:FALSE"
+                            "Condition" = "8:"
+                            "Transitive" = "11:FALSE"
+                            "Property" = "8:_F456F815F19B4F75874E219542147281"
+                                "Folders"
+                                {
+                                }
+                            }
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_9C40CB32E07649DD88E57B7614C72032"
+                            {
+                            "Name" = "8:ContentReplacer"
+                            "AlwaysCreate" = "11:FALSE"
+                            "Condition" = "8:"
+                            "Transitive" = "11:FALSE"
+                            "Property" = "8:_71D4BB812B41415F97CB968E16642C4F"
+                                "Folders"
+                                {
+                                }
+                            }
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_B2B8A51E894F4820A2764E37D90F0A74"
+                            {
+                            "Name" = "8:PostBuild"
+                            "AlwaysCreate" = "11:FALSE"
+                            "Condition" = "8:"
+                            "Transitive" = "11:FALSE"
+                            "Property" = "8:_E42A5AFD360743E78638083B588CDFB0"
+                                "Folders"
+                                {
+                                }
+                            }
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_D9B64C7106764C7C8AAC13E2A7EC8B76"
+                            {
+                            "Name" = "8:SFTP_Upload"
+                            "AlwaysCreate" = "11:FALSE"
+                            "Condition" = "8:"
+                            "Transitive" = "11:FALSE"
+                            "Property" = "8:_D0C40F8796E7440AB999CFAD53959525"
+                                "Folders"
+                                {
+                                }
+                            }
                         }
                     }
                 }
@@ -653,8 +664,8 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:EsseivaN Products"
         "ProductCode" = "8:{7DBCDCF7-A134-4281-98D7-ECE5364A6AFD}"
-        "PackageCode" = "8:{4957500C-5D6E-4480-886F-43DD473DA06D}"
-        "UpgradeCode" = "8:{8CFF7A05-F262-4383-A8D4-7ED86CB7DA21}"
+        "PackageCode" = "8:{E2B341FD-8C07-49B9-B7B6-B2240D71BFD6}"
+        "UpgradeCode" = "8:{8CFF7A05-F262-4383-A8D4-000000000001}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
@@ -667,7 +678,7 @@
         "Title" = "8:EsseivaN Products"
         "Subject" = "8:"
         "ARPCONTACT" = "8:Esseiva Nicolas"
-        "Keywords" = "8:1.0.0"
+        "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:http://www.esseivan.ch"
         "ARPPRODUCTICON" = "8:"
@@ -1120,7 +1131,7 @@
             "SourcePath" = "8:..\\PostBuild_manager\\obj\\Release\\PostBuild.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_3B51B82B21C24E9F893D5C3EC12501A5"
+            "Folder" = "8:_B2B8A51E894F4820A2764E37D90F0A74"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1148,7 +1159,7 @@
             "SourcePath" = "8:..\\EsseivaN_Lib\\obj\\Release\\EsseivaN_Lib.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_9B2832F34D2C44548F50FDAF255E2B60"
+            "Folder" = "8:_7EDEA7AE7FB84212B155A2A877DCEAE9"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1176,7 +1187,7 @@
             "SourcePath" = "8:"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_08F934D1A0A94B0A859BEC3A9BF2210B"
+            "Folder" = "8:_D9B64C7106764C7C8AAC13E2A7EC8B76"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1204,7 +1215,7 @@
             "SourcePath" = "8:..\\ManualUpdateChecker\\obj\\Release\\ManualUpdateChecker.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_51A60315A6524C8B8360D419AAA47AFD"
+            "Folder" = "8:_C4D492504CD24A84B335559E94C0B527"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1232,7 +1243,7 @@
             "SourcePath" = "8:..\\ContentReplacer\\obj\\Release\\ContentReplacer.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_DEF2957844E147D792E6CBECFE7AD669"
+            "Folder" = "8:_9C40CB32E07649DD88E57B7614C72032"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1260,7 +1271,7 @@
             "SourcePath" = "8:..\\WebEditor\\obj\\Release\\WebEditor.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_75D3F30C06444D7CB1C6AB88E0565F1C"
+            "Folder" = "8:_180742F44C78421C8D0969E1BE37D896"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1288,7 +1299,7 @@
             "SourcePath" = "8:..\\SFTP_Upload\\obj\\Release\\SFTP_Upload.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_08F934D1A0A94B0A859BEC3A9BF2210B"
+            "Folder" = "8:_D9B64C7106764C7C8AAC13E2A7EC8B76"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"

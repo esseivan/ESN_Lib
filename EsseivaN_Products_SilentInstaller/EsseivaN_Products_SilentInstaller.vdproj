@@ -665,7 +665,7 @@
         "ProductName" = "8:EsseivaN Products"
         "ProductCode" = "8:{FBF2EBD7-37C6-4DAB-BAF0-D3164BBC3E42}"
         "PackageCode" = "8:{5AA38FE2-D211-457E-B0E3-717C5550E76A}"
-        "UpgradeCode" = "8:{8CFF7A05-F262-4383-A8D4-7ED86CB7DA21}"
+        "UpgradeCode" = "8:{8CFF7A05-F262-4383-A8D4-000000000001}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
