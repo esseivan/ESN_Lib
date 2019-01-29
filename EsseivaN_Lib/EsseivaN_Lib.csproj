@@ -119,7 +119,7 @@
 echo Copying dll to MyDlls VS2017 folder
 copy /Y "$(TargetPath)" "D:\Documents\Visual Studio 2017\MyDlls\"
 copy /Y "$(TargetDir)*" "C:\EsseivaN\libs\"
-copy /Y "$(TargetDir)*" "C:\WorkSpace\Personnal\Libraries\output\EsseivaN_Lib\"
+copy /Y "$(TargetDir)*" "$(SolutionDir)output\EsseivaN_Lib\"
 ) ELSE  (
 echo ATTENTION : Select RELEASE configuration to copy files
 )</PostBuildEvent>

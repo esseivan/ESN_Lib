@@ -76,7 +76,7 @@
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName) == Release (
 copy /Y "$(TargetDir)*" "C:\EsseivaN\tools\WebEditor\"
-copy /Y "$(TargetDir)*" "C:\WorkSpace\Personnal\Libraries\output\WebEditor\"
+copy /Y "$(TargetDir)*" "$(SolutionDir)output\WebEditor\"
 ) ELSE  (
 echo ATTENTION : Select RELEASE configuration to copy files
 )</PostBuildEvent>

@@ -95,7 +95,7 @@
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName) == Release (
 copy /Y "$(TargetDir)*" "C:\EsseivaN\tools\SFTP_Upload\"
-copy /Y "$(TargetDir)*" "C:\WorkSpace\Personnal\Libraries\output\SFTP_Upload\"
+copy /Y "$(TargetDir)*" "$(SolutionDir)output\SFTP_Upload\"
 ) ELSE  (
 echo ATTENTION : Select RELEASE configuration to copy files
 )</PostBuildEvent>

@@ -64,7 +64,7 @@
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName) == Release (
 echo Copying dll to MyDlls VS2017 folder
-copy /Y "$(TargetDir)*" "C:\WorkSpace\Personnal\Libraries\output\"
+copy /Y "$(TargetDir)*" "$(SolutionDir)output\"
 ) ELSE  (
 echo ATTENTION : Select RELEASE configuration to copy files
 )</PostBuildEvent>

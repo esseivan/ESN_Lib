@@ -63,7 +63,7 @@
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName) == Release (
 copy /Y "$(TargetDir)*" "C:\EsseivaN\tools\ContentReplacer\"
-copy /Y "$(TargetDir)*" "C:\WorkSpace\Personnal\Libraries\output\ContentReplacer\"
+copy /Y "$(TargetDir)*" "$(SolutionDir)output\ContentReplacer\"
 ) ELSE  (
 echo ATTENTION : Select RELEASE configuration to copy files
 )</PostBuildEvent>

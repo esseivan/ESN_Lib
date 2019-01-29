@@ -54,7 +54,7 @@
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName) == Release (
 copy /Y "$(TargetDir)*" "C:\EsseivaN\tools\PostBuild\"
-copy /Y "$(TargetDir)*" "C:\WorkSpace\Personnal\Libraries\output\PostBuild\"
+copy /Y "$(TargetDir)*" "$(SolutionDir)output\PostBuild\"
 ) ELSE  (
 echo ATTENTION : Select RELEASE configuration to copy files
 )</PostBuildEvent>
