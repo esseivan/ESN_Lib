@@ -100,23 +100,54 @@ usage: <app_name> [-u username | -pk private_key_path | -hk host_key_path | -p p
                         TransferOptions transferOptions = new TransferOptions();
                         transferOptions.TransferMode = TransferMode.Binary;
 
+                        Console.WriteLine($"[{DateTime.Now.ToString("yyyy.MM.dd hh.mm.ss")}] Starting upload");
+
                         // Synchronize directories
                         foreach (string[] file in files)
                         {
                             Console.WriteLine($"Synchronize local {file[0]} to remote {file[1]}");
                             var result = session.SynchronizeDirectories(mode:SynchronizationMode.Remote, localPath:file[0], remotePath:file[1], removeFiles:false, mirror:false, criteria:SynchronizationCriteria.Either, options:transferOptions);
-                            //result.Check();
+
+                            result.Check();
                             Console.WriteLine("Failures: " + result.Failures.Count);
+                            if(result.Failures.Count != 0)
+                            {
+                                foreach (SessionRemoteException item in result.Failures)
+                                {
+                                    Console.WriteLine("\t" + item.Message);
+                                }
+                            }
                             Console.WriteLine("Downloads: " + result.Downloads.Count);
+                            if (result.Downloads.Count != 0)
+                            {
+                                foreach (TransferEventArgs item in result.Downloads)
+                                {
+                                    Console.WriteLine("\t" + item.FileName);
+                                }
+                            }
                             Console.WriteLine("IsSuccess: " + result.IsSuccess);
                             Console.WriteLine("Uploads: " + result.Uploads.Count);
+                            if (result.Uploads.Count != 0)
+                            {
+                                foreach (TransferEventArgs item in result.Uploads)
+                                {
+                                    Console.WriteLine("\t" + item.FileName);
+                                }
+                            }
                             Console.WriteLine("Removals: " + result.Removals.Count);
+                            if (result.Removals.Count != 0)
+                            {
+                                foreach (RemovalEventArgs item in result.Removals)
+                                {
+                                    Console.WriteLine("\t" + item.FileName);
+                                }
+                            }
                         }
 
                         // Session is automatically closed with the using keyword
                     }
 
-                    Console.WriteLine("Upload success");
+                    Console.WriteLine($"[{DateTime.Now.ToString("yyyy.MM.dd hh.mm.ss")}] Upload success");
                 }
                 catch (Exception ex)
                 {
