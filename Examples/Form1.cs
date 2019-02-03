@@ -42,6 +42,8 @@ namespace Examples
                 "Update Checker",       // 6
                 "Watermark",            // 7
                 "PostBuild",            // 8
+                "Flags",                // 9
+                "Clipboard monitor",    // 10
             });
         }
 
@@ -75,6 +77,12 @@ namespace Examples
                     break;
                 case 8:
                     EsseivaN.Tools.PostBuild.Main(Environment.GetCommandLineArgs());
+                    break;
+                case 9:
+                    new ex_flags().ShowDialog();
+                    break;
+                case 10:
+                    new ex_clipboard_monitor().ShowDialog();
                     break;
                 default:
                     break;

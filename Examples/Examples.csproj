@@ -45,6 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ex_clipboard_monitor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ex_clipboard_monitor.Designer.cs">
+      <DependentUpon>ex_clipboard_monitor.cs</DependentUpon>
+    </Compile>
     <Compile Include="ex_dialogInput.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -56,6 +62,12 @@
     </Compile>
     <Compile Include="ex_dialog.Designer.cs">
       <DependentUpon>ex_dialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ex_flags.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ex_flags.Designer.cs">
+      <DependentUpon>ex_flags.cs</DependentUpon>
     </Compile>
     <Compile Include="ex_settings_manager.cs">
       <SubType>Form</SubType>
@@ -106,6 +118,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ex_dialogInput.resx">
       <DependentUpon>ex_dialogInput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ex_flags.resx">
+      <DependentUpon>ex_flags.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ex_settings_manager.resx">
       <DependentUpon>ex_settings_manager.cs</DependentUpon>
