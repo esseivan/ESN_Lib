@@ -17,11 +17,6 @@ namespace EsseivaN.Tools
         private List<T> settingsList;
 
         /// <summary>
-        /// List of names from loaded file
-        /// </summary>
-        private Dictionary<string, T> nameList;
-
-        /// <summary>
         /// List of json settings
         /// </summary>
         private Dictionary<string, T> settingsJsonList;
@@ -30,6 +25,11 @@ namespace EsseivaN.Tools
         /// Get name function
         /// </summary>
         public Func<T, string> getName { get; set; }
+
+        /// <summary>
+        /// Number of settings in the list
+        /// </summary>
+        public int count => settingsList.Count;
 
         /// <summary>
         /// Default getName function
@@ -89,22 +89,23 @@ namespace EsseivaN.Tools
         /// <summary>
         /// Load settings from specified path
         /// </summary>
-        public void load(string Path)
+        public Dictionary<string, T> load(string Path)
         {
             // Load settings from raw data
             settingsJsonList = deserialize(File.ReadAllText(Path));
             settingsList = settingsJsonList.Values.ToList();
-            nameList = settingsJsonList;
 
             if (settingsList == null)
             {
                 settingsList = new List<T>();
             }
 
-            if(nameList == null)
+            if(settingsJsonList == null)
             {
-                nameList = new Dictionary<string, T>();
+                settingsJsonList = new Dictionary<string, T>();
             }
+
+            return settingsJsonList;
         }
         
         /// <summary>
@@ -144,7 +145,7 @@ namespace EsseivaN.Tools
         /// </summary>
         public Dictionary<string, T> getNames()
         {
-            return nameList;
+            return settingsJsonList;
         }
 
         /// <summary>
@@ -211,6 +212,16 @@ namespace EsseivaN.Tools
                 addSetting(item.Value);
             }
         }
+
+        /// <summary>
+        /// Update existing setting
+        /// </summary>
+        public void updateSettings(T Value)
+        {
+            removeSetting(getName(Value));
+            addSetting(Value);
+        }
+
 
         /// <summary>
         /// Remove setting from name

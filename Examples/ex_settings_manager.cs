@@ -49,9 +49,8 @@ namespace Examples
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 settingsManager = new SettingsManager<setting>(getName);
-                settingsManager.load(openFileDialog1.FileName);
+                var t = settingsManager.load(openFileDialog1.FileName);
 
-                var t = settingsManager.getNames();
                 settingsNames.Clear();
                 foreach (var item in t)
                 {

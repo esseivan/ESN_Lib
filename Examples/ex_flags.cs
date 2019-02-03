@@ -26,7 +26,7 @@ namespace Examples
 
         private void button2_Click(object sender, EventArgs e)
         {
-            flags.setBits((int)numericUpDown1.Value, (int)numericUpDown2.Value, (ulong)numericUpDown3.Value);
+            flags.setBits((int)numericUpDown1.Value, (int)numericUpDown2.Value, (int)numericUpDown3.Value);
             textBox1.Text = flags.displayBinary();
         }
 
@@ -44,7 +44,7 @@ namespace Examples
 
         private void button5_Click(object sender, EventArgs e)
         {
-            flags.setBits((int)numericUpDown1.Value, (ulong)numericUpDown3.Value);
+            flags.setBits((int)numericUpDown1.Value, (int)numericUpDown3.Value);
             textBox1.Text = flags.displayBinary();
         }
 
