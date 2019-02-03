@@ -133,5 +133,18 @@ namespace Examples
                 }
             }
         }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            if (int.TryParse(txtIndex.Text, out int index))
+            {
+                setting setting = settingsManager.getSetting(settingsNames[index]);
+                if (setting == null)
+                    setting = new setting(index);
+
+                setting.data1 = txtData1.Text;
+                setting.data2 = txtData2.Text;
+            }
+        }
     }
 }

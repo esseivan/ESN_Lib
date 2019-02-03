@@ -44,6 +44,7 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.txtIndex = new EsseivaN.Controls.TextboxWatermark();
             this.txtName = new EsseivaN.Controls.TextboxWatermark();
+            this.btnUpdate = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnDel
@@ -190,6 +191,16 @@
             this.txtName.WatermarkColor = System.Drawing.SystemColors.GrayText;
             this.txtName.WatermarkText = "Name";
             // 
+            // btnUpdate
+            // 
+            this.btnUpdate.Location = new System.Drawing.Point(128, 148);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(110, 23);
+            this.btnUpdate.TabIndex = 3;
+            this.btnUpdate.Text = "Update Setting";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            // 
             // ex_settings_manager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -201,6 +212,7 @@
             this.Controls.Add(this.richTextBox2);
             this.Controls.Add(this.btnGet);
             this.Controls.Add(this.btnAddAll);
+            this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.txtData2);
             this.Controls.Add(this.btnLoad);
@@ -234,5 +246,6 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private EsseivaN.Controls.TextboxWatermark txtIndex;
         private EsseivaN.Controls.TextboxWatermark txtName;
+        private System.Windows.Forms.Button btnUpdate;
     }
 }

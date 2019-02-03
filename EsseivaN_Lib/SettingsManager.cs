@@ -214,16 +214,6 @@ namespace EsseivaN.Tools
         }
 
         /// <summary>
-        /// Update existing setting
-        /// </summary>
-        public void updateSettings(T Value)
-        {
-            removeSetting(getName(Value));
-            addSetting(Value);
-        }
-
-
-        /// <summary>
         /// Remove setting from name
         /// </summary>
         public void removeSetting(string name)
