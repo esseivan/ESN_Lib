@@ -207,6 +207,9 @@ namespace EsseivaN.Tools
         {
             Dictionary<string, T> list = deserialize(data);
 
+            if (list == null)
+                return;
+
             foreach (var item in list)
             {
                 addSetting(item.Value);

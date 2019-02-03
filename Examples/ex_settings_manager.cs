@@ -76,8 +76,11 @@ namespace Examples
 
         private void btnDel_Click(object sender, EventArgs e)
         {
-            settingsManager.removeSetting(txtIndex.Text);
-            btnGetAll.PerformClick();
+            if (int.TryParse(txtIndex.Text, out int index))
+            {
+                settingsManager.removeSetting(settingsNames[index]);
+                btnGetAll.PerformClick();
+            }
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -116,8 +119,8 @@ namespace Examples
             if (int.TryParse(txtIndex.Text, out int index))
             {
                 txtName.Text = txtData1.Text = txtData2.Text = string.Empty;
-                
-                if(settingsNames.ContainsKey(index))
+
+                if (settingsNames.ContainsKey(index))
                 {
                     setting setting = settingsManager.getSetting(settingsNames[index]);
                     if (setting == null)
@@ -140,10 +143,14 @@ namespace Examples
             {
                 setting setting = settingsManager.getSetting(settingsNames[index]);
                 if (setting == null)
+                {
                     setting = new setting(index);
+                }
 
                 setting.data1 = txtData1.Text;
                 setting.data2 = txtData2.Text;
+                settingsNames[index] = txtName.Text;
+                btnGetAll.PerformClick();
             }
         }
     }

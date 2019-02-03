@@ -36,20 +36,20 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.btnGet = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
-            this.txtData2 = new EsseivaN.Controls.TextboxWatermark();
-            this.txtData1 = new EsseivaN.Controls.TextboxWatermark();
             this.btnLoad = new System.Windows.Forms.Button();
             this.btnNew = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.txtIndex = new EsseivaN.Controls.TextboxWatermark();
-            this.txtName = new EsseivaN.Controls.TextboxWatermark();
             this.btnUpdate = new System.Windows.Forms.Button();
+            this.txtData2 = new EsseivaN.Controls.TextboxWatermark();
+            this.txtName = new EsseivaN.Controls.TextboxWatermark();
+            this.txtIndex = new EsseivaN.Controls.TextboxWatermark();
+            this.txtData1 = new EsseivaN.Controls.TextboxWatermark();
             this.SuspendLayout();
             // 
             // btnDel
             // 
-            this.btnDel.Location = new System.Drawing.Point(244, 69);
+            this.btnDel.Location = new System.Drawing.Point(128, 95);
             this.btnDel.Name = "btnDel";
             this.btnDel.Size = new System.Drawing.Size(110, 24);
             this.btnDel.TabIndex = 9;
@@ -59,6 +59,7 @@
             // 
             // btnGetAll
             // 
+            this.btnGetAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnGetAll.Location = new System.Drawing.Point(128, 278);
             this.btnGetAll.Name = "btnGetAll";
             this.btnGetAll.Size = new System.Drawing.Size(110, 23);
@@ -69,6 +70,7 @@
             // 
             // btnAddAll
             // 
+            this.btnAddAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnAddAll.Location = new System.Drawing.Point(12, 278);
             this.btnAddAll.Name = "btnAddAll";
             this.btnAddAll.Size = new System.Drawing.Size(110, 23);
@@ -79,6 +81,9 @@
             // 
             // richTextBox2
             // 
+            this.richTextBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBox2.Location = new System.Drawing.Point(128, 176);
             this.richTextBox2.Name = "richTextBox2";
             this.richTextBox2.Size = new System.Drawing.Size(110, 96);
@@ -87,6 +92,8 @@
             // 
             // richTextBox1
             // 
+            this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.richTextBox1.Location = new System.Drawing.Point(12, 176);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(110, 96);
@@ -123,28 +130,6 @@
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
-            // txtData2
-            // 
-            this.txtData2.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.txtData2.Location = new System.Drawing.Point(12, 150);
-            this.txtData2.Name = "txtData2";
-            this.txtData2.Size = new System.Drawing.Size(110, 20);
-            this.txtData2.TabIndex = 2;
-            this.txtData2.TextColor = System.Drawing.SystemColors.ControlText;
-            this.txtData2.WatermarkColor = System.Drawing.SystemColors.GrayText;
-            this.txtData2.WatermarkText = "Data2";
-            // 
-            // txtData1
-            // 
-            this.txtData1.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.txtData1.Location = new System.Drawing.Point(12, 124);
-            this.txtData1.Name = "txtData1";
-            this.txtData1.Size = new System.Drawing.Size(110, 20);
-            this.txtData1.TabIndex = 2;
-            this.txtData1.TextColor = System.Drawing.SystemColors.ControlText;
-            this.txtData1.WatermarkColor = System.Drawing.SystemColors.GrayText;
-            this.txtData1.WatermarkText = "Data1";
-            // 
             // btnLoad
             // 
             this.btnLoad.Location = new System.Drawing.Point(12, 41);
@@ -169,16 +154,26 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // txtIndex
+            // btnUpdate
             // 
-            this.txtIndex.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.txtIndex.Location = new System.Drawing.Point(12, 72);
-            this.txtIndex.Name = "txtIndex";
-            this.txtIndex.Size = new System.Drawing.Size(110, 20);
-            this.txtIndex.TabIndex = 2;
-            this.txtIndex.TextColor = System.Drawing.SystemColors.ControlText;
-            this.txtIndex.WatermarkColor = System.Drawing.SystemColors.GrayText;
-            this.txtIndex.WatermarkText = "Index";
+            this.btnUpdate.Location = new System.Drawing.Point(128, 148);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(110, 23);
+            this.btnUpdate.TabIndex = 3;
+            this.btnUpdate.Text = "Update Setting";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            // 
+            // txtData2
+            // 
+            this.txtData2.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.txtData2.Location = new System.Drawing.Point(12, 150);
+            this.txtData2.Name = "txtData2";
+            this.txtData2.Size = new System.Drawing.Size(110, 20);
+            this.txtData2.TabIndex = 2;
+            this.txtData2.TextColor = System.Drawing.SystemColors.ControlText;
+            this.txtData2.WatermarkColor = System.Drawing.SystemColors.GrayText;
+            this.txtData2.WatermarkText = "Data2";
             // 
             // txtName
             // 
@@ -191,21 +186,33 @@
             this.txtName.WatermarkColor = System.Drawing.SystemColors.GrayText;
             this.txtName.WatermarkText = "Name";
             // 
-            // btnUpdate
+            // txtIndex
             // 
-            this.btnUpdate.Location = new System.Drawing.Point(128, 148);
-            this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(110, 23);
-            this.btnUpdate.TabIndex = 3;
-            this.btnUpdate.Text = "Update Setting";
-            this.btnUpdate.UseVisualStyleBackColor = true;
-            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            this.txtIndex.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.txtIndex.Location = new System.Drawing.Point(12, 72);
+            this.txtIndex.Name = "txtIndex";
+            this.txtIndex.Size = new System.Drawing.Size(110, 20);
+            this.txtIndex.TabIndex = 2;
+            this.txtIndex.TextColor = System.Drawing.SystemColors.ControlText;
+            this.txtIndex.WatermarkColor = System.Drawing.SystemColors.GrayText;
+            this.txtIndex.WatermarkText = "Index";
+            // 
+            // txtData1
+            // 
+            this.txtData1.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.txtData1.Location = new System.Drawing.Point(12, 124);
+            this.txtData1.Name = "txtData1";
+            this.txtData1.Size = new System.Drawing.Size(110, 20);
+            this.txtData1.TabIndex = 2;
+            this.txtData1.TextColor = System.Drawing.SystemColors.ControlText;
+            this.txtData1.WatermarkColor = System.Drawing.SystemColors.GrayText;
+            this.txtData1.WatermarkText = "Data1";
             // 
             // ex_settings_manager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(364, 354);
+            this.ClientSize = new System.Drawing.Size(246, 310);
             this.Controls.Add(this.btnGetAll);
             this.Controls.Add(this.btnDel);
             this.Controls.Add(this.btnNew);
