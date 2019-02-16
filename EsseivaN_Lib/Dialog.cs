@@ -23,6 +23,7 @@ namespace EsseivaN.Tools
             Next = 7,
             Cancel = 8,
             Abort = 9,
+            Retry = 10,
 
             Custom1 = 253,
             Custom2 = 254,
@@ -44,6 +45,7 @@ namespace EsseivaN.Tools
             Next = 7,
             Cancel = 8,
             Abort = 9,
+            Retry = 10,
 
             Custom1 = 253,
             Custom2 = 254,
