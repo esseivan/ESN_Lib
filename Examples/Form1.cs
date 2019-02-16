@@ -44,6 +44,7 @@ namespace Examples
                 "PostBuild",            // 8
                 "Flags",                // 9
                 "Clipboard monitor",    // 10
+                "Logger",               // 11
             });
         }
 
@@ -83,6 +84,9 @@ namespace Examples
                     break;
                 case 10:
                     new ex_clipboard_monitor().ShowDialog();
+                    break;
+                case 11:
+                    new ex_logger().ShowDialog();
                     break;
                 default:
                     break;
