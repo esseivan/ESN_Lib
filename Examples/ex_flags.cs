@@ -6,7 +6,7 @@ namespace Examples
 {
     public partial class ex_flags : Form
     {
-        Flags flags = new Flags();
+        Flags_32 flags = new Flags_32();
         public ex_flags()
         {
             InitializeComponent();
