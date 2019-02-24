@@ -41,10 +41,9 @@ namespace Examples
                 "Text Panel",           // 5
                 "Update Checker",       // 6
                 "Watermark",            // 7
-                "PostBuild",            // 8
-                "Flags",                // 9
-                "Clipboard monitor",    // 10
-                "Logger",               // 11
+                "Flags",                // 8
+                "Clipboard monitor",    // 9
+                "Logger",               // 10
             });
         }
 
@@ -77,19 +76,39 @@ namespace Examples
                     new ex_watermark().ShowDialog();
                     break;
                 case 8:
-                    EsseivaN.Tools.PostBuild.Main(Environment.GetCommandLineArgs());
-                    break;
-                case 9:
                     new ex_flags().ShowDialog();
                     break;
-                case 10:
+                case 9:
                     new ex_clipboard_monitor().ShowDialog();
                     break;
-                case 11:
+                case 10:
                     new ex_logger().ShowDialog();
                     break;
                 default:
                     break;
+            }
+        }
+
+        private void listBox1_DoubleClick(object sender, EventArgs e)
+        {
+            if (listBox1.SelectedIndex != 0)
+            {
+                button1.PerformClick();
+            }
+        }
+
+        private void listBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (listBox1.SelectedIndex != 0)
+                {
+                    button1.PerformClick();
+                }
+            }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                Close();
             }
         }
     }

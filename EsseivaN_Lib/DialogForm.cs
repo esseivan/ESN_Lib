@@ -7,10 +7,10 @@
  * use the result in the software
  */
 
+using EsseivaN.Tools;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using EsseivaN.Tools;
 
 namespace EsseivaN.Controls
 {
@@ -84,27 +84,60 @@ namespace EsseivaN.Controls
 
             // Button 1
             if (Btn1 == Dialog.ButtonType.None)
+            {
                 dialogForm.button1.Visible = false;
-            else if (Btn1 >= Dialog.ButtonType.Custom1)
-                dialogForm.button1.Text = Btn1_t;
+                dialogForm.button1.Enabled = false;
+            }
             else
-                dialogForm.button1.Text = Btn1.ToString();
+            {
+                dialogForm.CancelButton = dialogForm.button1;
+                if (Btn1 >= Dialog.ButtonType.Custom1)
+                {
+                    dialogForm.button1.Text = Btn1_t;
+                }
+                else
+                {
+                    dialogForm.button1.Text = Btn1.ToString();
+                }
+            }
 
             // Button 2
             if (Btn2 == Dialog.ButtonType.None)
+            {
                 dialogForm.button2.Visible = false;
-            else if (Btn2 >= Dialog.ButtonType.Custom1)
-                dialogForm.button2.Text = Btn2_t;
+                dialogForm.button2.Enabled = false;
+            }
             else
-                dialogForm.button2.Text = Btn2.ToString();
+            {
+                dialogForm.CancelButton = dialogForm.button2;
+                if (Btn2 >= Dialog.ButtonType.Custom1)
+                {
+                    dialogForm.button2.Text = Btn2_t;
+                }
+                else
+                {
+                    dialogForm.button2.Text = Btn2.ToString();
+                }
+            }
 
             // Button 3
             if (Btn3 == Dialog.ButtonType.None)
+            {
                 dialogForm.button3.Visible = false;
-            else if (Btn3 >= Dialog.ButtonType.Custom1)
-                dialogForm.button3.Text = Btn3_t;
+                dialogForm.button3.Enabled = false;
+            }
             else
-                dialogForm.button3.Text = Btn3.ToString();
+            {
+                dialogForm.CancelButton = dialogForm.button3;
+                if (Btn3 >= Dialog.ButtonType.Custom1)
+                {
+                    dialogForm.button3.Text = Btn3_t;
+                }
+                else
+                {
+                    dialogForm.button3.Text = Btn3.ToString();
+                }
+            }
 
             Result = Dialog.DialogResult.None;
 
@@ -125,12 +158,12 @@ namespace EsseivaN.Controls
             int width = Screen.PrimaryScreen.WorkingArea.Width;
             int height = Screen.PrimaryScreen.WorkingArea.Height;
 
-            this.MaximumSize = this.label_text.MaximumSize = new Size((int)(width * MaximumSizeRatio), (int)(height * MaximumSizeRatio));
+            MaximumSize = label_text.MaximumSize = new Size((int)(width * MaximumSizeRatio), (int)(height * MaximumSizeRatio));
 
-            int posX = (width / 2 - this.Size.Width / 2);
-            int posY = (height / 2 - this.Size.Height / 2);
+            int posX = (width / 2 - Size.Width / 2);
+            int posY = (height / 2 - Size.Height / 2);
 
-            this.Location = new Point(posX, posY);
+            Location = new Point(posX, posY);
         }
 
         #endregion

@@ -30,7 +30,7 @@ namespace EsseivaN.Tools
         public WriteMode LogToFile_WriteMode { get; set; } = WriteMode.Append;
 
         private Exception lastException;
-
+        
         public Exception LastException
         {
             get

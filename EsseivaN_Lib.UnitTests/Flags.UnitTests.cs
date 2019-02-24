@@ -5,137 +5,249 @@ using System;
 namespace EsseivaN.UnitTests
 {
     [TestClass]
-    public class Flags_UnitTests
+    public class FlagsTests
     {
         [TestMethod]
-        public void Flags_Infinite_SetBits_OneSlot()
+        public void FlagsSetBits_0To32_1FlagAndData()
         {
-            // Create object
-            Flags_infinite flags_Infinite = new Tools.Flags_infinite();
-            // Initialize content
+            // Arrange
+            Flags flags_Infinite = new Flags();
             int writeData = 0x55A5A5A5;
+
+            // Act
             flags_Infinite.setBits(0, 32, writeData);
-            // Retrieve data
-            int readData = flags_Infinite.Flags[0];
-            // Check 
+            int readData = flags_Infinite.FlagList[0];
+
+            // Assert 
+            Assert.IsTrue(flags_Infinite.FlagList.Count == 1);
             Assert.AreEqual(readData, (int)writeData);
         }
 
         [TestMethod]
-        public void Flags_Infinite_SetBits_TwoSlots_Symetrical()
+        public void FlagsSetBits_16To32_2FlagAndData()
         {
-            // Create object
-            Flags_infinite flags_Infinite = new Tools.Flags_infinite();
-            // Initialize content
+            // Arrange
+            Flags flags_Infinite = new Flags();
             int writeData = 0x55A5A5A5;
+
+            // Act
             flags_Infinite.setBits(16, 32, writeData);
-            // Retrieve data
-            int mask = 0x0000ffff; // 0xFFFF0000
-            int t0 = ((flags_Infinite.Flags[1] & mask) * (int)Math.Pow(2,16)) & ~mask;
-            int t1 = ((flags_Infinite.Flags[0] & ~mask) / (int)Math.Pow(2, 16)) & mask;
-            int readData = (int)(t0 + t1);
-            // Check 
-            Assert.AreEqual(readData, writeData);
-        }
-
-        [TestMethod]
-        public void Flags_Infinite_SetBits_TwoSlots_Asymetrical()
-        {
-            // Create object
-            Flags_infinite flags_Infinite = new Tools.Flags_infinite();
-            // Initialize content
-            int writeData = 0x55A5A5A5;
-            flags_Infinite.setBits(28, 32, writeData);
-            // Retrieve data
-            int mask = 0x0fffffff; // 0xFFFF0000
-            int t0 = ((flags_Infinite.Flags[1] & mask) * (int)Math.Pow(2, 4));
-            int t1 = ((flags_Infinite.Flags[0] & ~mask) / (int)Math.Pow(2, 28)) & mask;
-            int readData = (int)(t0 + t1);
-            // Check 
-            Assert.AreEqual(readData, writeData);
-        }
-
-        [TestMethod]
-        public void Flags_Infinite_SetBits_Slot_Not1_Asymetrical()
-        {
-            // Create object
-            Flags_infinite flags_Infinite = new Tools.Flags_infinite();
-            // Initialize content
-            int writeData = 0x55A5A5A5;
-            flags_Infinite.setBits(68, 32, writeData);
-            // Retrieve data
-            int readData = flags_Infinite.getBits(68, 32);
-            // Check 
-            Assert.AreEqual(readData, writeData);
-        }
-
-        [TestMethod]
-        public void Flags_Infinite_GetBits_OneSlot()
-        {
-            // Create object
-            Flags_infinite flags_Infinite = new Tools.Flags_infinite();
-            // Initialize content
-            int writeData = 0x55A5A5A5;
-            flags_Infinite.setBits(0, 32, writeData);
-            // Retrieve data
-            int readData = flags_Infinite.getBits(0, 32);
-            // Check 
-            Assert.AreEqual(readData, writeData);
-        }
-
-        [TestMethod]
-        public void Flags_Infinite_GetBits_TwoSlots_Symetrical()
-        {
-            // Create object
-            Flags_infinite flags_Infinite = new Tools.Flags_infinite();
-            // Initialize content
-            int writeData = 0x55A5A5A5;
-            flags_Infinite.setBits(16, 32, writeData);
-            // Retrieve data
             int readData = flags_Infinite.getBits(16, 32);
-            // Check 
+
+            // Assert
+            Assert.IsTrue(flags_Infinite.FlagList.Count == 2);
             Assert.AreEqual(readData, writeData);
         }
 
         [TestMethod]
-        public void Flags_Infinite_GetBits_TwoSlots_Asymetrical()
+        public void FlagsSetBits_28To32_2FlagAndData()
         {
-            // Create object
-            Flags_infinite flags_Infinite = new Tools.Flags_infinite();
-            // Initialize content
+            // Arrange
+            Flags flags_Infinite = new Flags();
             int writeData = 0x55A5A5A5;
+
+            // Act
             flags_Infinite.setBits(28, 32, writeData);
-            // Retrieve data
             int readData = flags_Infinite.getBits(28, 32);
-            // Check 
+            
+            // Assert
+            Assert.IsTrue(flags_Infinite.FlagList.Count == 2);
             Assert.AreEqual(readData, writeData);
         }
 
         [TestMethod]
-        public void Flags_Infinite_GetBits_640bits()
+        public void FlagsSetBits_68To32_4FlagAndData()
         {
-            // Create object
-            Flags_infinite flags_Infinite = new Tools.Flags_infinite();
+            // Arrange
+            Flags flags_Infinite = new Flags();
+            int writeData = 0x55A5A5A5;
+
+            // Act
+            flags_Infinite.setBits(68, 32, writeData);
+            int readData = flags_Infinite.getBits(68, 32);
+
+            // Assert
+            Assert.IsTrue(flags_Infinite.FlagList.Count == 4);
+            Assert.AreEqual(readData, writeData);
+        }
+
+        [TestMethod]
+        public void FlagsGetBits_0To32_1FlagAndData()
+        {
+            // Arrange
+            Flags flags_Infinite = new Flags();
+            int writeData = 0x55A5A5A5;
+
+            // Act
+            flags_Infinite.setBits(0, 32, writeData);
+            int readData = flags_Infinite.getBits(0, 32);
+
+            // Assert
+            Assert.IsTrue(flags_Infinite.FlagList.Count == 1);
+            Assert.AreEqual(readData, writeData);
+        }
+
+        [TestMethod]
+        public void FlagsGetBits_16To32_2FlagAndData()
+        {
+            // Arrange
+            Flags flags_Infinite = new Flags();
+            int writeData = 0x55A5A5A5;
+
+            // Act
+            flags_Infinite.setBits(16, 32, writeData);
+            int readData = flags_Infinite.getBits(16, 32);
+
+            // Assert 
+            Assert.IsTrue(flags_Infinite.FlagList.Count == 2);
+            Assert.AreEqual(readData, writeData);
+        }
+
+        [TestMethod]
+        public void FlagsGetBits_28To32_2FlagAndData()
+        {
+            // Arrange
+            Flags flags_Infinite = new Flags();
+            int writeData = 0x55A5A5A5;
+
+            // Act
+            flags_Infinite.setBits(28, 32, writeData);
+            int readData = flags_Infinite.getBits(28, 32);
+
+            // Assert 
+            Assert.IsTrue(flags_Infinite.FlagList.Count == 2);
+            Assert.AreEqual(readData, writeData);
+        }
+
+        [TestMethod]
+        public void FlagsSetBits_MultipleWrites_DataComplete()
+        {
+            // wanted pattern :
+            // 0x12312345
+            // 0x67812123
+            // Writes : 0, 3, 0x123
+            //          3, 2, 0x12
+            //          5, 8, 0x12345678
+            //          13, 3, 0x123
+            // Arrange
+            Flags flags_Infinite = new Flags();
+            int c1,
+                c2,
+                r11,
+                r12,
+                r21,
+                r22;
+
+            // Act
+            // ##### First order
             // Initialize content
+            flags_Infinite.setBits(0, 3*4, 0x123);
+            flags_Infinite.setBits(3*4, 2*4, 0x12);
+            flags_Infinite.setBits(5*4, 8*4, 0x12345678);
+            flags_Infinite.setBits(13*4, 3*4, 0x123);
+            c1 = flags_Infinite.FlagList.Count;
+            r11 = flags_Infinite.getBits(0, 32);
+            r12 = flags_Infinite.getBits(32, 32);
+            // ##### Second order
+            // Initialize content
+            flags_Infinite.setBits(13*4, 3*4, 0x123);
+            flags_Infinite.setBits(0, 3*4, 0x123);
+            flags_Infinite.setBits(5*4, 8*4, 0x12345678);
+            flags_Infinite.setBits(3*4, 2*4, 0x12);
+            c2 = flags_Infinite.FlagList.Count;
+            r21 = flags_Infinite.getBits(0, 32);
+            r22 = flags_Infinite.getBits(32, 32);
+
+            // Act
+            Assert.IsTrue(c1 == 2);
+            Assert.IsTrue(c2 == 2);
+
+            Assert.AreEqual(r11, 0x67812123);
+            Assert.AreEqual(r12, 0x12312345);
+            
+            Assert.AreEqual(r21, 0x67812123);
+            Assert.AreEqual(r22, 0x12312345);
+        }
+
+        [TestMethod]
+        public void FlagsSetBits_Mask_DataComplete()
+        {
+            // wanted pattern :
+            // 0x00654300
+            // Arrange
+            Flags flags_Infinite = new Flags();
+
+            // Act
+            flags_Infinite.setBits(0, 6 * 4, 0x87654321);
+            flags_Infinite.setBits(0, 2 * 4, 0);
+            int readData = flags_Infinite.getBits(0, 32);
+
+            // Assert 
+            Assert.IsTrue(flags_Infinite.FlagList.Count == 1);
+            Assert.AreEqual(readData, 0x00654300); 
+        }
+
+        [TestMethod]
+        public void FlagsSetBits_FullTest_GetEqualsSet()
+        {
+            // Arrange
+            Flags flags_Infinite = new Flags();
             int[] Pattern_index = { 0, 40, 80, 120, 160, 200, 235, 270, 305, 340 };
             Random rnd = new Random();
             int[] writeData = new int[10];
+
+            // Act
             for (int i = 0; i < 10; i++)
             {
                 writeData[i] = (int)(rnd.NextDouble() * int.MaxValue);
                 flags_Infinite.setBits(Pattern_index[i], 32, writeData[i]);
             }
-            // Retrieve data
             int[] readData = new int[10];
             for (int i = 0; i < 10; i++)
             {
                 readData[i] = flags_Infinite.getBits(Pattern_index[i], 32);
             }
-            // Check 
+
+            // Assert 
+            Assert.IsTrue(flags_Infinite.FlagList.Count == 12);
             for (int i = 0; i < 10; i++)
             {
                 Assert.AreEqual(readData[i], writeData[i]);
             }
         }
+
+        [TestMethod]
+        public void FlagsDisplayBinary_Normal_DataValid()
+        {
+            // Arrange
+            Flags flags_Infinite = new Flags();
+            int writeData = 0b0110011000111;
+
+            // Act
+            flags_Infinite.setBits(28, 11, writeData);
+            string binary = flags_Infinite.displayBinary(28, 11);
+
+            // Assert 
+            Assert.IsTrue(flags_Infinite.FlagList.Count == 2);
+            Assert.AreEqual(binary, "10011000111");
+        }
+
+
+        [TestMethod]
+        public void FlagsDisplayHex_Normal_DataValid()
+        {
+            // Arrange
+            Flags flags_Infinite = new Flags();
+            int writeData = 0x8563224;
+
+            // Act
+            flags_Infinite.setBits(28, 5*4, writeData);
+            string hex = flags_Infinite.displayHex(28, 5*4);
+
+            // Assert 
+            Assert.IsTrue(flags_Infinite.FlagList.Count == 2);
+            Assert.AreEqual(hex, "63224");
+        }
+
     }
 }

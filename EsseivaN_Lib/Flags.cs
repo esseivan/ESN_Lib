@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace EsseivaN.Tools
 {
+    [Obsolete("This class is no longer updated, use Flags class")]
     public class Flags_32
     {
         public int Register { get; set; } = 0;
@@ -62,6 +63,7 @@ namespace EsseivaN.Tools
         }
     }
 
+    [Obsolete("This class is no longer updated, use Flags class")]
     public class Flags_64
     {
         public long Register { get; set; } = 0;
@@ -121,18 +123,37 @@ namespace EsseivaN.Tools
         }
     }
 
-    public class Flags_infinite
+    /// <summary>
+    /// Easily use flags with a specific length of bits
+    /// </summary>
+    public class Flags
     {
-        public List<int> Flags { get; set; }
-        private const int maxCount = 32;
+        /// <summary>
+        /// List that contains all flags data
+        /// </summary>
+        public List<int> FlagList { get; set; }
+        /// <summary>
+        /// Number of bit per element of the FlagList (Int32)
+        /// </summary>
+        public const int maxCount = 32;
 
-        public Flags_infinite()
+        public Flags()
         {
-            Flags = new List<int>();
+            FlagList = new List<int>();
         }
 
         /// <summary>
-        /// Get a single bit
+        /// Check if FlagList is valid for write/read
+        /// </summary>
+        public bool CheckValid()
+        {
+            return FlagList != null;
+        }
+
+        #region GetSet
+
+        /// <summary>
+        /// Get a single bit at the specified index
         /// </summary>
         public bool getBit(int index)
         {
@@ -140,11 +161,11 @@ namespace EsseivaN.Tools
         }
 
         /// <summary>
-        /// Get a range of bits
+        /// Get a range of bits from the startIndex to startIndex + maxCount
         /// </summary>
-        public long getBits(int startIndex)
+        public int getBits(int startIndex)
         {
-            return getBits(startIndex, maxCount - startIndex);
+            return getBits(startIndex, maxCount);
         }
 
         /// <summary>
@@ -152,132 +173,193 @@ namespace EsseivaN.Tools
         /// </summary>
         public int getBits(int startIndex, int count)
         {
-            // Invalid count
+            if (!CheckValid())
+            {
+                FlagList = new List<int>();
+                return -1;
+            }
+
+            // Invalid count, set to maxCount
             if (count > maxCount)
             {
-                return 0;
+                count = maxCount;
             }
 
             int t_count = count,
                 t_index = startIndex,
                 t_count2 = 0;
 
+            // Get index for the list
             int list_index = t_index / maxCount;
             t_index = t_index % maxCount;
 
-            // If overflow, limit count
+            // If overflow, do in 2 steps for 2 elements of the list
             if (t_index + t_count > maxCount)
             {
                 t_count = maxCount - t_index;
                 t_count2 = count - t_count;
             }
             
-            if (Flags.Count < list_index + 1)
+            // If index not existing, return -1
+            if (FlagList.Count < list_index + 1)
             {
-                return 0;
+                return -1;
             }
 
+            // Get the mask to retrieve only the wanted data
             long mask = getMask(t_index, t_count);
-            long t0 = Flags[list_index] & mask;
+            // Get the value of the first element of the list
+            long t0 = FlagList[list_index] & mask;
             int t1 = (int)Math.Pow(2, t_index);
-            long output = (long)(t0 / t1);
-            Console.WriteLine(output);
+            long output = (t0 / t1);
+
+            // If count 2nd element not 0
             if (t_count2 > 0)
             {
-                if (Flags.Count < list_index + 2)
+                // If element not existing, abort and return the output
+                if (FlagList.Count < list_index + 2)
                 {
-                    return 0;
+                    return (int)output;
                 }
 
+                // Get the mask to retrieve only the wanted data
                 mask = getMask(0, t_count2);
-                t0 = Flags[list_index + 1] & mask;
+
+                // Add the value of the first element of the list
+                t0 = FlagList[list_index + 1] & mask;
                 t1 = (int)Math.Pow(2, t_count);
-                output += (long)(t0 * t1);
+                output += (t0 * t1);
             }
 
             return (int)output;
         }
 
+        /// <summary>
+        /// Set a specific bit
+        /// </summary>
         public void setBit(int index, bool value)
         {
             setBits(index, 1, value ? 1 : 0);
         }
 
+        /// <summary>
+        /// Set a specific range from startIndex to startIndex + maxCount
+        /// </summary>
         public void setBits(int startIndex, long value)
         {
-            setBits(startIndex, maxCount - startIndex, value);
+            setBits(startIndex, maxCount, value);
         }
 
+        /// <summary>
+        /// Set a specific range
+        /// </summary>
         public void setBits(int startIndex, int count, long value)
         {
-            // Invalid count
+            if (!CheckValid())
+            {
+                FlagList = new List<int>();
+            }
+
+            // Invalid count, set to maxCount
             if (count > maxCount)
             {
-                return;
+                count = maxCount;
             }
 
             int t_count = count,
                 t_index = startIndex,
                 t_count2 = 0;
 
+            // Get index for the list
             int list_index = t_index / maxCount;
             t_index = t_index % maxCount;
 
-            // If overflow, limit count
+            // If overflow, do in 2 steps for 2 elements of the list
             if (t_index + t_count > maxCount)
             {
                 t_count = maxCount - t_index;
                 t_count2 = count - t_count;
             }
 
-            while (Flags.Count < list_index + 1)
+            // While not enough flags, add new
+            while (FlagList.Count < list_index + 1)
             {
-                Flags.Add(0);
+                FlagList.Add(0);
             }
 
+            // Get the mask to retrieve only the wanted data
             long mask = getMask(t_index, t_count);
-            long t_value = (long)(value * (long)Math.Pow(2, t_index)) & mask;
-            long wReg = Flags[list_index];
+            // Get the value for the first element of the list
+            long t_value = (value * (long)Math.Pow(2, t_index)) & mask;
+            // Apply the value to the element of the list (without touching others values)
+            long wReg = FlagList[list_index];
             wReg &= ~mask;
             wReg |= t_value;
-            Flags[list_index] = (int)wReg;
+            FlagList[list_index] = (int)wReg;
 
+            // If count 2nd element not 0
             if (t_count2 > 0)
             {
-                while (Flags.Count < list_index + 2)
+                // While not enough flags, add new
+                while (FlagList.Count < list_index + 2)
                 {
-                    Flags.Add(0);
+                    FlagList.Add(0);
                 }
 
+                // Get the mask to retrieve only the wanted data
                 mask = getMask(0, t_count2);
-                t_value = (long)(value / (long)Math.Pow(2, t_count)) & mask;
-                wReg = Flags[list_index + 1];
+                // Get the value for the first element of the list
+                t_value = (value / (long)Math.Pow(2, t_count)) & mask;
+                // Apply the value to the element of the list (without touching others values)
+                wReg = FlagList[list_index + 1];
                 wReg &= ~mask;
                 wReg |= t_value;
-                Flags[list_index + 1] = (int)wReg;
+                FlagList[list_index + 1] = (int)wReg;
             }
         }
 
-        public string displayBinary()
+        /// <summary>
+        /// Get the mask for the specified rage
+        /// </summary>
+        public long getMask(int startIndex, int count)
         {
-            return displayBinary(0, maxCount);
+            long t1 = (long)Math.Pow(2, count) - 1;
+            long t2 = (long)Math.Pow(2, startIndex);
+            return (t1 * t2);
         }
 
+        #endregion GetSet
+
+        /// <summary>
+        /// Display the data in binary from startIndex to startIndex + maxCount
+        /// </summary>
         public string displayBinary(int startIndex)
         {
             return displayBinary(startIndex, maxCount - startIndex);
         }
 
+        /// <summary>
+        /// Display the data in binary
+        /// </summary>
         public string displayBinary(int startIndex, int count)
         {
             return Convert.ToString(getBits(startIndex, count), 2);
         }
 
-        public long getMask(int startIndex, int count)
+        /// <summary>
+        /// Display the data in binary from startIndex to startIndex + maxCount
+        /// </summary>
+        public string displayHex(int startIndex)
         {
-            long t1 = (long)Math.Pow(2, count) - 1;
-            long t2 = (long)Math.Pow(2, startIndex);
-            return (long)(t1 * t2);
+            return displayHex(startIndex, maxCount - startIndex);
+        }
+
+        /// <summary>
+        /// Display the data in binary
+        /// </summary>
+        public string displayHex(int startIndex, int count)
+        {
+            return Convert.ToString(getBits(startIndex, count), 16);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Examples
 {
     public partial class ex_flags : Form
     {
-        Flags_32 flags = new Flags_32();
+        Flags flags = new Flags();
         public ex_flags()
         {
             InitializeComponent();
@@ -15,8 +15,16 @@ namespace Examples
 
         private void button1_Click(object sender, EventArgs e)
         {
-            numericUpDown3.Value = flags.getBits((int)numericUpDown1.Value, (int)numericUpDown2.Value);
-            textBox1.Text = flags.displayBinary();
+            var r = flags.getBits((int)numericUpDown1.Value, (int)numericUpDown2.Value);
+            if (r == -1)
+            {
+                MessageBox.Show("Error, no data", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                numericUpDown3.Value = r;
+                displayBox();
+            }
         }
 
         private void ex_flags_Load(object sender, EventArgs e)
@@ -27,31 +35,53 @@ namespace Examples
         private void button2_Click(object sender, EventArgs e)
         {
             flags.setBits((int)numericUpDown1.Value, (int)numericUpDown2.Value, (int)numericUpDown3.Value);
-            textBox1.Text = flags.displayBinary();
+            displayBox();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            numericUpDown3.Value = flags.getBits((int)numericUpDown1.Value);
-            textBox1.Text = flags.displayBinary();
+            var r = flags.getBits((int)numericUpDown1.Value);
+            if (r == -1)
+            {
+                MessageBox.Show("Error, no data", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                numericUpDown3.Value = r;
+                displayBox();
+            }
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            numericUpDown3.Value = flags.getBit((int)numericUpDown1.Value) ? 1 : 0;
-            textBox1.Text = flags.displayBinary();
+            var r = flags.getBit((int)numericUpDown1.Value) ? 1 : 0;
+            if (r == -1)
+            {
+                MessageBox.Show("Error, no data", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                numericUpDown3.Value = r;
+                displayBox();
+            }
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
             flags.setBits((int)numericUpDown1.Value, (int)numericUpDown3.Value);
-            textBox1.Text = flags.displayBinary();
+            displayBox();
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
             flags.setBit((int)numericUpDown1.Value, numericUpDown3.Value > 0);
-            textBox1.Text = flags.displayBinary();
+            displayBox();
+        }
+
+        private void displayBox()
+        {
+            textBox1.Text = flags.displayBinary(0);
+            textBox2.Text = flags.displayHex(0);
         }
     }
 }
