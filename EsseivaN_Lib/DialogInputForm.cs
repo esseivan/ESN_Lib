@@ -170,6 +170,12 @@ namespace EsseivaN.Controls
 
         #endregion
 
+        private void DialogInputForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape && CancelButton == null)
+                this.Close();
+        }
+
         private void Button1_Click(object sender, EventArgs e)
         {
             Result = (Dialog.DialogResult)Btn1;

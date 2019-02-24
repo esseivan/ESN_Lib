@@ -31,6 +31,24 @@ namespace EsseivaN.Tools
         }
 
         /// <summary>
+        /// Type of icon
+        /// </summary>
+        public enum DialogIcon
+        {
+            None = 0,
+            Application,
+            Asterisk,
+            Error,
+            Hand,
+            Exclamation,
+            Shield,
+            Question,
+            Warning,
+            Information,
+            WinLogo
+        }
+
+        /// <summary>
         /// Result of the dialog
         /// </summary>
         public enum DialogResult
@@ -63,6 +81,7 @@ namespace EsseivaN.Tools
             public ButtonType Button1 { get; set; } = ButtonType.OK;
             public ButtonType Button2 { get; set; } = ButtonType.None;
             public ButtonType Button3 { get; set; } = ButtonType.None;
+            public DialogIcon Icon { get; set; } = DialogIcon.None;
             public string CustomButton1Text { get; set; } = "Custom1";
             public string CustomButton2Text { get; set; } = "Custom2";
             public string CustomButton3Text { get; set; } = "Custom3";

@@ -14,6 +14,7 @@ namespace Examples
         private void button2_Click(object sender, EventArgs e)
         {
             var t = ((Dialog.ButtonType[])Enum.GetValues(typeof(Dialog.ButtonType)));
+            var t2 = ((Dialog.DialogIcon[])Enum.GetValues(typeof(Dialog.DialogIcon)));
             Dialog.DialogConfig dialogConfig = new Dialog.DialogConfig()
             {
                 CustomButton1Text = mB1.Text,
@@ -24,6 +25,7 @@ namespace Examples
                 Button1 = t[mL1.SelectedIndex],
                 Button2 = t[mL2.SelectedIndex],
                 Button3 = t[mL3.SelectedIndex],
+                Icon = t2[mI1.SelectedIndex],
             };
 
             label1.Text = string.Empty;
@@ -39,8 +41,17 @@ namespace Examples
             mL1.Items.AddRange(Enum.GetNames(typeof(Dialog.ButtonType)));
             mL2.Items.AddRange(Enum.GetNames(typeof(Dialog.ButtonType)));
             mL3.Items.AddRange(Enum.GetNames(typeof(Dialog.ButtonType)));
+            mI1.Items.AddRange(Enum.GetNames(typeof(Dialog.DialogIcon)));
 
-            mL1.SelectedIndex = mL2.SelectedIndex = mL3.SelectedIndex = 0;
+            mL1.SelectedIndex = mL2.SelectedIndex = mL3.SelectedIndex = mI1.SelectedIndex = 0;
+
+            mL1.SelectedIndex = 1;
+            mL2.SelectedIndex = 8;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(mMsg.Text, mTitle.Text, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
         }
     }
 }
