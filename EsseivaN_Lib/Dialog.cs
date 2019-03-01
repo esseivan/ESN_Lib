@@ -2,9 +2,9 @@
 
 namespace EsseivaN.Tools
 {
-    public class Dialog
+    public class Message_Config
     {
-        internal Dialog()
+        internal Message_Config()
         {
         }
 

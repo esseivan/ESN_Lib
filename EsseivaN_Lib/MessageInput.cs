@@ -2,14 +2,18 @@
 
 namespace EsseivaN.Tools
 {
-    public class DialogInput : Dialog
+    /// <summary>
+    /// Display a message to the user and ask a text input. Buttons can be customized
+    /// </summary>
+    public class MessageInput : Message_Config
     {
-        internal DialogInput()
+        private MessageInput()
         {
-
         }
 
-        // DialogInput
+        /// <summary>
+        /// Show dialog input with config class
+        /// </summary>
         public static DialogInputResult ShowDialog(DialogConfig Config)
         {
             // Set custom buttons
@@ -18,12 +22,14 @@ namespace EsseivaN.Tools
             DialogInputForm.SetButton(3, Config.CustomButton3Text);
 
             // Show dialog
-            return DialogInputForm.ShowDialog(Config.Message, Config.Title, Config.DefaultInput, Config.Button1, Config.Button2, Config.Button3);
+            return DialogInputForm.ShowDialog(Config.Message, Config.Title, Config.DefaultInput, Config.Button1, Config.Button2, Config.Button3, Config.Icon);
         }
 
-        // Dialog
+        /// <summary>
+        /// Show dialog input with config parameters
+        /// </summary>
         public static DialogInputResult ShowDialog(string Message, string Title = "Information", string DefaultInput = "",
-            ButtonType Btn1 = ButtonType.OK, ButtonType Btn2 = ButtonType.None, ButtonType Btn3 = ButtonType.None,
+            ButtonType Btn1 = ButtonType.OK, ButtonType Btn2 = ButtonType.None, ButtonType Btn3 = ButtonType.None, DialogIcon Icon = DialogIcon.None,
             string CB1_Text = "Custom1", string CB2_Text = "Custom2", string CB3_Text = "Custom3")
         {
             // Set custom buttons
@@ -32,25 +38,32 @@ namespace EsseivaN.Tools
             DialogForm.SetButton(3, CB3_Text);
 
             // Show dialog
-            return DialogInputForm.ShowDialog(Message, Title, DefaultInput, Btn1, Btn2, Btn3);
+            return DialogInputForm.ShowDialog(Message, Title, DefaultInput, Btn1, Btn2, Btn3, Icon);
         }
+
         /// <summary>
         /// Result of the call of ShowDialogInput
         /// </summary>
         public struct DialogInputResult
         {
-            public string input;
+            /// <summary>
+            /// The text set by the user
+            /// </summary>
+            public string text;
+            /// <summary>
+            /// The button clicked
+            /// </summary>
             public DialogResult dialogResult;
 
             public DialogInputResult(string input)
             {
-                this.input = input;
+                this.text = input;
                 dialogResult = DialogResult.None;
             }
 
             public DialogInputResult(string input, DialogResult dialogResult)
             {
-                this.input = input;
+                this.text = input;
                 this.dialogResult = dialogResult;
             }
         }

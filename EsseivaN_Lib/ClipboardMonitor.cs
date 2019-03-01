@@ -88,7 +88,7 @@ namespace EsseivaN.Tools
             {
                 // Swallow or pop-up, not sure
                 // Trace.Write(e.ToString());
-                MessageBox.Show(e.ToString());
+                System.Windows.Forms.MessageBox.Show(e.ToString());
             }
         }
     }

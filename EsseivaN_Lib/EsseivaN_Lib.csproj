@@ -63,7 +63,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Dialog.cs" />
-    <Compile Include="DialogInput.cs" />
+    <Compile Include="MessageInput.cs" />
     <Compile Include="DialogInputForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,6 +87,7 @@
     <Compile Include="TextboxWatermark.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UpdateChecker.cs" />
     <Compile Include="Watermark.cs" />
     <Compile Include="TextDialog.cs">
       <SubType>Component</SubType>
@@ -96,9 +97,6 @@
     </Compile>
     <Compile Include="TextPanel.designer.cs">
       <DependentUpon>TextPanel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UpdateChecker.cs">
-      <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>

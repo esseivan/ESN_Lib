@@ -38,7 +38,7 @@ using System.Xml;
 
 namespace EsseivaN.Tools
 {
-    public class UpdateChecker : Component
+    public class UpdateChecker
     {
         /// <summary>
         /// Website where is located the file
@@ -165,6 +165,91 @@ namespace EsseivaN.Tools
             return Result.NeedUpdate;
         }
 
+        /// <summary>
+        /// Result of an update check
+        /// </summary>
+        public class CheckUpdateResult
+        {
+            internal string silentUpdateURL;
+            internal string updateURL;
+            internal Version currentVersion;
+            internal Version lastVersion;
+            internal bool needUpdate = false;
+            internal Exception error = null;
+            internal bool errorOccured = false;
+            internal string filename;
+
+            /// <summary>
+            /// The current version
+            /// </summary>
+            public Version CurrentVersion { get => currentVersion; }
+            /// <summary>
+            /// The last release version
+            /// </summary>
+            public Version LastVersion { get => lastVersion; }
+            /// <summary>
+            /// Wheter the current version is lower to the release version
+            /// </summary>
+            public bool NeedUpdate { get => needUpdate; }
+            /// <summary>
+            /// The URL of the publish page
+            /// </summary>
+            public string UpdateURL { get => updateURL; }
+            /// <summary>
+            /// Indicate if an error occurred
+            /// </summary>
+            public bool ErrorOccurred { get => errorOccured; }
+            /// <summary>
+            /// The error that occurred
+            /// </summary>
+            public Exception Error { get => error; }
+            /// <summary>
+            /// The URL of the silent installer
+            /// </summary>
+            public string SilentUpdateURL { get => silentUpdateURL; }
+
+            /// <summary>
+            /// Open the website
+            /// </summary>
+            public void OpenUpdateWebsite()
+            {
+                Process.Start(updateURL);
+            }
+
+            /// <summary>
+            /// Download and run the update
+            /// </summary>
+            public async Task<bool> DownloadUpdate()
+            {
+                return await DownloadUpdate(Path.GetTempPath());
+            }
+
+            /// <summary>
+            /// Download and run the update
+            /// </summary>
+            public async Task<bool> DownloadUpdate(string downloadPath)
+            {
+                WebClient webClient = new WebClient();
+                await webClient.DownloadFileTaskAsync(new Uri(SilentUpdateURL), downloadPath + filename + ".msi");
+                FileInfo info = new FileInfo(downloadPath + filename + ".msi");
+                if (info.Length != 0)
+                {
+                    var process = Process.Start(downloadPath + filename + ".msi");
+                    await Task.Delay(300);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+    }
+
+    public class UpdateChecker_Runner
+    {
+        private UpdateChecker_Runner() { }
+
         public enum CheckUpdateAndAsk_Result
         {
             None = 0,
@@ -243,25 +328,25 @@ namespace EsseivaN.Tools
                     var result = update.Result;
                     output[0] = result;
 
-                    Dialog.DialogConfig dialogConfig = new Dialog.DialogConfig()
+                    Message_Config.DialogConfig dialogConfig = new Message_Config.DialogConfig()
                     {
                         Message = $"Update is available, do you want to download ?\nCurrent: { result.CurrentVersion}\nLast: { result.LastVersion}",
                         Title = "Update available",
-                        Button1 = Dialog.ButtonType.Custom1,
+                        Button1 = Message_Config.ButtonType.Custom1,
                         CustomButton1Text = "Visit website",
-                        Button2 = Dialog.ButtonType.Custom2,
+                        Button2 = Message_Config.ButtonType.Custom2,
                         CustomButton2Text = "Download and install",
-                        Button3 = Dialog.ButtonType.Cancel,
+                        Button3 = Message_Config.ButtonType.Cancel,
                     };
 
                     var dr = MessageDialog.ShowDialog(dialogConfig);
 
-                    if (dr == Dialog.DialogResult.Custom1)
+                    if (dr == Message_Config.DialogResult.Custom1)
                     {
                         // Visit website
                         output[1] = CheckUpdateAndAsk_Result.User_OpenWebsite;
                     }
-                    else if (dr == Dialog.DialogResult.Custom2)
+                    else if (dr == Message_Config.DialogResult.Custom2)
                     {
                         // Download and install
                         output[1] = CheckUpdateAndAsk_Result.User_Install;
@@ -293,7 +378,7 @@ namespace EsseivaN.Tools
         /// <param name="applicationExit"></param>
         public static async void ProcessResult(object[] result, Action applicationExit, Action<string, string, int> showMsg)
         {
-            CheckUpdateResult checkResult = (CheckUpdateResult)result[0];
+            UpdateChecker.CheckUpdateResult checkResult = (UpdateChecker.CheckUpdateResult)result[0];
             CheckUpdateAndAsk_Result askResult = (CheckUpdateAndAsk_Result)result[1];
             Exception ex = (Exception)result[2];
 
@@ -327,84 +412,5 @@ namespace EsseivaN.Tools
             }
         }
 
-        /// <summary>
-        /// Result of an update check
-        /// </summary>
-        public class CheckUpdateResult
-        {
-            internal string silentUpdateURL;
-            internal string updateURL;
-            internal Version currentVersion;
-            internal Version lastVersion;
-            internal bool needUpdate = false;
-            internal Exception error = null;
-            internal bool errorOccured = false;
-            internal string filename;
-
-            /// <summary>
-            /// The current version
-            /// </summary>
-            public Version CurrentVersion { get => currentVersion; }
-            /// <summary>
-            /// The last release version
-            /// </summary>
-            public Version LastVersion { get => lastVersion; }
-            /// <summary>
-            /// Wheter the current version is lower to the release version
-            /// </summary>
-            public bool NeedUpdate { get => needUpdate; }
-            /// <summary>
-            /// The URL of the publish page
-            /// </summary>
-            public string UpdateURL { get => updateURL; }
-            /// <summary>
-            /// Indicate if an error occurred
-            /// </summary>
-            public bool ErrorOccurred { get => errorOccured; }
-            /// <summary>
-            /// The error that occurred
-            /// </summary>
-            public Exception Error { get => error; }
-            /// <summary>
-            /// The URL of the silent installer
-            /// </summary>
-            public string SilentUpdateURL { get => silentUpdateURL; }
-
-            /// <summary>
-            /// Open the website
-            /// </summary>
-            public void OpenUpdateWebsite()
-            {
-                Process.Start(updateURL);
-            }
-
-            /// <summary>
-            /// Download and run the update
-            /// </summary>
-            public async Task<bool> DownloadUpdate()
-            {
-                return await DownloadUpdate(@"C:\temp\");
-            }
-
-            /// <summary>
-            /// Download and run the update
-            /// </summary>
-            public async Task<bool> DownloadUpdate(string downloadPath)
-            {
-                WebClient webClient = new WebClient();
-                await webClient.DownloadFileTaskAsync(new Uri(SilentUpdateURL), downloadPath + filename + ".msi");
-                FileInfo info = new FileInfo(downloadPath + filename + ".msi");
-                if (info.Length != 0)
-                {
-                    var process = Process.Start(downloadPath + filename + ".msi");
-                    await Task.Delay(300);
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
     }
 }

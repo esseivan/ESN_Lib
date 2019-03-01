@@ -2,14 +2,18 @@
 
 namespace EsseivaN.Tools
 {
-    public class MessageDialog : Dialog
+    /// <summary>
+    /// Display a message to the user. Buttons can be customized
+    /// </summary>
+    public class MessageDialog : Message_Config
     {
-        internal MessageDialog()
+        private MessageDialog()
         {
-
         }
 
-        // Dialog
+        /// <summary>
+        /// Show dialog with config class
+        /// </summary>
         public static DialogResult ShowDialog(DialogConfig Config)
         {
             // Set custom buttons
@@ -21,7 +25,9 @@ namespace EsseivaN.Tools
             return DialogForm.ShowDialog(Config.Message, Config.Title, Config.Button1, Config.Button2, Config.Button3, Config.Icon);
         }
 
-        // Dialog
+        /// <summary>
+        /// Show dialog with config parameters
+        /// </summary>
         public static DialogResult ShowDialog(string Message, string Title = "Information",
             ButtonType Btn1 = ButtonType.OK, ButtonType Btn2 = ButtonType.None, ButtonType Btn3 = ButtonType.None, DialogIcon Icon = DialogIcon.None,
             string CB1_Text = "Custom1", string CB2_Text = "Custom2", string CB3_Text = "Custom3")

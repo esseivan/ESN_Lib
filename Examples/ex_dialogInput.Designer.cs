@@ -41,11 +41,13 @@
             this.mL3 = new System.Windows.Forms.ComboBox();
             this.mB2 = new EsseivaN.Controls.TextboxWatermark();
             this.mB1 = new EsseivaN.Controls.TextboxWatermark();
+            this.mI1 = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.mI1);
             this.groupBox1.Controls.Add(this.mInput);
             this.groupBox1.Controls.Add(this.mMsg);
             this.groupBox1.Controls.Add(this.label1);
@@ -191,6 +193,15 @@
             this.mB1.WatermarkColor = System.Drawing.SystemColors.GrayText;
             this.mB1.WatermarkText = "Button 1";
             // 
+            // mI1
+            // 
+            this.mI1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.mI1.FormattingEnabled = true;
+            this.mI1.Location = new System.Drawing.Point(9, 97);
+            this.mI1.Name = "mI1";
+            this.mI1.Size = new System.Drawing.Size(118, 21);
+            this.mI1.TabIndex = 23;
+            // 
             // ex_dialogInput
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -221,5 +232,6 @@
         private EsseivaN.Controls.TextboxWatermark mB1;
         private EsseivaN.Controls.TextboxWatermark mDInput;
         private System.Windows.Forms.TextBox mInput;
+        private System.Windows.Forms.ComboBox mI1;
     }
 }

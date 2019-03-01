@@ -19,7 +19,7 @@ namespace Examples
                 return;
             }
 
-            UpdateChecker.CheckUpdateAndProcess(textboxWatermark2.Text, textboxWatermark1.Text, appExit, showMsg);
+            UpdateChecker_Runner.CheckUpdateAndProcess(textboxWatermark2.Text, textboxWatermark1.Text, appExit, showMsg);
         }
 
         internal void showMsg(string msg, string title, int icon)

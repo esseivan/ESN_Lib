@@ -23,7 +23,7 @@ namespace ManualUpdateChecker
 
             if(!File.Exists(configPath))
             {
-                MessageBox.Show("Config file not found", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Windows.Forms.MessageBox.Show("Config file not found", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -32,7 +32,7 @@ namespace ManualUpdateChecker
 
             if(datas.Length < 2)
             {
-                MessageBox.Show("Invalid config file", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Windows.Forms.MessageBox.Show("Invalid config file", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -77,7 +77,7 @@ namespace ManualUpdateChecker
                 if (update.Result.ErrorOccurred)
                 {
                     if (!silent)
-                        MessageBox.Show(update.Result.Error.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        System.Windows.Forms.MessageBox.Show(update.Result.Error.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     else
                         Console.Error.WriteLine($"ERROR : {update.Result.Error.ToString()}");
                     return;
@@ -87,25 +87,25 @@ namespace ManualUpdateChecker
                 {   // Update available
                     var result = update.Result;
 
-                    Dialog.DialogConfig dialogConfig = new Dialog.DialogConfig()
+                    Message_Config.DialogConfig dialogConfig = new Message_Config.DialogConfig()
                     {
-                        Button1 = Dialog.ButtonType.Custom1,
+                        Button1 = Message_Config.ButtonType.Custom1,
                         CustomButton1Text = "Visit website",
-                        Button2 = Dialog.ButtonType.Custom2,
+                        Button2 = Message_Config.ButtonType.Custom2,
                         CustomButton2Text = "Download and install",
-                        Button3 = Dialog.ButtonType.Cancel,
+                        Button3 = Message_Config.ButtonType.Cancel,
                         Message = $"Update is available, do you want to download ?\nCurrent : {result.CurrentVersion}\nLast : {result.LastVersion}",
                         Title = "Update available",
                     };
 
-                    var dialogResult = MessageDialog.ShowDialog(dialogConfig);
+                    var dialogResult = EsseivaN.Tools.MessageDialog.ShowDialog(dialogConfig);
 
-                    if (dialogResult == Dialog.DialogResult.Custom1)
+                    if (dialogResult == Message_Config.DialogResult.Custom1)
                     {
                         // Visit website
                         result.OpenUpdateWebsite();
                     }
-                    else if (dialogResult == Dialog.DialogResult.Custom2)
+                    else if (dialogResult == Message_Config.DialogResult.Custom2)
                     {
                         // Download and install
                         if (await result.DownloadUpdate())
@@ -115,7 +115,7 @@ namespace ManualUpdateChecker
                         else
                         {
                             if (!silent)
-                                MessageBox.Show("Unable to download update", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                System.Windows.Forms.MessageBox.Show("Unable to download update", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             else
                                 Console.Error.WriteLine("ERROR : Unable to download update");
                         }
@@ -124,7 +124,7 @@ namespace ManualUpdateChecker
                 else
                 {
                     if (!silent)
-                        MessageBox.Show("No update avaiable", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        System.Windows.Forms.MessageBox.Show("No update avaiable", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     else
                         Console.WriteLine("Already up to date");
                 }
@@ -132,7 +132,7 @@ namespace ManualUpdateChecker
             catch (Exception ex)
             {
                 if (!silent)
-                    MessageBox.Show($"Unknown error :\n{ex}\n\n{ex.StackTrace}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Windows.Forms.MessageBox.Show($"Unknown error :\n{ex}\n\n{ex.StackTrace}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 else
                     Console.Error.WriteLine($"UNKNWON ERROR :\n{ex}\n\n{ex.StackTrace}");
             }

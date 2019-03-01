@@ -492,22 +492,22 @@ namespace WebsiteEditor
                 {
                     if (listHtml2.GetItemChecked(i))
                     {
-                        Dialog.DialogConfig dialogConfig = new Dialog.DialogConfig()
+                        Message_Config.DialogConfig dialogConfig = new Message_Config.DialogConfig()
                         {
                             Message = "Enter a new name for : " + htmlFilesOutput.Values.ElementAt(i),
                             Title = "Enter filename",
                             DefaultInput = "",
-                            Button1 = Dialog.ButtonType.Skip,
-                            Button2 = Dialog.ButtonType.OK,
-                            Button3 = Dialog.ButtonType.Cancel,
+                            Button1 = Message_Config.ButtonType.Skip,
+                            Button2 = Message_Config.ButtonType.OK,
+                            Button3 = Message_Config.ButtonType.Cancel,
                         };
-                        var result = DialogInput.ShowDialog(dialogConfig);
+                        var result = MessageInput.ShowDialog(dialogConfig);
 
-                        if (result.dialogResult == Dialog.DialogResult.OK)
+                        if (result.dialogResult == Message_Config.DialogResult.OK)
                         {
-                            htmlFilesOutput[htmlFilesOutput.ElementAt(i).Key] = result.input;
+                            htmlFilesOutput[htmlFilesOutput.ElementAt(i).Key] = result.text;
                         }
-                        else if (result.dialogResult == Dialog.DialogResult.Cancel)
+                        else if (result.dialogResult == Message_Config.DialogResult.Cancel)
                             i = (short)htmlFilesOutput.Count;
                     }
                 }
@@ -525,7 +525,7 @@ namespace WebsiteEditor
                 updateChecker.CheckUpdates();
                 var result = updateChecker.Result;
                 if (result.NeedUpdate)
-                    if (MessageBox.Show($"Update is available, do you want to visit the website ?\nCurrent : {result.CurrentVersion}\nLast : {result.LastVersion}", "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    if (System.Windows.Forms.MessageBox.Show($"Update is available, do you want to visit the website ?\nCurrent : {result.CurrentVersion}\nLast : {result.LastVersion}", "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
                         result.OpenUpdateWebsite();
                     }

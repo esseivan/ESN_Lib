@@ -45,7 +45,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManualUpdateChecker", "Manu
 		{C82600D6-15FB-4D6E-ACBB-05CD44AAEE7E} = {C82600D6-15FB-4D6E-ACBB-05CD44AAEE7E}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EsseivaN_Lib.UnitTests", "EsseivaN_Lib.UnitTests\EsseivaN_Lib.UnitTests.csproj", "{20C4E0DF-2D20-4651-8072-FD6CAA47C997}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EsseivaN_Lib.UnitTests", "EsseivaN_Lib.UnitTests\EsseivaN_Lib.UnitTests.csproj", "{20C4E0DF-2D20-4651-8072-FD6CAA47C997}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,7 +62,8 @@ Global
 		{343388DD-A5DD-437F-8632-D6DC3BEF7EF3}.Release|Any CPU.Build.0 = Release
 		{D0916B4E-D06B-4156-9538-7D29B97B9D44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D0916B4E-D06B-4156-9538-7D29B97B9D44}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D0916B4E-D06B-4156-9538-7D29B97B9D44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0916B4E-D06B-4156-9538-7D29B97B9D44}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0916B4E-D06B-4156-9538-7D29B97B9D44}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{C82600D6-15FB-4D6E-ACBB-05CD44AAEE7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C82600D6-15FB-4D6E-ACBB-05CD44AAEE7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C82600D6-15FB-4D6E-ACBB-05CD44AAEE7E}.Release|Any CPU.ActiveCfg = Release|Any CPU

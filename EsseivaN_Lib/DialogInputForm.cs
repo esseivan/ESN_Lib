@@ -14,11 +14,11 @@ using System.Windows.Forms;
 
 namespace EsseivaN.Controls
 {
-    public partial class DialogInputForm : Form
+    internal partial class DialogInputForm : Form
     {
-        private static Dialog.DialogResult Result;
-        private static Dialog.ButtonType Btn1, Btn2, Btn3;
-        private static string Btn1_t, Btn2_t, Btn3_t;
+        private static Message_Config.DialogResult Result;
+        private static Message_Config.ButtonType Btn1, Btn2, Btn3;
+        private static string custom1_t, custom2_t, custom3_t;
         public string Input { get; set; }
 
         const double MaximumSizeRatio = 2d / 3d;
@@ -38,16 +38,16 @@ namespace EsseivaN.Controls
             switch (button)
             {
                 case 1:
-                    Btn1_t = text;
+                    custom1_t = text;
                     break;
                 case 2:
-                    Btn2_t = text;
+                    custom2_t = text;
                     break;
                 case 3:
-                    Btn3_t = text;
+                    custom3_t = text;
                     break;
                 case 255:
-                    Btn1_t = Btn2_t = Btn3_t = text;
+                    custom1_t = custom2_t = custom3_t = text;
                     break;
                 default:
                     break;
@@ -59,33 +59,33 @@ namespace EsseivaN.Controls
             switch (button)
             {
                 case 1:
-                    Btn1_t = string.Empty;
+                    custom1_t = string.Empty;
                     break;
                 case 2:
-                    Btn2_t = string.Empty;
+                    custom2_t = string.Empty;
                     break;
                 case 3:
-                    Btn3_t = string.Empty;
+                    custom3_t = string.Empty;
                     break;
                 case 255:
-                    Btn1_t = Btn2_t = Btn3_t = string.Empty;
+                    custom1_t = custom2_t = custom3_t = string.Empty;
                     break;
                 default:
                     break;
             }
         }
 
-        public static DialogInput.DialogInputResult ShowDialog(string Message, string Title, string DefaultInput, Dialog.ButtonType Button1, Dialog.ButtonType Button2, Dialog.ButtonType Button3)
+        public static MessageInput.DialogInputResult ShowDialog(string Message, string Title, string DefaultInput, Message_Config.ButtonType Button1, Message_Config.ButtonType Button2, Message_Config.ButtonType Button3, Message_Config.DialogIcon Icon)
         {
             Btn1 = Button1;
             Btn2 = Button2;
             Btn3 = Button3;
 
             DialogInputForm dialogForm = new DialogInputForm();
-            dialogForm.txtInput.Text = DefaultInput;
+            //dialogForm.txtInput.Text = DefaultInput;
 
             // Button 1
-            if (Btn1 == Dialog.ButtonType.None)
+            if (Btn1 == Message_Config.ButtonType.None)
             {
                 dialogForm.button1.Visible = false;
                 dialogForm.button1.Enabled = false;
@@ -93,9 +93,9 @@ namespace EsseivaN.Controls
             else
             {
                 dialogForm.CancelButton = dialogForm.button1;
-                if (Btn1 >= Dialog.ButtonType.Custom1)
+                if (Btn1 >= Message_Config.ButtonType.Custom1)
                 {
-                    dialogForm.button1.Text = Btn1_t;
+                    dialogForm.button1.Text = GetTextForCustom(Btn1);
                 }
                 else
                 {
@@ -104,7 +104,7 @@ namespace EsseivaN.Controls
             }
 
             // Button 2
-            if (Btn2 == Dialog.ButtonType.None)
+            if (Btn2 == Message_Config.ButtonType.None)
             {
                 dialogForm.button2.Visible = false;
                 dialogForm.button2.Enabled = false;
@@ -112,9 +112,9 @@ namespace EsseivaN.Controls
             else
             {
                 dialogForm.CancelButton = dialogForm.button2;
-                if (Btn2 >= Dialog.ButtonType.Custom1)
+                if (Btn2 >= Message_Config.ButtonType.Custom1)
                 {
-                    dialogForm.button2.Text = Btn2_t;
+                    dialogForm.button2.Text = GetTextForCustom(Btn2);
                 }
                 else
                 {
@@ -123,7 +123,7 @@ namespace EsseivaN.Controls
             }
 
             // Button 3
-            if (Btn3 == Dialog.ButtonType.None)
+            if (Btn3 == Message_Config.ButtonType.None)
             {
                 dialogForm.button3.Visible = false;
                 dialogForm.button3.Enabled = false;
@@ -131,9 +131,9 @@ namespace EsseivaN.Controls
             else
             {
                 dialogForm.CancelButton = dialogForm.button3;
-                if (Btn3 >= Dialog.ButtonType.Custom1)
+                if (Btn3 >= Message_Config.ButtonType.Custom1)
                 {
-                    dialogForm.button3.Text = Btn3_t;
+                    dialogForm.button3.Text = GetTextForCustom(Btn3);
                 }
                 else
                 {
@@ -141,13 +141,72 @@ namespace EsseivaN.Controls
                 }
             }
 
-            Result = Dialog.DialogResult.None;
+            Result = Message_Config.DialogResult.None;
 
             dialogForm.Text = Title;
             dialogForm.label_text.Text = Message;
 
+            dialogForm.pictureBox1.Visible = true;
+
+            Icon t_icon = null;
+            switch (Icon)
+            {
+                case Message_Config.DialogIcon.None:
+                    dialogForm.pictureBox1.Visible = false;
+                    break;
+                case Message_Config.DialogIcon.Application:
+                    t_icon = SystemIcons.Application;
+                    break;
+                case Message_Config.DialogIcon.Asterisk:
+                    t_icon = SystemIcons.Asterisk;
+                    break;
+                case Message_Config.DialogIcon.Error:
+                    t_icon = SystemIcons.Error;
+                    break;
+                case Message_Config.DialogIcon.Hand:
+                    t_icon = SystemIcons.Hand;
+                    break;
+                case Message_Config.DialogIcon.Exclamation:
+                    t_icon = SystemIcons.Exclamation;
+                    break;
+                case Message_Config.DialogIcon.Shield:
+                    t_icon = SystemIcons.Shield;
+                    break;
+                case Message_Config.DialogIcon.Question:
+                    t_icon = SystemIcons.Question;
+                    break;
+                case Message_Config.DialogIcon.Warning:
+                    t_icon = SystemIcons.Warning;
+                    break;
+                case Message_Config.DialogIcon.Information:
+                    t_icon = SystemIcons.Information;
+                    break;
+                case Message_Config.DialogIcon.WinLogo:
+                    t_icon = SystemIcons.WinLogo;
+                    break;
+                default:
+                    break;
+            }
+            if (t_icon != null)
+                dialogForm.pictureBox1.Image = t_icon.ToBitmap();
+
             dialogForm.ShowDialog();
-            return new DialogInput.DialogInputResult(dialogForm.Input, Result);
+            return new MessageInput.DialogInputResult(dialogForm.Input, Result);
+        }
+
+        private static string GetTextForCustom(Message_Config.ButtonType buttonType)
+        {
+            switch (buttonType)
+            {
+                case Message_Config.ButtonType.Custom1:
+                    return custom1_t;
+                case Message_Config.ButtonType.Custom2:
+                    return custom2_t;
+                case Message_Config.ButtonType.Custom3:
+                    return custom3_t;
+                default:
+                    return string.Empty;
+            }
         }
 
         #endregion
@@ -157,15 +216,6 @@ namespace EsseivaN.Controls
         // Execute on load
         private void DialogInputForm_Load(object sender, EventArgs e)
         {
-            int width = Screen.PrimaryScreen.WorkingArea.Width;
-            int height = Screen.PrimaryScreen.WorkingArea.Height;
-
-            MaximumSize = label_text.MaximumSize = new Size((int)(width * MaximumSizeRatio), (int)(height * MaximumSizeRatio));
-
-            int posX = (width / 2 - Size.Width / 2);
-            int posY = (height / 2 - Size.Height / 2);
-
-            Location = new Point(posX, posY);
         }
 
         #endregion
@@ -173,30 +223,32 @@ namespace EsseivaN.Controls
         private void DialogInputForm_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape && CancelButton == null)
-                this.Close();
+            {
+                Close();
+            }
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            Result = (Dialog.DialogResult)Btn1;
+            Result = (Message_Config.DialogResult)Btn1;
             Close();
         }
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            Result = (Dialog.DialogResult)Btn2;
+            Result = (Message_Config.DialogResult)Btn2;
             Close();
         }
 
         private void Button3_CLick(object sender, EventArgs e)
         {
-            Result = (Dialog.DialogResult)Btn3;
+            Result = (Message_Config.DialogResult)Btn3;
             Close();
         }
 
         private void DialogInputForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Input = txtInput.Text;
+            Input = richTextBox1.Text;
         }
     }
 }
