@@ -54,16 +54,10 @@ namespace ManualUpdateChecker
             UpdateChecker updateChecker = new UpdateChecker(url, version);
 
             var task = CheckUpdate(updateChecker, silent);
-
-            int state = 0;
-            Console.WriteLine("Downloading   ");
+            
             while(!(task.IsCompleted || task.IsCanceled))
             {
-                Console.SetCursorPosition(0, Console.CursorTop - 1);
-                Console.WriteLine("Downloading." + (state == 0 ? ("  "):(state == 1 ? ". " : "..")));
                 Thread.Sleep(100);
-                if (++state == 3)
-                    state = 0;
             }
             Console.WriteLine("Complete !");
         }
@@ -107,9 +101,11 @@ namespace ManualUpdateChecker
                     }
                     else if (dialogResult == Message_Config.DialogResult.Custom2)
                     {
+                        Console.WriteLine("Download started...");
                         // Download and install
                         if (await result.DownloadUpdate())
                         {
+                            Console.WriteLine("Download complete ! ");
                             return;
                         }
                         else
