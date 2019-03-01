@@ -362,6 +362,11 @@
             "AssemblyAsmDisplayName" = "8:System.IO.Compression.FileSystem, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                 "ScatterAssemblies"
                 {
+                    "_68F856E49A0A15AE368D46893F503DE7"
+                    {
+                    "Name" = "8:System.IO.Compression.FileSystem.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:System.IO.Compression.FileSystem.dll"
             "TargetName" = "8:"
@@ -405,9 +410,14 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:EsseivaN_Lib, Version=1.2.4.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:EsseivaN_Lib, Version=1.3.2.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_9BC62E34B7ADB3BE0CB245BF6F91DB00"
+                    {
+                    "Name" = "8:EsseivaN_Lib.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:EsseivaN_Lib.dll"
             "TargetName" = "8:"
@@ -434,6 +444,11 @@
             "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_D076B078A6BA9311F32F737F2EC42A63"
+                    {
+                    "Name" = "8:Newtonsoft.Json.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:Newtonsoft.Json.dll"
             "TargetName" = "8:"
@@ -460,6 +475,11 @@
             "AssemblyAsmDisplayName" = "8:WinSCPnet, Version=1.5.7.9125, Culture=neutral, PublicKeyToken=2271ec4a3c56d0bf, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_DD605A16708DD390EAF80BB11843A1B8"
+                    {
+                    "Name" = "8:WinSCPnet.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:WinSCPnet.dll"
             "TargetName" = "8:"
@@ -486,6 +506,11 @@
             "AssemblyAsmDisplayName" = "8:System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
                 "ScatterAssemblies"
                 {
+                    "_FE97A3E2A1774FF74140FDD7FAD79F50"
+                    {
+                    "Name" = "8:System.Net.Http.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:System.Net.Http.dll"
             "TargetName" = "8:"
@@ -638,8 +663,8 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:EsseivaN Products"
-        "ProductCode" = "8:{1BF679A3-901E-44DB-8562-9A9E7D679EB0}"
-        "PackageCode" = "8:{3C662522-1175-463A-8130-30DEED74E1C5}"
+        "ProductCode" = "8:{7D172560-801C-4A47-8703-2E83E8C9EE80}"
+        "PackageCode" = "8:{9AADB172-5117-4792-A9AA-13011AE69945}"
         "UpgradeCode" = "8:{8CFF7A05-F262-4383-A8D4-000000000001}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

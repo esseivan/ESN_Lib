@@ -52,11 +52,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\EsseivaN_Lib\EsseivaN_Lib.csproj">
-      <Project>{3A24EC05-3A28-4A69-AB5D-E8EB4C86A9C5}</Project>
+      <Project>{3a24ec05-3a28-4a69-ab5d-e8eb4c86a9c5}</Project>
       <Name>EsseivaN_Lib</Name>
     </ProjectReference>
   </ItemGroup>
