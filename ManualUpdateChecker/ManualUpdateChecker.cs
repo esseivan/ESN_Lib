@@ -120,14 +120,14 @@ namespace ManualUpdateChecker
                         Title = "Update available",
                     };
 
-                    var dialogResult = MessageDialog.ShowDialog(dialogConfig);
+                    var dialogResult = Dialog.ShowDialog(dialogConfig);
 
-                    if (dialogResult == Dialog.DialogResult.Custom1)
+                    if (dialogResult.DialogResult == Dialog.DialogResult.Custom1)
                     {
                         // Visit website
                         result.OpenUpdateWebsite();
                     }
-                    else if (dialogResult == Dialog.DialogResult.Custom2)
+                    else if (dialogResult.DialogResult == Dialog.DialogResult.Custom2)
                     {
                        return true;
                     }

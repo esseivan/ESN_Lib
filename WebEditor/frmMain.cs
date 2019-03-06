@@ -501,13 +501,13 @@ namespace WebsiteEditor
                             Button2 = Dialog.ButtonType.OK,
                             Button3 = Dialog.ButtonType.Cancel,
                         };
-                        var result = MessageInput.ShowDialog(dialogConfig);
+                        var result = Dialog.ShowDialog(dialogConfig);
 
-                        if (result.dialogResult == Dialog.DialogResult.OK)
+                        if (result.DialogResult == Dialog.DialogResult.OK)
                         {
                             htmlFilesOutput[htmlFilesOutput.ElementAt(i).Key] = result.text;
                         }
-                        else if (result.dialogResult == Dialog.DialogResult.Cancel)
+                        else if (result.DialogResult == Dialog.DialogResult.Cancel)
                             i = (short)htmlFilesOutput.Count;
                     }
                 }
