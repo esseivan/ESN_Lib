@@ -65,7 +65,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(799, 369);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(537, 253);
             this.tableLayoutPanel1.TabIndex = 13;
             // 
             // tableLayoutPanel3
@@ -80,14 +80,14 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 3F));
             this.tableLayoutPanel3.Controls.Add(this.tableLayoutPanel2, 1, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 320);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 204);
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 3;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 6F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 5F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(799, 49);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(537, 49);
             this.tableLayoutPanel3.TabIndex = 16;
             // 
             // tableLayoutPanel2
@@ -108,7 +108,7 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(781, 32);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(519, 32);
             this.tableLayoutPanel2.TabIndex = 15;
             // 
             // button1
@@ -118,7 +118,7 @@
             this.button1.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.button1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(498, 3);
+            this.button1.Location = new System.Drawing.Point(236, 3);
             this.button1.Margin = new System.Windows.Forms.Padding(5, 3, 3, 3);
             this.button1.MinimumSize = new System.Drawing.Size(88, 26);
             this.button1.Name = "button1";
@@ -134,7 +134,7 @@
             this.button2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.button2.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.button2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(594, 3);
+            this.button2.Location = new System.Drawing.Point(332, 3);
             this.button2.Margin = new System.Windows.Forms.Padding(5, 3, 3, 3);
             this.button2.MinimumSize = new System.Drawing.Size(88, 26);
             this.button2.Name = "button2";
@@ -150,7 +150,7 @@
             this.button3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.button3.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.button3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(690, 3);
+            this.button3.Location = new System.Drawing.Point(428, 3);
             this.button3.Margin = new System.Windows.Forms.Padding(5, 3, 3, 3);
             this.button3.MinimumSize = new System.Drawing.Size(88, 26);
             this.button3.Name = "button3";
@@ -168,7 +168,7 @@
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.MinimumSize = new System.Drawing.Size(19, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(487, 26);
+            this.panel2.Size = new System.Drawing.Size(225, 26);
             this.panel2.TabIndex = 13;
             // 
             // label_text
@@ -181,7 +181,7 @@
             this.label_text.Margin = new System.Windows.Forms.Padding(3);
             this.label_text.MaximumSize = new System.Drawing.Size(438, 0);
             this.label_text.Name = "label_text";
-            this.label_text.Size = new System.Drawing.Size(53, 268);
+            this.label_text.Size = new System.Drawing.Size(53, 152);
             this.label_text.TabIndex = 0;
             this.label_text.Text = "Message";
             this.label_text.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -217,7 +217,7 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(799, 369);
+            this.ClientSize = new System.Drawing.Size(537, 253);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;

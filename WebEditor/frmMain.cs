@@ -492,22 +492,22 @@ namespace WebsiteEditor
                 {
                     if (listHtml2.GetItemChecked(i))
                     {
-                        Message_Config.DialogConfig dialogConfig = new Message_Config.DialogConfig()
+                        Dialog.DialogConfig dialogConfig = new Dialog.DialogConfig()
                         {
                             Message = "Enter a new name for : " + htmlFilesOutput.Values.ElementAt(i),
                             Title = "Enter filename",
                             DefaultInput = "",
-                            Button1 = Message_Config.ButtonType.Skip,
-                            Button2 = Message_Config.ButtonType.OK,
-                            Button3 = Message_Config.ButtonType.Cancel,
+                            Button1 = Dialog.ButtonType.Skip,
+                            Button2 = Dialog.ButtonType.OK,
+                            Button3 = Dialog.ButtonType.Cancel,
                         };
                         var result = MessageInput.ShowDialog(dialogConfig);
 
-                        if (result.dialogResult == Message_Config.DialogResult.OK)
+                        if (result.dialogResult == Dialog.DialogResult.OK)
                         {
                             htmlFilesOutput[htmlFilesOutput.ElementAt(i).Key] = result.text;
                         }
-                        else if (result.dialogResult == Message_Config.DialogResult.Cancel)
+                        else if (result.dialogResult == Dialog.DialogResult.Cancel)
                             i = (short)htmlFilesOutput.Count;
                     }
                 }

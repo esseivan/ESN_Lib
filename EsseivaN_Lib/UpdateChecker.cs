@@ -328,25 +328,25 @@ namespace EsseivaN.Tools
                     var result = update.Result;
                     output[0] = result;
 
-                    Message_Config.DialogConfig dialogConfig = new Message_Config.DialogConfig()
+                    Dialog.DialogConfig dialogConfig = new Dialog.DialogConfig()
                     {
                         Message = $"Update is available, do you want to download ?\nCurrent: { result.CurrentVersion}\nLast: { result.LastVersion}",
                         Title = "Update available",
-                        Button1 = Message_Config.ButtonType.Custom1,
+                        Button1 = Dialog.ButtonType.Custom1,
                         CustomButton1Text = "Visit website",
-                        Button2 = Message_Config.ButtonType.Custom2,
+                        Button2 = Dialog.ButtonType.Custom2,
                         CustomButton2Text = "Download and install",
-                        Button3 = Message_Config.ButtonType.Cancel,
+                        Button3 = Dialog.ButtonType.Cancel,
                     };
 
-                    var dr = MessageDialog.ShowDialog(dialogConfig);
+                    var dr = Dialog.ShowDialog(dialogConfig);
 
-                    if (dr == Message_Config.DialogResult.Custom1)
+                    if (dr.DialogResult == Dialog.DialogResult.Custom1)
                     {
                         // Visit website
                         output[1] = CheckUpdateAndAsk_Result.User_OpenWebsite;
                     }
-                    else if (dr == Message_Config.DialogResult.Custom2)
+                    else if (dr.DialogResult == Dialog.DialogResult.Custom2)
                     {
                         // Download and install
                         output[1] = CheckUpdateAndAsk_Result.User_Install;

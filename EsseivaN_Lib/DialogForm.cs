@@ -14,10 +14,11 @@ using System.Windows.Forms;
 
 namespace EsseivaN.Controls
 {
+    [Obsolete("Use DialogInputForm instead and set flag Input to false", true)]
     internal partial class DialogForm : Form
     {
-        private static Message_Config.DialogResult Result;
-        private static Message_Config.ButtonType Btn1, Btn2, Btn3;
+        private static Dialog.DialogResult Result;
+        private static Dialog.ButtonType Btn1, Btn2, Btn3;
         private static string custom1_t, custom2_t, custom3_t;
 
         const double MaximumSizeRatio = 2d / 3d;
@@ -74,7 +75,7 @@ namespace EsseivaN.Controls
             }
         }
 
-        public static Message_Config.DialogResult ShowDialog(string Message, string Title, Message_Config.ButtonType Button1, Message_Config.ButtonType Button2, Message_Config.ButtonType Button3, Message_Config.DialogIcon Icon)
+        public static Dialog.DialogResult ShowDialog(string Message, string Title, Dialog.ButtonType Button1, Dialog.ButtonType Button2, Dialog.ButtonType Button3, Dialog.DialogIcon Icon)
         {
             Btn1 = Button1;
             Btn2 = Button2;
@@ -83,7 +84,7 @@ namespace EsseivaN.Controls
             DialogForm dialogForm = new DialogForm();
 
             // Button 1
-            if (Btn1 == Message_Config.ButtonType.None)
+            if (Btn1 == Dialog.ButtonType.None)
             {
                 dialogForm.button1.Visible = false;
                 dialogForm.button1.Enabled = false;
@@ -91,7 +92,7 @@ namespace EsseivaN.Controls
             else
             {
                 dialogForm.CancelButton = dialogForm.button1;
-                if (Btn1 >= Message_Config.ButtonType.Custom1)
+                if (Btn1 >= Dialog.ButtonType.Custom1)
                 {
                     dialogForm.button1.Text = GetTextForCustom(Btn1);
                 }
@@ -102,7 +103,7 @@ namespace EsseivaN.Controls
             }
 
             // Button 2
-            if (Btn2 == Message_Config.ButtonType.None)
+            if (Btn2 == Dialog.ButtonType.None)
             {
                 dialogForm.button2.Visible = false;
                 dialogForm.button2.Enabled = false;
@@ -110,7 +111,7 @@ namespace EsseivaN.Controls
             else
             {
                 dialogForm.CancelButton = dialogForm.button2;
-                if (Btn2 >= Message_Config.ButtonType.Custom1)
+                if (Btn2 >= Dialog.ButtonType.Custom1)
                 {
                     dialogForm.button2.Text = GetTextForCustom(Btn2);
                 }
@@ -121,7 +122,7 @@ namespace EsseivaN.Controls
             }
 
             // Button 3
-            if (Btn3 == Message_Config.ButtonType.None)
+            if (Btn3 == Dialog.ButtonType.None)
             {
                 dialogForm.button3.Visible = false;
                 dialogForm.button3.Enabled = false;
@@ -129,7 +130,7 @@ namespace EsseivaN.Controls
             else
             {
                 dialogForm.CancelButton = dialogForm.button3;
-                if (Btn3 >= Message_Config.ButtonType.Custom1)
+                if (Btn3 >= Dialog.ButtonType.Custom1)
                 {
                     dialogForm.button3.Text = GetTextForCustom(Btn3);
                 }
@@ -139,7 +140,7 @@ namespace EsseivaN.Controls
                 }
             }
 
-            Result = Message_Config.DialogResult.None;
+            Result = Dialog.DialogResult.None;
 
             dialogForm.Text = Title;
             dialogForm.label_text.Text = Message;
@@ -149,37 +150,37 @@ namespace EsseivaN.Controls
             Icon t_icon = null;
             switch (Icon)
             {
-                case Message_Config.DialogIcon.None:
+                case Dialog.DialogIcon.None:
                     dialogForm.pictureBox1.Visible = false;
                     break;
-                case Message_Config.DialogIcon.Application:
+                case Dialog.DialogIcon.Application:
                     t_icon = SystemIcons.Application;
                     break;
-                case Message_Config.DialogIcon.Asterisk:
+                case Dialog.DialogIcon.Asterisk:
                     t_icon = SystemIcons.Asterisk;
                     break;
-                case Message_Config.DialogIcon.Error:
+                case Dialog.DialogIcon.Error:
                     t_icon = SystemIcons.Error;
                     break;
-                case Message_Config.DialogIcon.Hand:
+                case Dialog.DialogIcon.Hand:
                     t_icon = SystemIcons.Hand;
                     break;
-                case Message_Config.DialogIcon.Exclamation:
+                case Dialog.DialogIcon.Exclamation:
                     t_icon = SystemIcons.Exclamation;
                     break;
-                case Message_Config.DialogIcon.Shield:
+                case Dialog.DialogIcon.Shield:
                     t_icon = SystemIcons.Shield;
                     break;
-                case Message_Config.DialogIcon.Question:
+                case Dialog.DialogIcon.Question:
                     t_icon = SystemIcons.Question;
                     break;
-                case Message_Config.DialogIcon.Warning:
+                case Dialog.DialogIcon.Warning:
                     t_icon = SystemIcons.Warning;
                     break;
-                case Message_Config.DialogIcon.Information:
+                case Dialog.DialogIcon.Information:
                     t_icon = SystemIcons.Information;
                     break;
-                case Message_Config.DialogIcon.WinLogo:
+                case Dialog.DialogIcon.WinLogo:
                     t_icon = SystemIcons.WinLogo;
                     break;
                 default:
@@ -192,15 +193,15 @@ namespace EsseivaN.Controls
             return Result;
         }
 
-        private static string GetTextForCustom(Message_Config.ButtonType buttonType)
+        private static string GetTextForCustom(Dialog.ButtonType buttonType)
         {
             switch (buttonType)
             {
-                case Message_Config.ButtonType.Custom1:
+                case Dialog.ButtonType.Custom1:
                     return custom1_t;
-                case Message_Config.ButtonType.Custom2:
+                case Dialog.ButtonType.Custom2:
                     return custom2_t;
-                case Message_Config.ButtonType.Custom3:
+                case Dialog.ButtonType.Custom3:
                     return custom3_t;
                 default:
                     return string.Empty;
@@ -229,19 +230,19 @@ namespace EsseivaN.Controls
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            Result = (Message_Config.DialogResult)Btn1;
+            Result = (Dialog.DialogResult)Btn1;
             Close();
         }
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            Result = (Message_Config.DialogResult)Btn2;
+            Result = (Dialog.DialogResult)Btn2;
             Close();
         }
 
         private void Button3_CLick(object sender, EventArgs e)
         {
-            Result = (Message_Config.DialogResult)Btn3;
+            Result = (Dialog.DialogResult)Btn3;
             Close();
         }
     }

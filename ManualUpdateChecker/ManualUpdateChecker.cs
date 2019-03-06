@@ -109,25 +109,25 @@ namespace ManualUpdateChecker
                 {   // Update available
                     var result = update.Result;
 
-                    Message_Config.DialogConfig dialogConfig = new Message_Config.DialogConfig()
+                    Dialog.DialogConfig dialogConfig = new Dialog.DialogConfig()
                     {
-                        Button1 = Message_Config.ButtonType.Custom1,
+                        Button1 = Dialog.ButtonType.Custom1,
                         CustomButton1Text = "Visit website",
-                        Button2 = Message_Config.ButtonType.Custom2,
+                        Button2 = Dialog.ButtonType.Custom2,
                         CustomButton2Text = "Download and install",
-                        Button3 = Message_Config.ButtonType.Cancel,
+                        Button3 = Dialog.ButtonType.Cancel,
                         Message = $"Update is available, do you want to download ?\nCurrent : {result.CurrentVersion}\nLast : {result.LastVersion}",
                         Title = "Update available",
                     };
 
                     var dialogResult = MessageDialog.ShowDialog(dialogConfig);
 
-                    if (dialogResult == Message_Config.DialogResult.Custom1)
+                    if (dialogResult == Dialog.DialogResult.Custom1)
                     {
                         // Visit website
                         result.OpenUpdateWebsite();
                     }
-                    else if (dialogResult == Message_Config.DialogResult.Custom2)
+                    else if (dialogResult == Dialog.DialogResult.Custom2)
                     {
                        return true;
                     }
