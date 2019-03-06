@@ -53,16 +53,44 @@ namespace ManualUpdateChecker
 
             UpdateChecker updateChecker = new UpdateChecker(url, version);
 
-            var task = CheckUpdate(updateChecker, silent);
+            var DownloadRequested = CheckUpdate(updateChecker, silent);
             
-            while(!(task.IsCompleted || task.IsCanceled))
-            {
-                Thread.Sleep(100);
-            }
+			if(DownloadRequested)
+			{
+				var task2 = Update(updateChecker, silent);
+				
+				int state = 0;
+				while(!(task2.IsCompleted || task2.IsCanceled))
+				{
+					Console.WriteLine("Downloading." + (state == 1 ? "." : state == 2 ? ".." : "  "));
+					if(++state > 2)
+						state = 0;
+					Console.SetCursorPosition(0, Console.CursorTop - 1);
+					Thread.Sleep(200);
+				}
+			}
+			
             Console.WriteLine("Complete !");
         }
 
-        private static async Task CheckUpdate(UpdateChecker update, bool silent)
+		private static async Task Update(UpdateChecker update, bool silent)
+		{
+			// Download and install
+			if (await update.Result.DownloadUpdate())
+			{
+				Console.WriteLine("Download complete ! ");
+				return;
+			}
+			else
+			{
+				if (!silent)
+					MessageBox.Show("Unable to download update", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				else
+					Console.Error.WriteLine("ERROR : Unable to download update");
+			}
+		}
+		
+        private static bool CheckUpdate(UpdateChecker update, bool silent)
         {
             try
             {
@@ -74,7 +102,7 @@ namespace ManualUpdateChecker
                         MessageBox.Show(update.Result.Error.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     else
                         Console.Error.WriteLine($"ERROR : {update.Result.Error.ToString()}");
-                    return;
+                    return false;
                 }
 
                 if (update.NeedUpdate())
@@ -101,20 +129,7 @@ namespace ManualUpdateChecker
                     }
                     else if (dialogResult == Message_Config.DialogResult.Custom2)
                     {
-                        Console.WriteLine("Download started...");
-                        // Download and install
-                        if (await result.DownloadUpdate())
-                        {
-                            Console.WriteLine("Download complete ! ");
-                            return;
-                        }
-                        else
-                        {
-                            if (!silent)
-                                MessageBox.Show("Unable to download update", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            else
-                                Console.Error.WriteLine("ERROR : Unable to download update");
-                        }
+                       return true;
                     }
                 }
                 else
@@ -132,6 +147,8 @@ namespace ManualUpdateChecker
                 else
                     Console.Error.WriteLine($"UNKNWON ERROR :\n{ex}\n\n{ex.StackTrace}");
             }
+
+            return false;
         }
     }
 }
