@@ -171,21 +171,21 @@ namespace EsseivaN.Tools
             /// <summary>
             /// The text set by the user
             /// </summary>
-            public string text { get; set; }
+            public string UserInput { get; set; }
             /// <summary>
             /// The button clicked
             /// </summary>
             public DialogResult DialogResult { get; set; }
 
-            public DialogInputResult(string input)
+            public DialogInputResult(string UserInput)
             {
-                this.text = input;
+                this.UserInput = UserInput;
                 DialogResult = DialogResult.None;
             }
 
             public DialogInputResult(string input, DialogResult dialogResult)
             {
-                this.text = input;
+                this.UserInput = input;
                 this.DialogResult = dialogResult;
             }
         }

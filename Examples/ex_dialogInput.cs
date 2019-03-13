@@ -41,7 +41,7 @@ namespace Examples
             var t3 = Dialog.ShowDialog(dialogConfig);
 
             label1.Text = t3.DialogResult.ToString();
-            mInput.Text = t3.text;
+            mInput.Text = t3.UserInput;
         }
 
         private void ex_dialogInput_Load(object sender, EventArgs e)

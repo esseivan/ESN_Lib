@@ -505,7 +505,7 @@ namespace WebsiteEditor
 
                         if (result.DialogResult == Dialog.DialogResult.OK)
                         {
-                            htmlFilesOutput[htmlFilesOutput.ElementAt(i).Key] = result.text;
+                            htmlFilesOutput[htmlFilesOutput.ElementAt(i).Key] = result.UserInput;
                         }
                         else if (result.DialogResult == Dialog.DialogResult.Cancel)
                             i = (short)htmlFilesOutput.Count;
