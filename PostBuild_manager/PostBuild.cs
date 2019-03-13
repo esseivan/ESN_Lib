@@ -20,7 +20,7 @@ namespace EsseivaN.Tools
             string fileVersionPath,
                 templateBaseName,
                 productBaseName,
-                zipBaseName,
+                installerProductName,
                 installerName,
                 silentInstallerName,
                 binFolderPath,
@@ -72,8 +72,8 @@ namespace EsseivaN.Tools
             // product name, used for the infos.xml file
             productBaseName = datas[3].Replace("\"", "");
 
-            // zip name
-            zipBaseName = datas[4].Replace("\"", "");
+            // Intaller product name (and zip)
+            installerProductName = datas[4].Replace("\"", "");
 
             // Path of the web folder (from the config base)
             webFolderPath = datas[5].Replace("\"", "");
@@ -144,7 +144,7 @@ namespace EsseivaN.Tools
             Console.WriteLine("Version : " + version);
 
             // Create a zipped file of the output
-            string zip_dest = $@"{baseDestinationPath}{webFolderPath}\{zipBaseName}.zip";
+            string zip_dest = $@"{baseDestinationPath}{webFolderPath}\{installerProductName}.zip";
             string zip_source = binFolderPath + @"\";
             if (!Directory.Exists(zip_source))
             {
@@ -219,6 +219,7 @@ namespace EsseivaN.Tools
                 File.WriteAllText(infos_dest, File.ReadAllText(infos_template).Replace("{VERSION}", version)
                     .Replace("{PATH}", webFolderPath.Replace(@"\", "/"))
                     .Replace("{NAME}", productBaseName)
+                    .Replace("{PRODUCTNAME}", installerProductName)
                     .Replace("{SILENTFILENAME}", silentInstallerName)
                     .Replace("{FILENAME}", installerName)
                     .Replace("{SIZE}", ZipSizeString)
