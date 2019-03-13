@@ -7,7 +7,9 @@ namespace EsseivaN.Tools
 {
     public class XmlReader
     {
-        public XmlDocument ReadFromFile(string path)
+        private XmlReader() { }
+
+        public static XmlDocument ReadFromFile(string path)
         {
             if (!File.Exists(path))
             {
@@ -34,7 +36,7 @@ namespace EsseivaN.Tools
             return doc;
         }
         
-        public XmlDocument ReadFromWeb(string url)
+        public static XmlDocument ReadFromWeb(string url)
         {
             try
             {

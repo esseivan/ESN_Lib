@@ -14,6 +14,8 @@ namespace EsseivaN.Tools
             TB = 4,
         }
 
+        private MiscTools() { }
+
         public static string GetFileSize(string path)
         {
             FileSize unit = 0;
