@@ -31,24 +31,55 @@ namespace EsseivaN.Tools
             return $"{fileSize}{unit.ToString()}";
         }
 
-        public static async Task<bool> DownloadFile(string webPath, string storePath, string fileName)
+        public static async Task<bool> DownloadFile(string webPath)
         {
-            WebClient webClient = new WebClient();
-            await webClient.DownloadFileTaskAsync(new Uri(webPath), storePath + fileName + ".msi");
-            FileInfo info = new FileInfo(storePath + fileName + ".msi");
-
-            return (info.Length != 0);
+            return await DownloadFile(webPath,
+                Path.GetTempPath(),
+                Path.GetFileName(webPath),
+                Path.GetExtension(webPath),
+                false);
         }
 
-        public static async Task<bool> DownloadAndRunFile(string webPath, string storePath, string fileName)
+        public static async Task<bool> DownloadFile(string webPath, bool RunAfterDownload)
         {
+            return await DownloadFile(webPath,
+                Path.GetTempPath(),
+                Path.GetFileName(webPath),
+                Path.GetExtension(webPath),
+                RunAfterDownload);
+        }
+
+        public static async Task<bool> DownloadFile(string webPath, string fileName, bool RunAfterDownload)
+        {
+            return await DownloadFile(webPath,
+                Path.GetTempPath(),
+                fileName,
+                Path.GetExtension(webPath),
+                RunAfterDownload);
+        }
+
+        public static async Task<bool> DownloadFile(string webPath, string storePath, string fileName, bool RunAfterDownload)
+        {
+            return await DownloadFile(webPath,
+                storePath,
+                fileName,
+                Path.GetExtension(webPath),
+                RunAfterDownload);
+        }
+
+        public static async Task<bool> DownloadFile(string webPath, string storePath, string fileName, string extension, bool RunAfterDownload)
+        {
+            string filePath = Path.ChangeExtension(Path.Combine(storePath, Path.GetFileNameWithoutExtension(fileName)), extension);
             WebClient webClient = new WebClient();
-            await webClient.DownloadFileTaskAsync(new Uri(webPath), storePath + fileName + ".msi");
-            FileInfo info = new FileInfo(storePath + fileName + ".msi");
+            await webClient.DownloadFileTaskAsync(new Uri(webPath), filePath);
+            FileInfo info = new FileInfo(filePath);
             if (info.Length != 0)
             {
-                var process = Process.Start(storePath + fileName + ".msi");
-                await Task.Delay(300);
+                if (RunAfterDownload)
+                {
+                    var process = Process.Start(filePath);
+                    await Task.Delay(300);
+                }
                 return true;
             }
             else

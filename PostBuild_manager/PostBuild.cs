@@ -220,6 +220,7 @@ namespace EsseivaN.Tools
                     .Replace("{PATH}", webFolderPath.Replace(@"\", "/"))
                     .Replace("{NAME}", productBaseName)
                     .Replace("{SILENTFILENAME}", silentInstallerName)
+                    .Replace("{FILENAME}", installerName)
                     .Replace("{SIZE}", ZipSizeString)
                     .Replace("{DATE}", date.ToString("yyyy/MM/dd"))
                     .Replace("{DESCRIPTION}", description));
