@@ -154,6 +154,7 @@ namespace EsseivaN.Controls
             dialogForm.Text = Title;
             dialogForm.label_text.Text = Message;
             dialogForm.Input = Input;
+            dialogForm.txt_userInput.Text = DefaultInput;
 
             dialogForm.pictureBox1.Visible = true;
 
@@ -260,7 +261,7 @@ namespace EsseivaN.Controls
 
         private void DialogInputForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Result = richTextBox1.Text;
+            Result = txt_userInput.Text;
         }
     }
 }

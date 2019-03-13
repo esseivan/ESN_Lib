@@ -36,7 +36,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panelInput = new System.Windows.Forms.Panel();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.txt_userInput = new System.Windows.Forms.RichTextBox();
             this.label_text = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -180,7 +180,7 @@
             // 
             this.panelInput.AutoSize = true;
             this.panelInput.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panelInput.Controls.Add(this.richTextBox1);
+            this.panelInput.Controls.Add(this.txt_userInput);
             this.panelInput.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelInput.Location = new System.Drawing.Point(12, 47);
             this.panelInput.MinimumSize = new System.Drawing.Size(0, 20);
@@ -189,16 +189,16 @@
             this.panelInput.Size = new System.Drawing.Size(424, 20);
             this.panelInput.TabIndex = 16;
             // 
-            // richTextBox1
+            // txt_userInput
             // 
-            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox1.Location = new System.Drawing.Point(0, 0);
-            this.richTextBox1.Multiline = false;
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(421, 20);
-            this.richTextBox1.TabIndex = 0;
-            this.richTextBox1.Text = "";
-            this.richTextBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DialogInputForm_KeyDown);
+            this.txt_userInput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txt_userInput.Location = new System.Drawing.Point(0, 0);
+            this.txt_userInput.Multiline = false;
+            this.txt_userInput.Name = "txt_userInput";
+            this.txt_userInput.Size = new System.Drawing.Size(421, 20);
+            this.txt_userInput.TabIndex = 0;
+            this.txt_userInput.Text = "";
+            this.txt_userInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DialogInputForm_KeyDown);
             // 
             // label_text
             // 
@@ -287,6 +287,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Panel panelInput;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox txt_userInput;
     }
 }
