@@ -5,9 +5,9 @@ using System.Xml;
 
 namespace EsseivaN.Tools
 {
-    public class XmlReader
+    public class XmlWebReader
     {
-        private XmlReader() { }
+        private XmlWebReader() { }
 
         public static XmlDocument ReadFromFile(string path)
         {
