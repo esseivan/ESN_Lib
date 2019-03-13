@@ -25,7 +25,8 @@ namespace EsseivaN.Tools
                 silentInstallerName,
                 binFolderPath,
                 webFolderPath,
-                version;
+                version,
+                description;
 
             DateTime date;
 
@@ -68,7 +69,7 @@ namespace EsseivaN.Tools
             // template name
             templateBaseName = datas[2].Replace("\"", "");
 
-            // product name, used for the version.xml file
+            // product name, used for the infos.xml file
             productBaseName = datas[3].Replace("\"", "");
 
             // zip name
@@ -82,6 +83,9 @@ namespace EsseivaN.Tools
 
             // Silent installer file name (without extension)
             silentInstallerName = datas[7].Replace("\"", "");
+
+            // Description on one line
+            description = datas[8].Replace("\"", "");
 
             // Read the general config file
             configPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\config.cfg";
@@ -166,27 +170,6 @@ namespace EsseivaN.Tools
                 return;
             }
 
-            // Version.xml
-            string version_dest = $@"{baseDestinationPath}{webFolderPath}\version.xml";
-            string version_template = $@"{websiteWorkspacePath}\version_template.xml";
-            if (!File.Exists(version_template))
-            {
-                Console.Error.WriteLine("Invalid version template file path ! : " + version_template);
-                Exit(ExitCodes.InvalidPath_VersionTemplate);
-                return;
-            }
-            Console.WriteLine("Modifying version file : " + version_dest + "\n\t by : " + version_template);
-            try
-            {
-                File.WriteAllText(version_dest, File.ReadAllText(version_template).Replace("{VERSION}", version).Replace("{PATH}", webFolderPath.Replace(@"\", "/")).Replace("{NAME}", productBaseName).Replace("{SILENTFILENAME}", silentInstallerName));
-            }
-            catch (Exception ex)
-            {
-                Console.Error.WriteLine("Unable to create modified version file ! : " + ex);
-                Exit(ExitCodes.UnableWrite_Version);
-                return;
-            }
-
             // File sizes
             string installer_dest = $@"{baseDestinationPath}{webFolderPath}\{installerName}";
             if (!File.Exists(installer_dest))
@@ -203,7 +186,7 @@ namespace EsseivaN.Tools
                 FileSize = Math.Round(FileSize / 1024, 2);
                 unit++;
             }
-            string FileSizeString = $"{FileSize}{unit.ToString()}";
+            string FileSizeString = $"{GetFileSize(installer_dest)}{unit.ToString()}";
 
             if (!File.Exists(zip_dest))
             {
@@ -221,6 +204,33 @@ namespace EsseivaN.Tools
             }
             string ZipSizeString = $"{FileSize}{unit.ToString()}";
 
+            // Infos.xml
+            string infos_dest = $@"{baseDestinationPath}{webFolderPath}\infos.xml";
+            string infos_template = $@"{websiteWorkspacePath}\infos_template.xml";
+            if (!File.Exists(infos_template))
+            {
+                Console.Error.WriteLine("Invalid version template file path ! : " + infos_template);
+                Exit(ExitCodes.InvalidPath_VersionTemplate);
+                return;
+            }
+            Console.WriteLine("Modifying info file : " + infos_dest + "\n\t by : " + infos_template);
+            try
+            {
+                File.WriteAllText(infos_dest, File.ReadAllText(infos_template).Replace("{VERSION}", version)
+                    .Replace("{PATH}", webFolderPath.Replace(@"\", "/"))
+                    .Replace("{NAME}", productBaseName)
+                    .Replace("{SILENTFILENAME}", silentInstallerName)
+                    .Replace("{SIZE}", ZipSizeString)
+                    .Replace("{DATE}", date.ToString("yyyy/MM/dd"))
+                    .Replace("{DESCRIPTION}", description));
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine("Unable to create modified version file ! : " + ex);
+                Exit(ExitCodes.UnableWrite_Version);
+                return;
+            }
+
             // Publish page
             string template_source = $@"{websiteWorkspacePath}{templateBaseName}_template.txt";
             string template_new = $@"{websiteWorkspacePath}{templateBaseName}.txt";
@@ -234,7 +244,10 @@ namespace EsseivaN.Tools
             try
             {
                 File.Copy(template_source, template_new, true);
-                File.WriteAllText(template_new, File.ReadAllText(template_new).Replace("{VERSION}", version).Replace("{FILESIZE}", FileSizeString).Replace("{ZIPSIZE}", ZipSizeString).Replace("{DATE}", date.ToString("yyyy/MM/dd")));
+                File.WriteAllText(template_new, File.ReadAllText(template_new).Replace("{VERSION}", version)
+                    .Replace("{FILESIZE}", FileSizeString)
+                    .Replace("{ZIPSIZE}", ZipSizeString)
+                    .Replace("{DATE}", date.ToString("yyyy/MM/dd")));
 
             }
             catch (Exception ex)
@@ -270,13 +283,25 @@ namespace EsseivaN.Tools
             Exit((int)exitCode);
         }
 
-        enum FileSize
+        public enum FileSize
         {
             B = 0,
             kB = 1,
             MB = 2,
             GB = 3,
             TB = 4,
+        }
+
+        public static string GetFileSize(string path)
+        {
+            FileSize unit = 0;
+            double fileSize = new FileInfo(path).Length;
+            while (fileSize >= 1024)
+            {
+                fileSize = Math.Round(fileSize / 1024, 2);
+                unit++;
+            }
+            return $"{fileSize}{unit.ToString()}";
         }
 
         enum ExitCodes
