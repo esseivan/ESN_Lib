@@ -387,19 +387,12 @@ namespace WebsiteEditor
 
         public class Parameters
         {
-            private List<string> vars = new List<string>();
-            private List<string> htmlFiles = new List<string>();
-            private List<string> htmlFilesOutput = new List<string>();
-            private List<string> contentFile = new List<string>();
-            private bool varInFile;
-            private string outputDir;
-
-            public List<string> Vars { get { return vars; } set { vars = value; } }
-            public List<string> HtmlFiles { get { return htmlFiles; } set { htmlFiles = value; } }
-            public List<string> HtmlFilesOutput { get { return htmlFilesOutput; } set { htmlFilesOutput = value; } }
-            public List<string> ContentFile { get { return contentFile; } set { contentFile = value; } }
-            public bool VarInFile { get => varInFile; set => varInFile = value; }
-            public string OutputDir { get { return outputDir; } set { outputDir = value; } }
+            public List<string> Vars { get; set; } = new List<string>();
+            public List<string> HtmlFiles { get; set; } = new List<string>();
+            public List<string> HtmlFilesOutput { get; set; } = new List<string>();
+            public List<string> ContentFile { get; set; } = new List<string>();
+            public bool VarInFile { get; set; }
+            public string OutputDir { get; set; }
 
 
             public Parameters()
@@ -411,30 +404,30 @@ namespace WebsiteEditor
             {
                 for (short i = 0; i < Vars.CheckedItems.Count; i++)
                 {
-                    vars.Add(Vars.CheckedItems[i] as string);
+                    this.Vars.Add(Vars.CheckedItems[i] as string);
                 }
 
                 for (short i = 0; i < HtmlFiles.CheckedItems.Count; i++)
                 {
-                    htmlFiles.Add(HtmlFiles.CheckedItems[i] as string);
+                    this.HtmlFiles.Add(HtmlFiles.CheckedItems[i] as string);
                 }
 
                 for (short i = 0; i < ContentFile.CheckedItems.Count; i++)
                 {
-                    contentFile.Add(ContentFile.CheckedItems[i] as string);
+                    this.ContentFile.Add(ContentFile.CheckedItems[i] as string);
                 }
 
                 for (short i = 0; i < HtmlFilesOutput.Items.Count; i++)
                 {
                     if (HtmlFilesOutput.GetItemChecked(i))
                     {
-                        if (htmlFiles[i] != HtmlFilesOutput.Items[i] as string)
-                            htmlFilesOutput.Add(HtmlFilesOutput.Items[i] as string);
+                        if (this.HtmlFiles[i] != HtmlFilesOutput.Items[i] as string)
+                            this.HtmlFilesOutput.Add(HtmlFilesOutput.Items[i] as string);
                         else
-                            htmlFilesOutput.Add(string.Empty);
+                            this.HtmlFilesOutput.Add(string.Empty);
                     }
                     else
-                        htmlFilesOutput.Add(string.Empty);
+                        this.HtmlFilesOutput.Add(string.Empty);
                 }
             }
 

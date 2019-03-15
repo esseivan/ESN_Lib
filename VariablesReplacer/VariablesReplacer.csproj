@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7CD22733-E6F8-4C76-8E8F-960BA5008818}</ProjectGuid>
+    <ProjectGuid>{601AFB16-B37A-495D-BA48-43060A26AB2F}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>EsseivaN</RootNamespace>
-    <AssemblyName>WebEditor</AssemblyName>
+    <RootNamespace>VariablesReplacer</RootNamespace>
+    <AssemblyName>VariablesReplacer</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <TargetFrameworkProfile />
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,16 +30,13 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup>
-    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EsseivaN_Lib">
+      <HintPath>..\..\..\..\EsseivaN\libs\EsseivaN_Lib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,33 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="frmMain.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmMain.Designer.cs">
-      <DependentUpon>frmMain.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WebEditor.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="frmMain.resx">
-      <DependentUpon>frmMain.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\EsseivaN_Lib\EsseivaN_Lib.csproj">
-      <Project>{3a24ec05-3a28-4a69-ab5d-e8eb4c86a9c5}</Project>
-      <Name>EsseivaN_Lib</Name>
-    </ProjectReference>
+    <Compile Include="Replacer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>if $(ConfigurationName) == Release (
-copy /Y "$(TargetDir)*" "C:\EsseivaN\tools\WebEditor\"
-copy /Y "$(TargetDir)*" "$(SolutionDir)output\WebEditor\"
-) ELSE  (
-echo ATTENTION : Select RELEASE configuration to copy files
-)</PostBuildEvent>
-  </PropertyGroup>
 </Project>

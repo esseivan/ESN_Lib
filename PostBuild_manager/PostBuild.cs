@@ -78,10 +78,10 @@ namespace EsseivaN.Tools
             // Path of the web folder (from the config base)
             webFolderPath = datas[5].Replace("\"", "");
 
-            // Installer file name (without extension)
+            // Installer file name
             installerName = datas[6].Replace("\"", "");
 
-            // Silent installer file name (without extension)
+            // Silent installer file name
             silentInstallerName = datas[7].Replace("\"", "");
 
             // Description on one line

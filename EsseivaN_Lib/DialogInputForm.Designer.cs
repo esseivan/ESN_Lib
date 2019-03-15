@@ -69,7 +69,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.Size = new System.Drawing.Size(442, 271);
-            this.tableLayoutPanel1.TabIndex = 14;
+            this.tableLayoutPanel1.TabIndex = 1;
             // 
             // tableLayoutPanel3
             // 
@@ -93,7 +93,7 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 15F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(442, 85);
-            this.tableLayoutPanel3.TabIndex = 16;
+            this.tableLayoutPanel3.TabIndex = 1;
             // 
             // tableLayoutPanel2
             // 
@@ -114,7 +114,7 @@
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(424, 32);
-            this.tableLayoutPanel2.TabIndex = 15;
+            this.tableLayoutPanel2.TabIndex = 2;
             // 
             // button1
             // 
@@ -128,7 +128,7 @@
             this.button1.MinimumSize = new System.Drawing.Size(88, 26);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(88, 26);
-            this.button1.TabIndex = 10;
+            this.button1.TabIndex = 1;
             this.button1.Text = "btn1";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
@@ -144,7 +144,7 @@
             this.button2.MinimumSize = new System.Drawing.Size(88, 26);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(88, 26);
-            this.button2.TabIndex = 11;
+            this.button2.TabIndex = 2;
             this.button2.Text = "btn2";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.Button2_Click);
@@ -160,7 +160,7 @@
             this.button3.MinimumSize = new System.Drawing.Size(88, 26);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(88, 26);
-            this.button3.TabIndex = 12;
+            this.button3.TabIndex = 3;
             this.button3.Text = "btn3";
             this.button3.UseVisualStyleBackColor = false;
             this.button3.Click += new System.EventHandler(this.Button3_CLick);
@@ -174,7 +174,7 @@
             this.panel2.MinimumSize = new System.Drawing.Size(19, 0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(130, 26);
-            this.panel2.TabIndex = 13;
+            this.panel2.TabIndex = 4;
             // 
             // panelInput
             // 
@@ -187,7 +187,7 @@
             this.panelInput.Name = "panelInput";
             this.panelInput.Padding = new System.Windows.Forms.Padding(0, 0, 3, 0);
             this.panelInput.Size = new System.Drawing.Size(424, 20);
-            this.panelInput.TabIndex = 16;
+            this.panelInput.TabIndex = 1;
             // 
             // txt_userInput
             // 
@@ -196,7 +196,7 @@
             this.txt_userInput.Multiline = false;
             this.txt_userInput.Name = "txt_userInput";
             this.txt_userInput.Size = new System.Drawing.Size(421, 20);
-            this.txt_userInput.TabIndex = 0;
+            this.txt_userInput.TabIndex = 1;
             this.txt_userInput.Text = "";
             this.txt_userInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DialogInputForm_KeyDown);
             // 
@@ -211,7 +211,7 @@
             this.label_text.MaximumSize = new System.Drawing.Size(438, 0);
             this.label_text.Name = "label_text";
             this.label_text.Size = new System.Drawing.Size(53, 134);
-            this.label_text.TabIndex = 0;
+            this.label_text.TabIndex = 2;
             this.label_text.Text = "Message";
             this.label_text.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -225,7 +225,7 @@
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.panel1.Size = new System.Drawing.Size(64, 66);
-            this.panel1.TabIndex = 2;
+            this.panel1.TabIndex = 3;
             // 
             // pictureBox1
             // 
@@ -241,6 +241,7 @@
             // 
             // DialogInputForm
             // 
+            this.AcceptButton = this.button1;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;

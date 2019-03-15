@@ -77,12 +77,12 @@ namespace EsseivaN.Controls
         }
 
         public static Dialog.DialogInputResult ShowDialog(string Message,
-            string Title = "Title", 
-            string DefaultInput = "", 
-            bool Input = false, 
-            Dialog.ButtonType Button1 = Dialog.ButtonType.OK, 
-            Dialog.ButtonType Button2 = Dialog.ButtonType.Cancel, 
-            Dialog.ButtonType Button3 = Dialog.ButtonType.None, 
+            string Title = "Title",
+            string DefaultInput = "",
+            bool Input = false,
+            Dialog.ButtonType Button1 = Dialog.ButtonType.OK,
+            Dialog.ButtonType Button2 = Dialog.ButtonType.Cancel,
+            Dialog.ButtonType Button3 = Dialog.ButtonType.None,
             Dialog.DialogIcon Icon = Dialog.DialogIcon.None)
         {
             Btn1 = Button1;
@@ -229,6 +229,15 @@ namespace EsseivaN.Controls
         private void DialogInputForm_Load(object sender, EventArgs e)
         {
             panelInput.Visible = Input;
+            if (Input)
+            {
+                txt_userInput.Focus();
+                txt_userInput.Select(txt_userInput.TextLength, 0);
+            }
+            else
+            {
+                button1.Focus();
+            }
         }
 
         #endregion

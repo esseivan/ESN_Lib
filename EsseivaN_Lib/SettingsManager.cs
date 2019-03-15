@@ -20,22 +20,22 @@ namespace EsseivaN.Tools
         /// List of json settings
         /// </summary>
         private Dictionary<string, T> settingsJsonList;
-        
+
         /// <summary>
         /// Get name function
         /// </summary>
-        public Func<T, string> getName { get; set; }
+        public Func<T, string> getName_Function { get; set; }
 
         /// <summary>
         /// Number of settings in the list
         /// </summary>
-        public int count => settingsList.Count;
+        public int Count => settingsList.Count;
 
         /// <summary>
         /// Default getName function
         /// </summary>
         /// <returns>value.toString()</returns>
-        public string defaultGetNameFunc(T value)
+        public string DefaultGetNameFunc(T value)
         {
             return value.ToString();
         }
@@ -46,7 +46,7 @@ namespace EsseivaN.Tools
         public SettingsManager()
         {
             settingsList = new List<T>();
-            getName = defaultGetNameFunc;
+            getName_Function = DefaultGetNameFunc;
         }
 
         /// <summary>
@@ -56,86 +56,95 @@ namespace EsseivaN.Tools
         public SettingsManager(Func<T, string> getNameFunc)
         {
             settingsList = new List<T>();
-            getName = getNameFunc;
+            getName_Function = getNameFunc;
         }
 
         /// <summary>
         /// Save settings to specified file
         /// </summary>
-        public void save(string Path)
+        public void Save(string Path)
         {
-            File.WriteAllText(Path, generateFileData());
+            File.WriteAllText(Path, GenerateFileData());
         }
 
         /// <summary>
         /// Generate file data to be saved in file
         /// </summary>
-        public string generateFileData()
+        public string GenerateFileData()
         {
             if (settingsList == null)
+            {
                 return string.Empty;
+            }
 
             settingsJsonList = new Dictionary<string, T>();
 
             // Convert list
             foreach (T item in settingsList)
             {
-                settingsJsonList.Add(getName(item), item);
+                settingsJsonList.Add(getName_Function(item), item);
             }
 
-            return serialize(settingsJsonList);
+            return Serialize(settingsJsonList);
         }
 
         /// <summary>
         /// Load settings from specified path
         /// </summary>
-        public Dictionary<string, T> load(string Path)
+        public Dictionary<string, T> Load(string Path)
         {
-            // Load settings from raw data
-            settingsJsonList = deserialize(File.ReadAllText(Path));
-            settingsList = settingsJsonList.Values.ToList();
-
-            if (settingsList == null)
+            if (File.Exists(Path))
             {
-                settingsList = new List<T>();
-            }
 
-            if(settingsJsonList == null)
+                // Load settings from raw data
+                settingsJsonList = Deserialize(File.ReadAllText(Path));
+                settingsList = settingsJsonList.Values.ToList();
+
+                if (settingsList == null)
+                {
+                    settingsList = new List<T>();
+                }
+
+                if (settingsJsonList == null)
+                {
+                    settingsJsonList = new Dictionary<string, T>();
+                }
+                return settingsJsonList;
+            }
+            else
             {
-                settingsJsonList = new Dictionary<string, T>();
+                return null;
             }
-
-            return settingsJsonList;
         }
-        
+
         /// <summary>
         /// Check if the specified setting is already existing
         /// </summary>
-        private T checkExisting(T value)
+        private T CheckExisting(T value)
         {
-            return checkExisting(getName(value));
+            return CheckExisting(getName_Function(value));
         }
 
         /// <summary>
         /// Check if the specified setting is already existing
         /// </summary>
-        private T checkExisting(string name)
+        private T CheckExisting(string name)
         {
-            return settingsList.Where((s) => getName(s) == name).FirstOrDefault();
+            return settingsList.Where((s) => getName_Function(s) == name).FirstOrDefault();
         }
 
         /// <summary>
         /// Get current setting
         /// </summary>
-        public T getSetting(string Key)
+        public T GetSetting(string Key)
         {
-            return checkExisting(Key);
+            return CheckExisting(Key);
         }
 
         /// <summary>
         /// Get all settings
         /// </summary>
-        public List<T> getSettings()
+        public List<T> GetSettings()
         {
             return settingsList;
         }
@@ -143,7 +152,7 @@ namespace EsseivaN.Tools
         /// <summary>
         /// Get all names from loaded setting
         /// </summary>
-        public Dictionary<string, T> getNames()
+        public Dictionary<string, T> GetNames()
         {
             return settingsJsonList;
         }
@@ -151,20 +160,20 @@ namespace EsseivaN.Tools
         /// <summary>
         /// Add specified setting
         /// </summary>
-        public void addSetting(T Value)
+        public void AddSetting(T Value)
         {
             if (Value == null)
             {
                 return;
             }
 
-            if (getName(Value) == string.Empty)
+            if (getName_Function(Value) == string.Empty)
             {
                 return;
             }
 
             // Check if entry existing
-            T setting = getSetting(getName(Value));
+            T setting = GetSetting(getName_Function(Value));
             if (setting == null)
             {
                 // Not existing, add new
@@ -177,51 +186,53 @@ namespace EsseivaN.Tools
                 settingsList[index] = Value;
             }
         }
-        
+
         /// <summary>
         /// Add range of settings
         /// </summary>
-        public void addSettingRange(List<T> data)
+        public void AddSettingRange(List<T> data)
         {
             foreach (var item in data)
             {
-                addSetting(item);
+                AddSetting(item);
             }
         }
 
         /// <summary>
         /// Add range of settings
         /// </summary>
-        public void addSettingRange(T[] data)
+        public void AddSettingRange(T[] data)
         {
             foreach (var item in data)
             {
-                addSetting(item);
+                AddSetting(item);
             }
         }
 
         /// <summary>
         /// Add range of settings from json raw text
         /// </summary>
-        public void addSettingRange(string data)
+        public void AddSettingRange(string data)
         {
-            Dictionary<string, T> list = deserialize(data);
+            Dictionary<string, T> list = Deserialize(data);
 
             if (list == null)
+            {
                 return;
+            }
 
             foreach (var item in list)
             {
-                addSetting(item.Value);
+                AddSetting(item.Value);
             }
         }
 
         /// <summary>
         /// Remove setting from name
         /// </summary>
-        public void removeSetting(string name)
+        public void RemoveSetting(string name)
         {
-            T setting = checkExisting(name);
+            T setting = CheckExisting(name);
             if (setting != null)
             {
                 settingsList.Remove(setting);
@@ -231,7 +242,7 @@ namespace EsseivaN.Tools
         /// <summary>
         /// deserialize data
         /// </summary>
-        private static Dictionary<string, T> deserialize(string data)
+        private static Dictionary<string, T> Deserialize(string data)
         {
             return JsonConvert.DeserializeObject<Dictionary<string, T>>(data);
         }
@@ -239,7 +250,7 @@ namespace EsseivaN.Tools
         /// <summary>
         /// serialize data
         /// </summary>
-        private static string serialize(Dictionary<string, T> data)
+        private static string Serialize(Dictionary<string, T> data)
         {
             return JsonConvert.SerializeObject(data, Formatting.Indented);
         }

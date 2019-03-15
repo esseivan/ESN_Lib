@@ -69,12 +69,6 @@
     <Compile Include="DialogInputForm.Designer.cs">
       <DependentUpon>DialogInputForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DialogForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DialogForm.Designer.cs">
-      <DependentUpon>DialogForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Flags.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="MiscTools.cs" />
@@ -103,9 +97,6 @@
     <EmbeddedResource Include="DialogInputForm.resx">
       <DependentUpon>DialogInputForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DialogForm.resx">
-      <DependentUpon>DialogForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="TextPanel.resx">
       <DependentUpon>TextPanel.cs</DependentUpon>
     </EmbeddedResource>
@@ -119,12 +110,19 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName) == Release (
+
 echo Copying dll to MyDlls VS2017 folder
+
 copy /Y "$(TargetPath)" "D:\Documents\Visual Studio 2017\MyDlls\"
+
 copy /Y "$(TargetDir)*" "C:\EsseivaN\libs\"
+
 copy /Y "$(TargetDir)*" "$(SolutionDir)output\EsseivaN_Lib\"
+
 ) ELSE  (
+
 echo ATTENTION : Select RELEASE configuration to copy files
+
 )</PostBuildEvent>
   </PropertyGroup>
 </Project>

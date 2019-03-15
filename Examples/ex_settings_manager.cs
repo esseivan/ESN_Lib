@@ -49,7 +49,7 @@ namespace Examples
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 settingsManager = new SettingsManager<setting>(getName);
-                var t = settingsManager.load(openFileDialog1.FileName);
+                var t = settingsManager.Load(openFileDialog1.FileName);
 
                 settingsNames.Clear();
                 foreach (var item in t)
@@ -70,7 +70,7 @@ namespace Examples
                     return;
                 }
 
-                settingsManager.save(saveFileDialog1.FileName);
+                settingsManager.Save(saveFileDialog1.FileName);
             }
         }
 
@@ -78,7 +78,7 @@ namespace Examples
         {
             if (int.TryParse(txtIndex.Text, out int index))
             {
-                settingsManager.removeSetting(settingsNames[index]);
+                settingsManager.RemoveSetting(settingsNames[index]);
                 btnGetAll.PerformClick();
             }
         }
@@ -93,20 +93,20 @@ namespace Examples
             if (int.TryParse(txtIndex.Text, out int index))
             {
                 settingsNames[index] = txtName.Text;
-                settingsManager.addSetting(new setting(index) { data1 = txtData1.Text, data2 = txtData2.Text });
+                settingsManager.AddSetting(new setting(index) { data1 = txtData1.Text, data2 = txtData2.Text });
                 btnGetAll.PerformClick();
             }
         }
 
         private void btnAddAll_Click(object sender, EventArgs e)
         {
-            settingsManager.addSettingRange(richTextBox1.Text);
+            settingsManager.AddSettingRange(richTextBox1.Text);
             btnGetAll.PerformClick();
         }
 
         private void btnGetAll_Click(object sender, EventArgs e)
         {
-            richTextBox2.Text = settingsManager.generateFileData();
+            richTextBox2.Text = settingsManager.GenerateFileData();
         }
 
         private void btnGet_Click(object sender, EventArgs e)
@@ -122,7 +122,7 @@ namespace Examples
 
                 if (settingsNames.ContainsKey(index))
                 {
-                    setting setting = settingsManager.getSetting(settingsNames[index]);
+                    setting setting = settingsManager.GetSetting(settingsNames[index]);
                     if (setting == null)
                     {
                         txtName.Text = txtData1.Text = txtData2.Text = string.Empty;
@@ -141,7 +141,7 @@ namespace Examples
         {
             if (int.TryParse(txtIndex.Text, out int index))
             {
-                setting setting = settingsManager.getSetting(settingsNames[index]);
+                setting setting = settingsManager.GetSetting(settingsNames[index]);
                 if (setting == null)
                 {
                     setting = new setting(index);
