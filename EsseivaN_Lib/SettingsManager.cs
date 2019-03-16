@@ -37,7 +37,7 @@ namespace EsseivaN.Tools
         /// <returns>value.toString()</returns>
         public string DefaultGetNameFunc(T value)
         {
-            return value.ToString();
+            return $"{value}@{value.GetHashCode()}";
         }
 
         /// <summary>

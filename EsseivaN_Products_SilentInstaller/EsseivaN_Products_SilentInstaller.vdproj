@@ -663,15 +663,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:EsseivaN Products"
-        "ProductCode" = "8:{085DB715-7B89-4F7A-8508-95BFB1A2020E}"
-        "PackageCode" = "8:{A8DACD5F-8F10-4CBC-B63F-0026F26A25C2}"
+        "ProductCode" = "8:{58CC0F9D-BD12-46F4-87DC-6FCBD766EC09}"
+        "PackageCode" = "8:{06DE2DCD-53C7-4CFF-B833-4EAC761FA063}"
         "UpgradeCode" = "8:{8CFF7A05-F262-4383-A8D4-000000000001}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.1.10"
+        "ProductVersion" = "8:1.1.12"
         "Manufacturer" = "8:EsseivaN"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -883,7 +883,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_810C6ABF787D4EF582004B10619DD34D"
             {
-            "SourcePath" = "8:"
+            "SourcePath" = "8:..\\ManualUpdateChecker\\obj\\Release\\ManualUpdateChecker.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_0A8C82AD990C4FEDB09CCA50FDB2C71E"
@@ -911,7 +911,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_A22811F6713A4A41A199B4FD721EF5E8"
             {
-            "SourcePath" = "8:"
+            "SourcePath" = "8:..\\EsseivaN_Lib\\obj\\Release\\EsseivaN_Lib.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_9A407B1C49BF4619A4BA34FBF87C715D"
@@ -939,7 +939,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_DF4C7E0E5A14442C971C0B0CA9140074"
             {
-            "SourcePath" = "8:"
+            "SourcePath" = "8:..\\WebEditor\\obj\\Release\\WebEditor.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_39903433FD784457B402DC81BF8E4C0F"
@@ -967,7 +967,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_E03F9541B1284F2E83AF6D156643D324"
             {
-            "SourcePath" = "8:"
+            "SourcePath" = "8:..\\SFTP_Upload\\obj\\Release\\SFTP_Upload.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_CF98F83A5FF34BC38CC317D4AB5486DE"
@@ -995,7 +995,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_E60FAD62FA284EFF9979D4C51967341F"
             {
-            "SourcePath" = "8:..\\VariablesReplacer\\obj\\Debug\\VariablesReplacer.exe"
+            "SourcePath" = "8:..\\VariablesReplacer\\obj\\Release\\VariablesReplacer.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_45BC0936C749462A9B93E6F1944A46D5"
@@ -1023,7 +1023,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_FBA3C41798DD4CB18EB91E303C56278A"
             {
-            "SourcePath" = "8:"
+            "SourcePath" = "8:..\\PostBuild_manager\\obj\\Release\\PostBuild.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_68BEAED29CBA46A9A71108D6B1E9E310"

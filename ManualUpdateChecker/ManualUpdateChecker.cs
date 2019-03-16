@@ -1,4 +1,5 @@
 ﻿using EsseivaN.Tools;
+using Microsoft.Win32;
 using System;
 using System.IO;
 using System.Threading;
@@ -21,28 +22,53 @@ namespace ManualUpdateChecker
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            if(!File.Exists(configPath))
+            if (!File.Exists(configPath))
             {
                 MessageBox.Show("Config file not found", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            string data = File.ReadAllText(configPath).Replace("\r","");
+            string data = File.ReadAllText(configPath).Replace("\r", "");
             var datas = data.Split('\n');
 
-            if(datas.Length < 2)
+            if (datas.Length < 3)
             {
                 MessageBox.Show("Invalid config file", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            string version = datas[0];
-            string url = datas[1];
+            string version = "0";
+
+            using (var hklm = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Default))
+            using (var key = hklm.OpenSubKey(datas[0]))
+            {
+                version = (string)key.GetValue("version");
+
+                if (version == null)
+                {
+                    version = string.Empty;
+                }
+            }
+
+            if (version == string.Empty)
+            {
+                if (Version.TryParse(version, out Version version_t2))
+                {
+                    version = version_t2.ToString();
+                }
+                else
+                {
+                    MessageBox.Show("Invalid config file, no valid version found", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
+            string url = datas[2];
             bool silent = false;
 
-            if(datas.Length >= 3)
+            if (datas.Length >= 3)
             {
-                if(datas[2] == "1")
+                if (datas[2] == "1")
                 {
                     silent = true;
                 }
@@ -54,42 +80,49 @@ namespace ManualUpdateChecker
             UpdateChecker updateChecker = new UpdateChecker(url, version);
 
             var DownloadRequested = CheckUpdate(updateChecker, silent);
-            
-			if(DownloadRequested)
-			{
-				var task2 = Update(updateChecker, silent);
-				
-				int state = 0;
-				while(!(task2.IsCompleted || task2.IsCanceled))
-				{
-					Console.WriteLine("Downloading." + (state == 1 ? "." : state == 2 ? ".." : "  "));
-					if(++state > 2)
-						state = 0;
-					Console.SetCursorPosition(0, Console.CursorTop - 1);
-					Thread.Sleep(200);
-				}
-			}
-			
+
+            if (DownloadRequested)
+            {
+                var task2 = Update(updateChecker, silent);
+
+                int state = 0;
+                while (!(task2.IsCompleted || task2.IsCanceled))
+                {
+                    Console.WriteLine("Downloading." + (state == 1 ? "." : state == 2 ? ".." : "  "));
+                    if (++state > 2)
+                    {
+                        state = 0;
+                    }
+
+                    Console.SetCursorPosition(0, Console.CursorTop - 1);
+                    Thread.Sleep(200);
+                }
+            }
+
             Console.WriteLine("Complete !");
         }
 
-		private static async Task Update(UpdateChecker update, bool silent)
-		{
-			// Download and install
-			if (await update.Result.DownloadUpdate())
-			{
-				Console.WriteLine("Download complete ! ");
-				return;
-			}
-			else
-			{
-				if (!silent)
-					MessageBox.Show("Unable to download update", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				else
-					Console.Error.WriteLine("ERROR : Unable to download update");
-			}
-		}
-		
+        private static async Task Update(UpdateChecker update, bool silent)
+        {
+            // Download and install
+            if (await update.Result.DownloadUpdate())
+            {
+                Console.WriteLine("Download complete ! ");
+                return;
+            }
+            else
+            {
+                if (!silent)
+                {
+                    MessageBox.Show("Unable to download update", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    Console.Error.WriteLine("ERROR : Unable to download update");
+                }
+            }
+        }
+
         private static bool CheckUpdate(UpdateChecker update, bool silent)
         {
             try
@@ -99,9 +132,14 @@ namespace ManualUpdateChecker
                 if (update.Result.ErrorOccurred)
                 {
                     if (!silent)
+                    {
                         MessageBox.Show(update.Result.Error.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                     else
+                    {
                         Console.Error.WriteLine($"ERROR : {update.Result.Error.ToString()}");
+                    }
+
                     return false;
                 }
 
@@ -129,23 +167,31 @@ namespace ManualUpdateChecker
                     }
                     else if (dialogResult.DialogResult == Dialog.DialogResult.Custom2)
                     {
-                       return true;
+                        return true;
                     }
                 }
                 else
                 {
                     if (!silent)
+                    {
                         MessageBox.Show("No update avaiable", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                     else
+                    {
                         Console.WriteLine("Already up to date");
+                    }
                 }
             }
             catch (Exception ex)
             {
                 if (!silent)
+                {
                     MessageBox.Show($"Unknown error :\n{ex}\n\n{ex.StackTrace}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 else
+                {
                     Console.Error.WriteLine($"UNKNWON ERROR :\n{ex}\n\n{ex.StackTrace}");
+                }
             }
 
             return false;

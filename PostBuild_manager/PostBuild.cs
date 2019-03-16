@@ -134,7 +134,7 @@ namespace EsseivaN.Tools
             Console.WriteLine("Creation date : " + date);
             if (File.Exists(binFolderPath + "\\config_version.txt"))
             {
-                version = File.ReadAllText(binFolderPath + "\\config_version.txt").Replace("\r","").Split('\n')[0];
+                version = File.ReadAllText(binFolderPath + "\\config_version.txt").Replace("\r", "").Split('\n')[1];
             }
             else
             {
@@ -179,14 +179,7 @@ namespace EsseivaN.Tools
                 return;
             }
             Console.WriteLine("Getting file size of " + installer_dest);
-            FileSize unit = 0;
-            double FileSize = new FileInfo(installer_dest).Length;
-            while (FileSize >= 1024)
-            {
-                FileSize = Math.Round(FileSize / 1024, 2);
-                unit++;
-            }
-            string FileSizeString = $"{GetFileSize(installer_dest)}{unit.ToString()}";
+            string FileSizeString = $"{GetFileSize(installer_dest)}";
 
             if (!File.Exists(zip_dest))
             {
@@ -195,14 +188,8 @@ namespace EsseivaN.Tools
                 return;
             }
             Console.WriteLine("Getting file size of " + zip_dest);
-            unit = 0;
-            FileSize = new FileInfo(zip_dest).Length;
-            while (FileSize >= 1024)
-            {
-                FileSize = Math.Round(FileSize / 1024, 2);
-                unit++;
-            }
-            string ZipSizeString = $"{FileSize}{unit.ToString()}";
+
+            string ZipSizeString = $"{GetFileSize(zip_dest)}";
 
             // Infos.xml
             string infos_dest = $@"{baseDestinationPath}{webFolderPath}\infos.xml";
