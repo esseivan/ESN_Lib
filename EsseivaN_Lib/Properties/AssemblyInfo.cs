@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("EsseivaN Library")]
 [assembly: AssemblyDescription("C# Library containing some tools")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Esseiva Nicolas")]
+[assembly: AssemblyCompany("EsseivaN")]
 [assembly: AssemblyProduct("EsseivaN_Lib")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]

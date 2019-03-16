@@ -32,9 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EsseivaN_Lib">
-      <HintPath>..\..\..\..\EsseivaN\libs\EsseivaN_Lib.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -49,5 +46,24 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Replacer.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EsseivaN_Lib\EsseivaN_Lib.csproj">
+      <Project>{3a24ec05-3a28-4a69-ab5d-e8eb4c86a9c5}</Project>
+      <Name>EsseivaN_Lib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if $(ConfigurationName) == Release (
+
+copy /Y "$(TargetDir)*" "C:\EsseivaN\tools\VariablesReplacer\"
+
+copy /Y "$(TargetDir)*" "$(SolutionDir)output\VariablesReplacer\"
+
+) ELSE  (
+
+echo ATTENTION : Select RELEASE configuration to copy files
+
+)</PostBuildEvent>
+  </PropertyGroup>
 </Project>
