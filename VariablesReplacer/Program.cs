@@ -20,10 +20,10 @@ namespace EsseivaN.Tools
             Console.WriteLine("Importing " + (args.Length) + " config file");
             foreach (string path in args)
             {
-                Replacer.TestImport(path);
+                Replacer.ImportConfig(path);
             }
             Console.WriteLine("Executing script !");
-            Replacer.ExecuteScript();
+            Replacer.ExecuteScripts();
             Console.WriteLine("Complete !");
         }
     }
