@@ -29,6 +29,8 @@ namespace EsseivaN.Tools
         /// </summary>
         public WriteMode LogToFile_WriteMode { get; set; } = WriteMode.Append;
 
+        private bool Enabled = false;
+
         private Exception lastException;
         
         public Exception LastException
@@ -199,7 +201,13 @@ namespace EsseivaN.Tools
             creationTime = DateTime.Now;
 
             // If no invalid condition, return true
+            Enabled = true;
             return true;
+        }
+
+        public void Disable()
+        {
+            Enabled = false;
         }
 
         private string CheckFile(string path)
@@ -254,6 +262,9 @@ namespace EsseivaN.Tools
         /// </summary>
         public void WriteLog(string data, string log_level)
         {
+            if (!Enabled)
+                return;
+
             if (LogToFile_Mode != SaveFileMode.None)
             {
                 var lines = data.Replace("\r", "").Split('\n');

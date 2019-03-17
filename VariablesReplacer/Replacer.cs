@@ -1,513 +1,284 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
-namespace EsseivaN.Tools
+namespace EsseivaN.Tools.VariablesReplacer
 {
     public class Replacer
     {
-        /// <summary>
-        /// List of configs
-        /// </summary>
-        public static List<Config> ConfigList { get; set; } = new List<Config>();
-        /// <summary>
-        /// Temp output path
-        /// </summary>
-        private static string TempPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "VariablesReplacer");
-        private static string BackupPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "VariablesReplacer_LastBackup");
-
-        /// <summary>
-        /// Import config from specified file
-        /// </summary>
-        /// <param name="Path"></param>
-        public static void ImportConfig(string Path)
+        private class ValidResult
         {
-            SettingsManager<Config> settingsManager = new SettingsManager<Config>();
-            try
-            {
-                ConfigList.AddRange(settingsManager.Load(Path).Values);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Unable to load config", ex);
-            }
+            public bool DirectoryValid { get; set; } = false;
+            public bool FilesValid { get; set; } = false;
         }
 
-        public static void ExportConfig(string Path, Config[] configs)
+        private static ValidResult CheckValid(ScriptConfig scriptConfig)
         {
-            SettingsManager<Config> settingsManager = new SettingsManager<Config>();
-            try
+            ValidResult validResult = new ValidResult()
             {
-                settingsManager.AddSettingRange(configs);
-                settingsManager.Save(Path);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Unable to save config", ex);
-            }
-        }
+                DirectoryValid = true,
+                FilesValid = true,
+            };
+            
 
-        public static void ExportVariables(string Path, Dictionary<string, Variable> variables)
-        {
-            SettingsManager<Variable> settingsManager = new SettingsManager<Variable>((v) => v.Name);
-            try
+            // Determine if Datadirectory is valid
+            if (scriptConfig.DataPath == null)
             {
-                settingsManager.AddSettingRange(variables.Values.ToArray());
-                settingsManager.Save(Path);
+                validResult.DirectoryValid = false;
             }
-            catch (Exception ex)
-            {
-                throw new Exception("Unable to save config", ex);
-            }
-        }
 
+            if (scriptConfig.DataPath == string.Empty)
+            {
+                validResult.DirectoryValid = false;
+            }
+
+            if (!Directory.Exists(scriptConfig.DataPath))
+            {
+                validResult.DirectoryValid = false;
+            }
+
+            // Determine if DataFiles is valid
+            if (scriptConfig.DataFiles == null)
+            {
+                validResult.FilesValid = false;
+            }
+
+            if (scriptConfig.DataFiles.Length == 0)
+            {
+                validResult.FilesValid = false;
+            }
+
+            return validResult;
+        }
 
         /// <summary>
-        /// Execute all scripts from config
+        /// Replace file content
         /// </summary>
-        public static void ExecuteScripts()
+        public static void Replace_FileContent(ScriptConfig scriptConfig)
         {
-            Console.WriteLine("Clearing temp folder...");
-            // Create temp directory if not existing
-            if (!Directory.Exists(BackupPath))
-            {
-                Directory.CreateDirectory(BackupPath);
-            }
-            if (!Directory.Exists(TempPath))
-            {
-                Directory.CreateDirectory(TempPath);
-            }
-            else
-            {
-                DirectoryInfo di = new DirectoryInfo(TempPath);
-                foreach (FileInfo file in di.EnumerateFiles())
-                {
-                    file.Delete();
-                }
-                foreach (DirectoryInfo dir in di.EnumerateDirectories())
-                {
-                    dir.Delete(true);
-                }
-            }
-            Console.WriteLine("Temp folder cleared !");
+            ValidResult valid = CheckValid(scriptConfig);
 
-            // Run the replacement
-            Console.WriteLine(ConfigList.Count + " replacement to do");
-            for (int i = 0; i < ConfigList.Count; i++)
+            // Run replacers
+            if (valid.DirectoryValid)
             {
-                Config config = ConfigList[i];
-
-                Console.WriteLine("Mode : " + config.Mode.ToString());
-                switch (config.Mode)
-                {
-                    case Config.ReplacementMode.FileContent:
-                        ReplaceFor_Content(config, false);
-                        CopyFor_Content(config);
-                        break;
-                    case Config.ReplacementMode.NewFileContent:
-                        ReplaceFor_Content(config, true);
-                        CopyFor_Content(config);
-                        break;
-                    case Config.ReplacementMode.FileNames:
-                        ReplaceFor_FileNames(config, false);
-                        CopyFor_FileNames(config);
-                        break;
-                    case Config.ReplacementMode.SubFilesNames:
-                        ReplaceFor_FileNames(config, true);
-                        CopyFor_FileNames(config);
-                        break;
-                    default:
-                        // Config disabled, quit
-                        Console.WriteLine("Config disabled");
-                        return;
-                }
+                Replace_FileContent_Directory(scriptConfig);
+            }
+            if (valid.FilesValid)
+            {
+                Replace_FileContent_Specified(scriptConfig);
             }
         }
 
-        private static string ReplaceText(string data, Config config)
-        {
-            // Set the settingsmanager to retrieve variables from content files
-            SettingsManager<Variable> variableSettingsManager = new SettingsManager<Variable>();
-
-            // For each content file
-            foreach (string contentfile in config.ContentFiles)
-            {
-                // Load variables
-                Dictionary<string, Variable> loadedVars = null;
-                try
-                {
-                    loadedVars = variableSettingsManager.Load(contentfile);
-                }
-                catch (Exception ex)
-                {
-                    // Skip this file
-                    Console.WriteLine("Invalid content file : " + contentfile + " :\n" + ex);
-                    continue;
-                }
-
-                Console.WriteLine(loadedVars.Count + " variables found in " + contentfile);
-
-                // For each variable in that file
-                foreach (var loadedVar in loadedVars)
-                {
-                    var varData = loadedVar.Value.Data;
-                    var varName = loadedVar.Key;
-
-                    // If no name, skip
-                    if (varName == string.Empty)
-                    {
-                        continue;
-                    }
-
-                    // Add delimiters
-                    varName = "{" + varName + "}";
-
-
-                    switch (config.FilterVariableMode)
-                    {
-                        // No filter
-                        case Config.FilterMode.None:
-                            // Search in data if found
-                            if (data.Contains(varName))
-                            {
-                                // If found replace
-                                Console.WriteLine("found variable " + varName + " in " + contentfile);
-                                data = data.Replace(varName, varData);
-                            }
-                            break;
-
-                        // Whitelist
-                        case Config.FilterMode.Whitelist:
-                            // check that this variable is whitelisted
-                            if (config.Variables.Contains(varName))
-                            {
-                                // Search in data if found
-                                if (data.Contains(varName))
-                                {
-                                    // If found replace
-                                    Console.WriteLine("found variable " + varName + " in " + contentfile);
-                                    data = data.Replace(varName, varData);
-                                }
-                            }
-                            break;
-
-                        // Blacklist
-                        case Config.FilterMode.Blacklist:
-                            // check that this variable is not in the blacklist
-                            if (!config.Variables.Contains(varName))
-                            {
-                                // Search in data if found
-                                if (data.Contains(varName))
-                                {
-                                    // If found replace
-                                    Console.WriteLine("found variable " + varName + " in " + contentfile);
-                                    data = data.Replace(varName, varData);
-                                }
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            } // End of foreach contentfile, replacement done for this config and datafile
-
-            return data;
-        }
-
-        private static void ReplaceFor_Content(Config config, bool newFile)
+        private static void Replace_FileContent_Specified(ScriptConfig scriptConfig)
         {
             // For each data file
-            for (short i = 0; i < config.DataFiles.Length; i++)
+            for (short i = 0; i < scriptConfig.DataFiles.Length; i++)
             {
                 // Retrieve the file path to the temp folder
-                string dataFile = config.DataFiles[i];
-                string dataPath = Path.Combine(TempPath, Path.GetFileName(dataFile));
-
+                string sourceFile = scriptConfig.DataFiles[i];
                 // Copy to temp path if not existing
-                if (File.Exists(dataPath))
-                {
-                    File.Delete(dataPath);
-                }
-                File.Copy(dataFile, dataPath);
+                string workFile;
 
-                // Get data from temp path
-                string data = File.ReadAllText(dataPath);
+                // Get working path
+                if (scriptConfig.ConfigBefore)
+                {
+                    workFile = Tools.GetTempPath(sourceFile);
+                }
+                else
+                {
+                    workFile = Tools.CopyFileToTemp(sourceFile);
+                }
+
+                // Read data
+                string data = File.ReadAllText(workFile);
                 string sourceData = data;
 
-                data = ReplaceText(data, config);
+                data = Tools.ReplaceText(data, scriptConfig);
 
                 // If any changes made, apply changes
                 if (sourceData != data)
                 {
-                    File.WriteAllText(dataPath, data);
-                    Console.WriteLine("Replacement done for : " + dataFile);
-                }
-                else
-                {
-                    Console.WriteLine("No replacement for " + dataFile + " in the current config");
+                    File.WriteAllText(workFile, data);
                 }
             }
         }
 
-        private static void ReplaceFor_FileNames(Config config, bool SubIncluded)
+        private static void Replace_FileContent_Directory(ScriptConfig scriptConfig)
         {
-            string mainDirectory = config.DataDirectory;
-            string tempDirectory = Path.Combine(TempPath, Path.GetFileName(mainDirectory));
+            // Get source directory
+            SearchOption SubIncluded = scriptConfig.IncludeSubDirectories ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
+            string sourceDirectory = scriptConfig.DataPath;
+            string workDirectory;
 
-            // Create directory and fill if not existing
-            if (!Directory.Exists(tempDirectory))
+            // Get work directory
+            if (scriptConfig.ConfigBefore)
             {
-                // Create
-                Directory.CreateDirectory(tempDirectory);
-
-                // Copy files and folders to temp directory
-                //Now Create all of the directories
-                foreach (string dirPath in Directory.GetDirectories(mainDirectory, "*",
-                    SearchOption.AllDirectories))
-                {
-                    Directory.CreateDirectory(dirPath.Replace(mainDirectory, tempDirectory));
-                }
-
-                //Copy all the files & Replaces any files with the same name
-                foreach (string newPath in Directory.GetFiles(mainDirectory, "*.*",
-                    SearchOption.AllDirectories))
-                {
-                    File.Copy(newPath, newPath.Replace(mainDirectory, tempDirectory));
-                }
+                workDirectory = Tools.GetTempPath(sourceDirectory);
             }
-            Console.WriteLine("Temp folder cleared !");
-
-            // Rename files
-            foreach (string file in Directory.GetFiles(tempDirectory, "*.*",
-                    (SubIncluded ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly)))
+            else
             {
-                ReplaceName(file, config, false);
+                workDirectory = Tools.CopyFolderToTemp(sourceDirectory);
             }
-            // Rename folders
-            RenameFolders(tempDirectory, config, SubIncluded);
-        }
 
-        private static void RenameFolders(string path, Config config, bool SubIncluded)
-        {
-            DirectoryInfo di = new DirectoryInfo(path);
-            // Get all directories
-            foreach (DirectoryInfo dir in di.EnumerateDirectories("*", SearchOption.TopDirectoryOnly))
-            {
-                // Rename subfolders before
-                if (SubIncluded)
-                {
-                    RenameFolders(dir.FullName, config);
-                }
-                ReplaceName(dir, config);
-            }
-        }
-
-        private static void RenameFolders(string path, Config config)
-        {
-            DirectoryInfo di = new DirectoryInfo(path);
-            // Get all directories
-            foreach (DirectoryInfo dir in di.EnumerateDirectories("*", SearchOption.TopDirectoryOnly))
-            {
-                // Rename subfolders before
-                RenameFolders(dir.FullName, config);
-                ReplaceName(dir, config);
-            }
-        }
-
-        private static void ReplaceName(DirectoryInfo directoryInfo, Config config)
-        {
-            string sourceName = directoryInfo.FullName;
-            string name = ReplaceText(directoryInfo.Name, config);
-            if (Path.GetFileName(sourceName) != name)
-            {
-                Directory.Move(sourceName, Path.Combine(Path.GetDirectoryName(sourceName), name));
-            }
-        }
-
-        private static void ReplaceName(string name, Config config, bool isFolder)
-        {
-            string sourceName = name;
-            name = ReplaceText(Path.GetFileName(name), config);
-            if (Path.GetFileName(sourceName) != name)
-            {
-                if (isFolder)
-                {
-                    Directory.Move(sourceName, Path.Combine(Path.GetDirectoryName(sourceName), name));
-                }
-                else
-                {
-                    File.Move(sourceName, Path.Combine(Path.GetDirectoryName(sourceName), name));
-                }
-            }
-        }
-
-        private static void CopyFor_Content(Config config)
-        {
-            // For each data file
-            for (short i = 0; i < config.DataFiles.Length; i++)
-            {
-                // Retrieve the file paths
-                string dataFile = config.DataFiles[i];
-                string dataPath = Path.Combine(TempPath, Path.GetFileName(dataFile));
-                string outputPath = string.Empty;
-
-                // If folder not existing, abort
-                if (!File.Exists(dataPath))
-                {
-                    return;
-                }
-
-                //If specific output path is set, apply
-                if (config.OutputFiles.Length > i)
-                {
-                    if (config.OutputFiles.ElementAt(i) != string.Empty)
-                    {
-                        outputPath = config.OutputFiles.ElementAt(i);
-                    }
-                }
-
-                // Otherwise, set the default one (output path + base filename)
-                if (outputPath == string.Empty)
-                {
-                    outputPath = Path.Combine(Path.GetFullPath(config.OutputPath), Path.GetFileName(dataFile));
-                }
-
-                Console.WriteLine("Backing up to " + BackupPath);
-                // If file existing, backup
-                if (File.Exists(outputPath))
-                {
-                    string fileBackupPath = Path.Combine(BackupPath, Path.GetFileName(outputPath));
-                    if (File.Exists(fileBackupPath))
-                    {
-                        File.Delete(fileBackupPath);
-                    }
-
-                    File.Move(outputPath, fileBackupPath);
-                }
-
-                File.WriteAllText(outputPath, File.ReadAllText(dataPath));
-            }
-        }
-
-        private static void CopyFor_FileNames(Config config)
-        {
-            // Retrieve the paths
-            string mainDirectory = config.DataDirectory;
-            string tempDirectory = Path.Combine(TempPath, Path.GetFileName(mainDirectory));
-            string outputDirectory = config.OutputPath;
-            string backupDirectory = Path.Combine(BackupPath, Path.GetFileName(outputDirectory) + DateTime.Now.ToString("yyyy_MM_dd_hh_mm_ss"));
-
-            if (!Directory.Exists(tempDirectory))
+            if (!Directory.Exists(workDirectory))
             {
                 return;
             }
 
-            // If directory existing, backup
-            if (Directory.Exists(outputDirectory))
+            string data;
+            string sourceData;
+
+            // Replace content in al files
+            foreach (string file in Directory.GetFiles(workDirectory, "*.*", SubIncluded))
             {
-                if (Directory.Exists(backupDirectory))
+                // Get data from temp path
+                data = File.ReadAllText(file);
+                sourceData = data;
+
+                data = Tools.ReplaceText(data, scriptConfig);
+
+                // If any changes made, apply changes
+                if (sourceData != data)
                 {
-                    Directory.Delete(backupDirectory, true);
+                    File.WriteAllText(file, data);
                 }
-                Console.WriteLine("Backing up to " + backupDirectory);
-                // Move folder
-                Directory.Move(outputDirectory, backupDirectory);
             }
-
-            // Move new directory
-            Directory.Move(tempDirectory, outputDirectory);
         }
 
-        public class Variable
+        /// <summary>
+        /// Replace files and folders names
+        /// </summary>
+        public static void Replace_Names(ScriptConfig scriptConfig)
         {
-            /// <summary>
-            /// The data of the variable
-            /// </summary>
-            public string Data { get; set; }
-            /// <summary>
-            /// The name of the variable (used for export only)
-            /// </summary>
-            public string Name { get; set; }
+            ValidResult valid = CheckValid(scriptConfig);
+
+            // Run replacers
+            if (valid.DirectoryValid)
+            {
+                Replace_Names_Directory(scriptConfig);
+            }
+            if (valid.FilesValid)
+            {
+                Replace_Names_Specified(scriptConfig);
+            }
         }
 
-        public class Config
+        private static void Replace_Names_Specified(ScriptConfig scriptConfig)
         {
-            /// <summary>
-            /// Determine the mode
-            /// </summary>
-            public ReplacementMode Mode { get; set; }
-            /// <summary>
-            /// Replace all the files and directory names variables present in the specified directory (sub included)
-            /// </summary>
-            public string DataDirectory { get; set; }
-            /// <summary>
-            /// Files to be replaced
-            /// </summary>
-            public string[] DataFiles { get; set; }
-            /// <summary>
-            /// Output files path
-            /// </summary>
-            public string[] OutputFiles { get; set; }
-            /// <summary>
-            /// Files to get variables from
-            /// </summary>
-            public string[] ContentFiles { get; set; }
-            /// <summary>
-            /// Specify which variables should be replaced (true) or replace all (false)
-            /// </summary>
-            public FilterMode FilterVariableMode { get; set; }
-            /// <summary>
-            /// List of variables to be replaced
-            /// </summary>
-            public string[] Variables { get; set; }
-            /// <summary>
-            /// Output directory
-            /// </summary>
-            public string OutputPath { get; set; }
-
-            /// <summary>
-            /// Determine the mode
-            /// </summary>
-            public enum ReplacementMode
+            // For each data file
+            for (short i = 0; i < scriptConfig.DataFiles.Length; i++)
             {
-                /// <summary>
-                /// This config is disabled
-                /// </summary>
-                None = 0,
-                /// <summary>
-                /// Replace content of specified files
-                /// </summary>
-                FileContent = 1,
-                /// <summary>
-                /// Rename files and directories in the specified directory excluding subdirectories
-                /// </summary>
-                FileNames = 2,
-                /// <summary>
-                /// Rename files and directories in the specified directory including subdirectories
-                /// </summary>
-                SubFilesNames = 3,
-                /// <summary>
-                /// Same as file content but reuse the base one instead of the modified one
-                /// </summary>
-                NewFileContent = 4,
+                // Retrieve the file path to the temp folder
+                string sourcePath = scriptConfig.DataFiles[i];
+                // Copy to temp path if not existing
+                string workPath;
+
+                // Get working path
+                if (scriptConfig.ConfigBefore)
+                {
+                    workPath = Tools.GetTempPath(sourcePath);
+                }
+                else
+                {
+                    workPath = Tools.CopyFileToTemp(sourcePath);
+                }
+
+                bool isFolder = Directory.Exists(workPath);
+                // Renames
+                Tools.Rename(workPath, scriptConfig, isFolder);
+            }
+        }
+
+        private static void Replace_Names_Directory(ScriptConfig scriptConfig)
+        {
+            // Get source directory
+            SearchOption SubIncluded = scriptConfig.IncludeSubDirectories ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
+            string sourceDirectory = scriptConfig.DataPath;
+            string workDirectory;
+
+            // Get work directory
+            if (scriptConfig.ConfigBefore)
+            {
+                // Take the existing temp directory
+                workDirectory = Tools.GetTempPath(sourceDirectory);
+            }
+            else
+            {
+                // Copy to the temp directory
+                workDirectory = Tools.CopyFolderToTemp(sourceDirectory);
             }
 
-            public enum FilterMode
+            if (!Directory.Exists(workDirectory))
             {
-                /// <summary>
-                /// Don't filter
-                /// </summary>
-                None = 0,
-                /// <summary>
-                /// Include the specified variables
-                /// </summary>
-                Whitelist = 1,
-                /// <summary>
-                /// Exclude the specified variables
-                /// </summary>
-                Blacklist = 2,
+                return;
             }
+
+            // Renames files before folders
+            Tools.RenameFiles(workDirectory, scriptConfig);
+            // Rename folders
+            Tools.RenameFolders(workDirectory, scriptConfig);
+        }
+
+        /// <summary>
+        /// Copy to output path
+        /// </summary>
+        public static void CopyToOutput(ScriptConfig scriptConfig)
+        {
+            // If script after this one, don't copy now
+            if (scriptConfig.ConfigAfter)
+            {
+                return;
+            }
+
+            ValidResult valid = CheckValid(scriptConfig);
+
+            // Run replacers
+            if (valid.DirectoryValid)
+            {
+                CopyToOutput_Directory(scriptConfig);
+            }
+            if (valid.FilesValid)
+            {
+                CopyToOutput_Specified(scriptConfig);
+            }
+        }
+
+        private static void CopyToOutput_Specified(ScriptConfig scriptConfig)
+        {
+            // For each data file
+            for (short i = 0; i < scriptConfig.DataFiles.Length; i++)
+            {
+                string sourceFile = scriptConfig.DataFiles[i];
+                string workPath = Tools.GetTempPath(sourceFile);
+                string outputPath = Tools.GetOutputPath(scriptConfig, workPath, i);
+
+                if (string.IsNullOrEmpty(outputPath))
+                {
+                    continue;
+                }
+
+                bool isFolder = Directory.Exists(outputPath);
+                if (isFolder)
+                {
+                    Tools.BackupFolder(outputPath);
+                    Tools.CopyToOutput(workPath, outputPath);
+                }
+                else
+                {
+                    Tools.BackupFiles(outputPath);
+                    File.WriteAllText(outputPath, File.ReadAllText(workPath));
+                }
+            }
+        }
+
+        private static void CopyToOutput_Directory(ScriptConfig scriptConfig)
+        {
+            string workPath = Tools.GetTempPath(scriptConfig.DataPath);
+            string outputPath = scriptConfig.OutputPath;
+
+            if (Directory.Exists(outputPath))
+                Tools.BackupFolder(outputPath);
+
+            Tools.CopyToOutput(workPath, outputPath);
         }
     }
 }

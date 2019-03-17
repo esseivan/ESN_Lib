@@ -24,7 +24,7 @@ namespace EsseivaN.Tools
         /// <summary>
         /// Get name function
         /// </summary>
-        public Func<T, string> getName_Function { get; set; }
+        public Func<T, string> GetName_Function { get; set; }
 
         /// <summary>
         /// Number of settings in the list
@@ -46,7 +46,7 @@ namespace EsseivaN.Tools
         public SettingsManager()
         {
             settingsList = new List<T>();
-            getName_Function = DefaultGetNameFunc;
+            GetName_Function = DefaultGetNameFunc;
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace EsseivaN.Tools
         public SettingsManager(Func<T, string> getNameFunc)
         {
             settingsList = new List<T>();
-            getName_Function = getNameFunc;
+            GetName_Function = getNameFunc;
         }
 
         /// <summary>
@@ -65,6 +65,16 @@ namespace EsseivaN.Tools
         public void Save(string Path)
         {
             File.WriteAllText(Path, GenerateFileData());
+        }
+
+        /// <summary>
+        /// Clear all settings and set functions to default
+        /// </summary>
+        public void ClearAll()
+        {
+            settingsList?.Clear();
+            settingsJsonList?.Clear();
+            GetName_Function = DefaultGetNameFunc;
         }
 
         /// <summary>
@@ -82,7 +92,7 @@ namespace EsseivaN.Tools
             // Convert list
             foreach (T item in settingsList)
             {
-                settingsJsonList.Add(getName_Function(item), item);
+                settingsJsonList.Add(GetName_Function(item), item);
             }
 
             return Serialize(settingsJsonList);
@@ -95,7 +105,6 @@ namespace EsseivaN.Tools
         {
             if (File.Exists(Path))
             {
-
                 // Load settings from raw data
                 settingsJsonList = Deserialize(File.ReadAllText(Path));
                 settingsList = settingsJsonList.Values.ToList();
@@ -122,7 +131,7 @@ namespace EsseivaN.Tools
         /// </summary>
         private T CheckExisting(T value)
         {
-            return CheckExisting(getName_Function(value));
+            return CheckExisting(GetName_Function(value));
         }
 
         /// <summary>
@@ -130,7 +139,7 @@ namespace EsseivaN.Tools
         /// </summary>
         private T CheckExisting(string name)
         {
-            return settingsList.Where((s) => getName_Function(s) == name).FirstOrDefault();
+            return settingsList.Where((s) => GetName_Function(s) == name).FirstOrDefault();
         }
 
         /// <summary>
@@ -167,13 +176,13 @@ namespace EsseivaN.Tools
                 return;
             }
 
-            if (getName_Function(Value) == string.Empty)
+            if (GetName_Function(Value) == string.Empty)
             {
                 return;
             }
 
             // Check if entry existing
-            T setting = GetSetting(getName_Function(Value));
+            T setting = GetSetting(GetName_Function(Value));
             if (setting == null)
             {
                 // Not existing, add new
