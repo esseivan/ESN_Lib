@@ -97,7 +97,12 @@ namespace EsseivaN.Tools.VariablesReplacer
                 // If any changes made, apply changes
                 if (sourceData != data)
                 {
+                    Console.WriteLine("[DEBUG] Replacement done. Data has beed modified : " + workFile);
                     File.WriteAllText(workFile, data);
+                }
+                else
+                {
+                    Console.WriteLine("[DEBUG] Replacement done. No data has beed modified : " + workFile);
                 }
             }
         }
@@ -139,7 +144,12 @@ namespace EsseivaN.Tools.VariablesReplacer
                 // If any changes made, apply changes
                 if (sourceData != data)
                 {
+                    Console.WriteLine("[DEBUG] Replacement done. Data has beed modified : " + file);
                     File.WriteAllText(file, data);
+                }
+                else
+                {
+                    Console.WriteLine("[DEBUG] Replacement done. No data has beed modified : " + file);
                 }
             }
         }

@@ -126,7 +126,7 @@ namespace EsseivaN.Tools.VariablesReplacer
             {
                 return;
             }
-            
+
             Directory.Move(path, outputPath);
         }
 
@@ -137,7 +137,7 @@ namespace EsseivaN.Tools.VariablesReplacer
         {
             return Path.Combine(TempPath, Path.GetFileName(path));
         }
-        
+
         /// <summary>
         /// Get the output path
         /// </summary>
@@ -499,6 +499,11 @@ namespace EsseivaN.Tools.VariablesReplacer
             /// Exclude the specified variables
             /// </summary>
             Blacklist = 2,
+        }
+
+        public override string ToString()
+        {
+            return $"Config@{GetHashCode()} [First data file : {DataFiles.FirstOrDefault()} ; First output file : {OutputFiles.FirstOrDefault()} ; First content file : {ContentFiles.FirstOrDefault()}";
         }
     }
 }

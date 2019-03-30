@@ -14,6 +14,7 @@ namespace EsseivaN.Tools.VariablesReplacer
 
         static void Main(string[] args)
         {
+            Console.WriteLine("########## Program started");
             Run(args);
         }
 
@@ -61,8 +62,7 @@ namespace EsseivaN.Tools.VariablesReplacer
         /// </summary>
         public static void Initialize(string ConfigPath)
         {
-            Tools.Initialize();
-            ScriptConfigList.AddRange(Tools.ImportConfig(ConfigPath).Values);
+            Initialize(new string[] { ConfigPath });
         }
 
         /// <summary>
@@ -73,7 +73,13 @@ namespace EsseivaN.Tools.VariablesReplacer
             Tools.Initialize();
             foreach (string ConfigPath in ConfigPaths)
             {
-                ScriptConfigList.AddRange(Tools.ImportConfig(ConfigPath).Values);
+                Console.WriteLine("[DEBUG] Importing config from : " + ConfigPath);
+                var t = Tools.ImportConfig(ConfigPath);
+                foreach (var item in t)
+                {
+                    Console.WriteLine("[DEBUG] Config found : " + item.Key + "@" + item.Value.GetHashCode());
+                }
+                ScriptConfigList.AddRange(t.Values);
             }
         }
 
@@ -89,6 +95,7 @@ namespace EsseivaN.Tools.VariablesReplacer
             for (int i = 0; i < sortedList.Count; i++)
             {
                 scriptConfig = sortedList.ElementAt(i);
+                Console.WriteLine("[DEBUG] Running script : " + scriptConfig.ToString());
 
                 // Run the replacement
                 if (scriptConfig.Mode == ScriptConfig.ReplacementMode.FileContent)
@@ -98,6 +105,10 @@ namespace EsseivaN.Tools.VariablesReplacer
                 else if (scriptConfig.Mode == ScriptConfig.ReplacementMode.FileNames)
                 {
                     Replacer.Replace_Names(scriptConfig);
+                }
+                else
+                {
+                    Console.WriteLine("[WARN] Unkown mode : " + scriptConfig.Mode + " for config " + scriptConfig.ToString());
                 }
 
                 if (!scriptConfig.ConfigAfter)
