@@ -36,10 +36,10 @@
             this.button3 = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panelInput = new System.Windows.Forms.Panel();
-            this.txt_userInput = new System.Windows.Forms.RichTextBox();
             this.label_text = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.txt_userInput = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -189,17 +189,6 @@
             this.panelInput.Size = new System.Drawing.Size(424, 20);
             this.panelInput.TabIndex = 1;
             // 
-            // txt_userInput
-            // 
-            this.txt_userInput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txt_userInput.Location = new System.Drawing.Point(0, 0);
-            this.txt_userInput.Multiline = false;
-            this.txt_userInput.Name = "txt_userInput";
-            this.txt_userInput.Size = new System.Drawing.Size(421, 20);
-            this.txt_userInput.TabIndex = 1;
-            this.txt_userInput.Text = "";
-            this.txt_userInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DialogInputForm_KeyDown);
-            // 
             // label_text
             // 
             this.label_text.AutoSize = true;
@@ -239,6 +228,15 @@
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
+            // txt_userInput
+            // 
+            this.txt_userInput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txt_userInput.Location = new System.Drawing.Point(0, 0);
+            this.txt_userInput.Name = "txt_userInput";
+            this.txt_userInput.Size = new System.Drawing.Size(421, 20);
+            this.txt_userInput.TabIndex = 0;
+            this.txt_userInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DialogInputForm_KeyDown);
+            // 
             // DialogInputForm
             // 
             this.AcceptButton = this.button1;
@@ -267,6 +265,7 @@
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             this.panelInput.ResumeLayout(false);
+            this.panelInput.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -288,6 +287,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Panel panelInput;
-        private System.Windows.Forms.RichTextBox txt_userInput;
+        private System.Windows.Forms.TextBox txt_userInput;
     }
 }

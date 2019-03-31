@@ -90,7 +90,6 @@ namespace EsseivaN.Controls
             Btn3 = Button3;
 
             DialogInputForm dialogForm = new DialogInputForm();
-            //dialogForm.txtInput.Text = DefaultInput;
 
             // Button 1
             if (Btn1 == Dialog.ButtonType.None)
