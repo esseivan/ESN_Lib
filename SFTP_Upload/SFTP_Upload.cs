@@ -7,31 +7,12 @@ namespace EsseivaN.Tools
 {
     public class SFTP_Upload
     {
-        private static string username;
-        private static bool HasUsername = false;
-        private static string passphrase;
-        private static bool HasPassphrase = false;
-        private static string host;
-        private static bool HasHost = false;
-        private static string private_key;
-        private static string host_key;
-        private static bool HasKey = false;
-        private static List<string[]> files = new List<string[]>();
-        private static bool HasFolder = false;
         private static string helpText = @"upload folders's content using SFTP protocol
-usage: <app_name> [-u username | -pk private_key_path | -hk host_key_path | -p passphrase | -h hostname |-f localFolder remoteFolder ]...
-    options:
-        -u username                     Set the username
-        -pk private_key_path            Set the path to the private key file
-        -hk host_key_path               Set the host key path
-        -p passphrase                   Set the key passphrase
-        -h hostname                     Set the host
-        -f localFolder remoteFolder     Copy local folder to remote folder
-";
+usage: <app_name> [BaseConfig path]";
 
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            // hijack to determine in WinScp is available
+            // Check in WinScp available
             try
             {
                 Session temp = new Session();
@@ -46,25 +27,32 @@ usage: <app_name> [-u username | -pk private_key_path | -hk host_key_path | -p p
             }
 
             // If no arguments, show help
-            if (args.Length == 0)
+            if (args.Length != 1)
             {
                 Console.WriteLine(helpText);
             }
             else
             {
-                ExecuteArgs(args);
-                if (HasUsername && HasPassphrase && HasHost && HasFolder && HasKey)
+                // If generate template argument
+                if (args[0] == "--GT")
                 {
-                    if(!RunUpload())
-                    {
-                        Console.WriteLine("Unable to upload");
-                        Environment.Exit(2);
-                    }
+                    Console.WriteLine("Generating templates then exit");
+                    GenerateTemplates();
+                    return;
+                }
+
+                Dictionary<string, ConfigManager.BaseConfig> configs = ConfigManager.ImportConfig(args[0]);
+                if (configs.Count == 0)
+                {
+                    Console.WriteLine("Invalid config file");
+                    Environment.Exit(2);
                 }
                 else
                 {
-                    Console.WriteLine("Arguments missing");
-                    Environment.Exit(1);
+                    foreach (ConfigManager.BaseConfig baseConfig in configs.Values)
+                    {
+                        RunUpload(baseConfig);
+                    }
                 }
             }
         }
@@ -73,165 +61,155 @@ usage: <app_name> [-u username | -pk private_key_path | -hk host_key_path | -p p
         /// Run the upload
         /// </summary>
         /// <returns>Wheter or not the upload is successfull</returns>
-        public static bool RunUpload()
+        public static bool RunUpload(ConfigManager.BaseConfig baseConfig)
         {
-            if (HasUsername && HasPassphrase && HasHost && HasFolder && HasKey)
+            // Check file
+            if (!baseConfig.IsValid())
             {
-                try
+                Console.WriteLine("Invalid config : " + baseConfig);
+                return false;
+            }
+
+            // Run each config
+            try
+            {
+                SessionOptions sessionOptions = null;
+                // Used to declare local variables that will die once if exitted
+                if (true)
                 {
-                    SessionOptions sessionOptions = new SessionOptions()
+                    string hostKey = baseConfig.HostKeyPath;
+
+                    if (File.Exists(hostKey))
+                        hostKey = File.ReadAllText(hostKey);
+
+                    sessionOptions = new SessionOptions()
                     {
                         Protocol = Protocol.Sftp,
-                        HostName = host,
-                        UserName = username,
-                        SshHostKeyFingerprint = host_key,
-                        SshPrivateKeyPath = private_key,
-                        PrivateKeyPassphrase = passphrase,
-                        PortNumber = 22,
-                        FtpMode = FtpMode.Passive,
-                    };
+                        HostName = baseConfig.Hostname,
+                        UserName = baseConfig.Username,
+                        SshHostKeyFingerprint = hostKey,
+                        SshPrivateKeyPath = baseConfig.PrivateKeyPath,
+                        PrivateKeyPassphrase = baseConfig.Passphrase,
+                        PortNumber = baseConfig.Port,
+                        FtpMode = baseConfig.FtpMode,
 
-                    using (Session session = new Session())
+                    };
+                }
+
+                // Open new session
+                using (Session session = new Session())
+                {
+                    // Connect
+                    session.Open(sessionOptions);
+
+                    // Sort configs
+                    Array.Sort(baseConfig.Configs);
+                    foreach (ConfigManager.BaseConfig.Config config in baseConfig.Configs)
                     {
-                        // Connect
-                        session.Open(sessionOptions);
+                        Console.WriteLine($"[{DateTime.Now.ToString("yyyy.MM.dd hh.mm.ss")}] Starting new upload");
+
+                        if (!config.IsValid())
+                        {
+                            Console.WriteLine("Invalid config");
+                            continue;
+                        }
 
                         // Upload files
-                        TransferOptions transferOptions = new TransferOptions();
-                        transferOptions.TransferMode = TransferMode.Binary;
-
-                        Console.WriteLine($"[{DateTime.Now.ToString("yyyy.MM.dd hh.mm.ss")}] Starting upload");
-
-                        // Synchronize directories
-                        foreach (string[] file in files)
+                        TransferOptions transferOptions = new TransferOptions
                         {
-                            Console.WriteLine($"Synchronize local {file[0]} to remote {file[1]}");
-                            var result = session.SynchronizeDirectories(mode:SynchronizationMode.Remote, localPath:file[0], remotePath:file[1], removeFiles:false, mirror:false, criteria:SynchronizationCriteria.Either, options:transferOptions);
+                            TransferMode = config.TransferMode
+                        };
 
-                            result.Check();
-                            Console.WriteLine("Failures: " + result.Failures.Count);
-                            if(result.Failures.Count != 0)
+                        Console.WriteLine($"Synchronize local {config.LocalPath} to remote {config.RemotePath}");
+
+                        SynchronizationResult result = session.SynchronizeDirectories(mode: config.SyncMode,
+                                localPath: config.LocalPath,
+                                remotePath: config.RemotePath,
+                                removeFiles: config.RemoveFiles,
+                                mirror: config.Mirror,
+                                criteria: config.SyncCriteria,
+                                options: transferOptions);
+
+                        result.Check();
+                        Console.WriteLine("Failures: " + result.Failures.Count);
+                        if (result.Failures.Count != 0)
+                        {
+                            foreach (SessionRemoteException item in result.Failures)
                             {
-                                foreach (SessionRemoteException item in result.Failures)
-                                {
-                                    Console.WriteLine("\t" + item.Message);
-                                }
-                            }
-                            Console.WriteLine("Downloads: " + result.Downloads.Count);
-                            if (result.Downloads.Count != 0)
-                            {
-                                foreach (TransferEventArgs item in result.Downloads)
-                                {
-                                    Console.WriteLine("\t" + item.FileName);
-                                }
-                            }
-                            Console.WriteLine("IsSuccess: " + result.IsSuccess);
-                            Console.WriteLine("Uploads: " + result.Uploads.Count);
-                            if (result.Uploads.Count != 0)
-                            {
-                                foreach (TransferEventArgs item in result.Uploads)
-                                {
-                                    Console.WriteLine("\t" + item.FileName);
-                                }
-                            }
-                            Console.WriteLine("Removals: " + result.Removals.Count);
-                            if (result.Removals.Count != 0)
-                            {
-                                foreach (RemovalEventArgs item in result.Removals)
-                                {
-                                    Console.WriteLine("\t" + item.FileName);
-                                }
+                                Console.WriteLine("\t" + item.Message);
                             }
                         }
 
-                        // Session is automatically closed with the using keyword
+                        Console.WriteLine("Downloads: " + result.Downloads.Count);
+                        if (result.Downloads.Count != 0)
+                        {
+                            foreach (TransferEventArgs item in result.Downloads)
+                            {
+                                Console.WriteLine("\t" + item.FileName);
+                            }
+                        }
+                        Console.WriteLine("IsSuccess: " + result.IsSuccess);
+                        Console.WriteLine("Uploads: " + result.Uploads.Count);
+                        if (result.Uploads.Count != 0)
+                        {
+                            foreach (TransferEventArgs item in result.Uploads)
+                            {
+                                Console.WriteLine("\t" + item.FileName);
+                            }
+                        }
+                        Console.WriteLine("Removals: " + result.Removals.Count);
+                        if (result.Removals.Count != 0)
+                        {
+                            foreach (RemovalEventArgs item in result.Removals)
+                            {
+                                Console.WriteLine("\t" + item.FileName);
+                            }
+                        }
                     }
+                    // Session is automatically closed with the using keyword
+                }
+                Console.WriteLine($"[{DateTime.Now.ToString("yyyy.MM.dd hh.mm.ss")}] Upload success");
 
-                    Console.WriteLine($"[{DateTime.Now.ToString("yyyy.MM.dd hh.mm.ss")}] Upload success");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                    return false;
-                }
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine("Config not set !");
+                Console.Error.WriteLine(ex);
                 return false;
             }
             return true;
         }
 
         /// <summary>
-        /// Give the arguments to fill the config
+        /// Generate template files
         /// </summary>
-        public static void ExecuteArgs(string[] args)
+        public static void GenerateTemplates()
         {
-            for (short i = 0; i < args.Length; i++)
+            string cfgpath = Path.Combine(Environment.CurrentDirectory, "config.cfg");
+            string varpath = Path.Combine(Environment.CurrentDirectory, "var.cfg");
+            ConfigManager.ExportConfig(cfgpath, new ConfigManager.BaseConfig[] { new ConfigManager.BaseConfig()
             {
-                string arg = args[i];
-
-                if ((i + 1) < args.Length)
+                FtpMode = FtpMode.Passive,
+                HostKeyPath = @"C:\TBD",
+                PrivateKeyPath = @"C:\TBD",
+                Hostname = @"www.hostname.com",
+                Username = "pi",
+                Passphrase = "passphrase",
+                Port = 22,
+                Configs = new ConfigManager.BaseConfig.Config[]
                 {
-                    switch (arg)
+                    new ConfigManager.BaseConfig.Config()
                     {
-                        case "-u":  // Username
-                            username = args[++i];
-                            HasUsername = true;
-                            break;
-                        case "-p":  // Passphrase
-                            passphrase = args[++i];
-                            HasPassphrase = true;
-                            break;
-                        case "-h":  // Host name
-                            host = args[++i];
-                            HasHost = true;
-                            break;
-                        case "-pk":  // private key
-                            private_key = args[++i];
-                            HasKey = true;
-                            break;
-                        case "-hk":  // host key
-                            host_key = File.ReadAllText(args[++i]);
-                            HasKey = true;
-                            break;
-                        case "-f":  // Upload file (or folder)
-                            if (i + 2 < args.Length)
-                            {
-                                string[] upload = new string[2];
-
-                                upload[0] = System.IO.Path.GetDirectoryName(args[++i]);
-                                upload[1] = args[++i];
-                                files.Add(upload);
-                                HasFolder = true;
-                            }
-                            break;
-                        //case "-fa":  // Upload folder content
-                        //    if (i + 2 < args.Length)
-                        //    {
-                        //        string[] upload = new string[2];
-
-                        //        upload[0] = System.IO.Path.GetFullPath(args[++i]) + @"\*";
-                        //        upload[1] = args[++i];
-                        //        files.Add(upload);
-                        //        HasFolder = true;
-                        //    }
-                        //    break;
-                        default:    // Display help
-                            Console.WriteLine("Unknown parameter : " + arg);
-                            Console.WriteLine(helpText);
-                            Environment.Exit(2);
-                            break;
+                        LocalPath = @"C:\TBD",
+                        RemotePath = @"\var\www\tbd",
+                        Mirror = false,
+                        RemoveFiles = false,
+                        RunPriority = 0,
+                        SyncCriteria = SynchronizationCriteria.Either,
+                        SyncMode = SynchronizationMode.Remote,
+                        TransferMode = TransferMode.Binary
                     }
                 }
-                else // Command without parameter : none -> display help
-                {
-                    Console.WriteLine("Unknown parameter : " + arg);
-                    Console.WriteLine(helpText);
-                    Environment.Exit(2);
-                }
-            }
+            } });
         }
     }
 }

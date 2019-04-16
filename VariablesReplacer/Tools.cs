@@ -503,7 +503,7 @@ namespace EsseivaN.Tools.VariablesReplacer
 
         public override string ToString()
         {
-            return $"Config@{GetHashCode()} [First data file : {DataFiles.FirstOrDefault()} ; First output file : {OutputFiles.FirstOrDefault()} ; First content file : {ContentFiles.FirstOrDefault()}";
+            return $"Config@{GetHashCode()} [First data file : {DataFiles.FirstOrDefault()} ; First output file : {OutputFiles.FirstOrDefault()} ; First content file : {ContentFiles.FirstOrDefault()}]";
         }
     }
 }
