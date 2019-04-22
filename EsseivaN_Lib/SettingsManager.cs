@@ -68,6 +68,15 @@ namespace EsseivaN.Tools
         }
 
         /// <summary>
+        /// Clear all settings
+        /// </summary>
+        public void Clear()
+        {
+            settingsList?.Clear();
+            settingsJsonList?.Clear();
+        }
+
+        /// <summary>
         /// Clear all settings and set functions to default
         /// </summary>
         public void ClearAll()
