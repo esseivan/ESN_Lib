@@ -4,8 +4,20 @@ namespace EsseivaN.Tools
 {
     public class Dialog
     {
-        private Dialog()
+        public DialogConfig Config { get; set; }
+
+        public Dialog()
         {
+
+        }
+        public Dialog(DialogConfig config)
+        {
+            this.Config = config;
+        }
+
+        public ShowDialogResult ShowDialog()
+        {
+            return ShowDialog(Config);
         }
 
         /// <summary>
@@ -77,7 +89,7 @@ namespace EsseivaN.Tools
         /// <summary>
         /// Show dialog with config class
         /// </summary>
-        public static DialogInputResult ShowDialog(DialogConfig Config)
+        public static ShowDialogResult ShowDialog(DialogConfig Config)
         {
             // Set custom buttons
             DialogInputForm.SetButton(1, Config.CustomButton1Text);
@@ -98,7 +110,7 @@ namespace EsseivaN.Tools
         /// <summary>
         /// Show dialog with config parameters
         /// </summary>
-        public static DialogInputResult ShowDialog(string Message,
+        public static ShowDialogResult ShowDialog(string Message,
             string Title = "Information",
             string DefaultInput = "",
             bool Input = false,
@@ -170,7 +182,7 @@ namespace EsseivaN.Tools
         /// <summary>
         /// Result of the call of ShowDialogInput
         /// </summary>
-        public struct DialogInputResult
+        public struct ShowDialogResult
         {
             /// <summary>
             /// The text set by the user
@@ -181,13 +193,13 @@ namespace EsseivaN.Tools
             /// </summary>
             public DialogResult DialogResult { get; set; }
 
-            public DialogInputResult(string UserInput)
+            public ShowDialogResult(string UserInput)
             {
                 this.UserInput = UserInput;
                 DialogResult = DialogResult.None;
             }
 
-            public DialogInputResult(string input, DialogResult dialogResult)
+            public ShowDialogResult(string input, DialogResult dialogResult)
             {
                 this.UserInput = input;
                 this.DialogResult = dialogResult;

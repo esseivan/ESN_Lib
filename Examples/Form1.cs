@@ -7,6 +7,8 @@ namespace Examples
 {
     public partial class Form1 : Form
     {
+        private string[] args;
+
         public Form1()
         {
             InitializeComponent();
@@ -14,7 +16,14 @@ namespace Examples
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            string[] args = Environment.GetCommandLineArgs();
+            args = Environment.GetCommandLineArgs();
+
+            Console.WriteLine("*** Arguments :");
+            foreach (string arg in args)
+            {
+                MessageBox.Show(arg);
+            }
+            Console.WriteLine("End of Arguments");
 
             if (args.Contains("INSTALLED"))
             {
@@ -44,6 +53,7 @@ namespace Examples
                 "Flags",                // 8
                 "Clipboard monitor",    // 9
                 "Logger",               // 10
+                "Tools",                // 11
             });
         }
 
@@ -83,6 +93,11 @@ namespace Examples
                     break;
                 case 10:
                     new ex_logger().ShowDialog();
+                    break;
+                case 11:
+                    var t = new ex_tools();
+                    t.args = args;
+                    t.ShowDialog();
                     break;
                 default:
                     break;

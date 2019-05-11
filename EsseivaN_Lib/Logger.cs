@@ -1,8 +1,131 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 
 namespace EsseivaN.Tools
 {
+    /// <summary>
+    /// Manage logging
+    /// </summary>
+    public class Logger<T> : Logger
+    {
+        /// <summary>
+        /// The output stream if WriteMode is WriteMode.Stream
+        /// </summary>
+        public StreamLogger<T> LogToFile_OutputStream { get; set; } = null;
+
+        public Logger()
+        {
+            creationTime = DateTime.Now;
+        }
+
+        protected override string CheckFile(string path)
+        {
+            if (LogToFile_WriteMode == WriteMode.Stream)
+                return "true";
+
+            // Create directory if not existing
+            if (!Directory.Exists(Path.GetDirectoryName(path)))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(path));
+            }
+
+            // If no extension, set .log
+            if (!Path.HasExtension(path))
+            {
+                path = Path.ChangeExtension(path, "log");
+            }
+
+            // If file not existing, create
+            if (!File.Exists(path))
+            {
+                File.Create(path).Close();
+            }
+            // Else if file existing and writemode set to write, clear file
+            else
+            {
+                if (LogToFile_WriteMode == WriteMode.Write)
+                {
+                    File.WriteAllText(path, string.Empty);
+                }
+            }
+
+            return path;
+        }
+
+        /// <summary>
+        /// Write log with custom text
+        /// </summary>
+        public override void WriteLog(string data, string log_level)
+        {
+            if (!Enabled)
+                return;
+
+            if (LogToFile_WriteMode == WriteMode.Stream)
+            {
+                if (LogToFile_OutputStream == null)
+                {
+                    LastException = new Exception("Output stream is not set !");
+                    return;
+                }
+            }
+
+            if (LogToFile_Mode != SaveFileMode.None)
+            {
+                var lines = data.Replace("\r", "").Split('\n');
+
+                string output = string.Empty;
+                string suffix = string.Empty;
+                string level = log_level;
+
+                if (level == "None" || level == string.Empty)
+                {
+                    level = string.Empty;
+                }
+                else
+                {
+                    level = $"[{level}] ".PadRight(8);
+                }
+
+                switch (LogToFile_SuffixMode)
+                {
+                    case Suffix_mode.None:
+                        break;
+                    case Suffix_mode.RunTime:
+                        suffix = (DateTime.Now - creationTime).TotalSeconds.ToString("000000.000");
+                        break;
+                    case Suffix_mode.CurrentTime:
+                        suffix = DateTime.Now.ToString("hh:mm:ss");
+                        break;
+                    case Suffix_mode.Custom:
+                        suffix = LogToFile_CustomSuffix;
+                        break;
+                    default:
+                        break;
+                }
+
+                if (suffix != string.Empty)
+                {
+                    suffix = $"[{suffix}] ";
+                }
+
+                foreach (var line in lines)
+                {
+                    output += $"{suffix}{level}{line}";
+                }
+
+                if (LogToFile_WriteMode == WriteMode.Stream)
+                {
+                    LogToFile_OutputStream.WriteData(output);
+                }
+                else
+                {
+                    File.AppendAllText(outputPath, output + Environment.NewLine);
+                }
+            }
+        }
+    }
+
     /// <summary>
     /// Manage logging
     /// </summary>
@@ -29,24 +152,28 @@ namespace EsseivaN.Tools
         /// </summary>
         public WriteMode LogToFile_WriteMode { get; set; } = WriteMode.Append;
 
-        private bool Enabled = false;
+        protected bool Enabled = false;
 
-        private Exception lastException;
-        
+        public bool HasError { get; set; }
+
         public Exception LastException
         {
             get
             {
-                var t = lastException;
-                lastException = null;
-                return t;
+                HasError = false;
+                return LastException;
+            }
+            protected set
+            {
+                HasError = true;
+                LastException = value;
             }
         }
 
         /// <summary>
         /// Return %appdata%\Manufacturer\ProductName path
         /// </summary>
-        public static string GetDefaultLogPath(string Manufacturer ,string ProductName)
+        public static string GetDefaultLogPath(string Manufacturer, string ProductName)
         {
             return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), $@"{Manufacturer}\{ProductName}\");
         }
@@ -54,9 +181,10 @@ namespace EsseivaN.Tools
         /// <summary>
         /// Output path generated by the Enable method and used by WriteLog
         /// </summary>
-        private string outputPath = string.Empty;
+        protected string outputPath = string.Empty;
 
-        private DateTime creationTime;
+        // Get the creation time to then get the running time of the app
+        protected DateTime creationTime;
 
         public enum SaveFileMode
         {
@@ -119,6 +247,10 @@ namespace EsseivaN.Tools
             /// Append to exitsing file
             /// </summary>
             Append = 1,
+            /// <summary>
+            /// Output to a stream
+            /// </summary>
+            Stream = 2,
         }
 
         public Logger()
@@ -195,7 +327,7 @@ namespace EsseivaN.Tools
                     }
                     catch (Exception ex)
                     {
-                        lastException = ex;
+                        LastException = ex;
                         return false;
                     }
 
@@ -218,8 +350,13 @@ namespace EsseivaN.Tools
             Enabled = false;
         }
 
-        private string CheckFile(string path)
+        protected virtual string CheckFile(string path)
         {
+            if (LogToFile_WriteMode == WriteMode.Stream)
+            {
+                throw new ArgumentException("Invalid write mode. Use Logger<T> for WriteMode.Stream");
+            }
+
             // Create directory if not existing
             if (!Directory.Exists(Path.GetDirectoryName(path)))
             {
@@ -268,8 +405,13 @@ namespace EsseivaN.Tools
         /// <summary>
         /// Write log with custom text
         /// </summary>
-        public void WriteLog(string data, string log_level)
+        public virtual void WriteLog(string data, string log_level)
         {
+            if (LogToFile_WriteMode == WriteMode.Stream)
+            {
+                throw new ArgumentException("Invalid write mode. Use Logger<T> for WriteMode.Stream");
+            }
+
             if (!Enabled)
                 return;
 
@@ -320,5 +462,40 @@ namespace EsseivaN.Tools
                 File.AppendAllText(outputPath, output);
             }
         }
+    }
+
+    public class StreamLogger<T>
+    {
+        private T stream;
+
+        public StreamLogger(T stream)
+        {
+            this.stream = stream;
+        }
+
+        public void WriteData(string data)
+        {
+            Type streamType = stream.GetType();
+
+            if (streamType.IsSubclassOf(typeof(Stream)))
+            {
+                byte[] bytes = Encoding.Default.GetBytes(data + Environment.NewLine);
+                (stream as Stream).Write(bytes, 0, bytes.Length);
+            }
+            else if (streamType.IsSubclassOf(typeof(StreamWriter)))
+            {
+                (stream as StreamWriter).WriteLine(data);
+            }
+            else if (streamType.IsSubclassOf(typeof(TextWriter)))
+            {
+                (stream as TextWriter).WriteLine(data);
+            }
+            else
+            {
+                throw new ArgumentException("Unsupported stream type : " + streamType);
+            }
+        }
+
+
     }
 }

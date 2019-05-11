@@ -93,6 +93,12 @@
     <Compile Include="ex_text_dialog.Designer.cs">
       <DependentUpon>ex_text_dialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="ex_tools.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ex_tools.Designer.cs">
+      <DependentUpon>ex_tools.cs</DependentUpon>
+    </Compile>
     <Compile Include="ex_update_checker.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -142,6 +148,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ex_text_panel.resx">
       <DependentUpon>ex_text_panel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ex_tools.resx">
+      <DependentUpon>ex_tools.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ex_update_checker.resx">
       <DependentUpon>ex_update_checker.cs</DependentUpon>

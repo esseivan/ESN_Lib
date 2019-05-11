@@ -71,7 +71,6 @@
     </Compile>
     <Compile Include="Flags.cs" />
     <Compile Include="Logger.cs" />
-    <Compile Include="MiscTools.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingsManager.cs" />
     <Compile Include="RichTextboxWatermark.cs">
@@ -80,6 +79,7 @@
     <Compile Include="TextboxWatermark.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Tools.cs" />
     <Compile Include="UpdateChecker.cs" />
     <Compile Include="Watermark.cs" />
     <Compile Include="TextDialog.cs">

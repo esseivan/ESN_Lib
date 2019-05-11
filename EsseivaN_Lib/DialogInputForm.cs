@@ -76,7 +76,7 @@ namespace EsseivaN.Controls
             }
         }
 
-        public static Dialog.DialogInputResult ShowDialog(string Message,
+        public static Dialog.ShowDialogResult ShowDialog(string Message,
             string Title = "Title",
             string DefaultInput = "",
             bool Input = false,
@@ -202,7 +202,7 @@ namespace EsseivaN.Controls
             }
 
             dialogForm.ShowDialog();
-            return new Dialog.DialogInputResult(dialogForm.Result, DialogResult);
+            return new Dialog.ShowDialogResult(dialogForm.Result, DialogResult);
         }
 
         private static string GetTextForCustom(Dialog.ButtonType buttonType)
