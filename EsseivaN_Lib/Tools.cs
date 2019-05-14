@@ -65,6 +65,17 @@ namespace EsseivaN.Tools
         /// </summary>
         public static string DecimalToEngineer(double Value)
         {
+            return DecimalToEngineer(Value, 3);
+        }
+
+        /// <summary>
+        /// Convert decimal format to engineer format
+        /// </summary>
+        public static string DecimalToEngineer(double Value, int Digits)
+        {
+            if (double.IsInfinity(Value) || double.IsNaN(Value))
+                return null;
+
             bool isNeg = false;
 
             if (Value < 0)
@@ -93,7 +104,7 @@ namespace EsseivaN.Tools
                 PowS++;
             }
 
-            Value = Math.Round(Value, 3);
+            Value = Math.Round(Value, Digits);
 
             switch (PowS)
             {
@@ -225,10 +236,14 @@ namespace EsseivaN.Tools
         /// <summary>
         /// Get error percent
         /// </summary>
-        public static double GetErrorPercent(double RealValue, double CalculatedValue)
+        public static double GetErrorPercent(double Value, double TrueValue)
         {
-            return (100 * (CalculatedValue - RealValue) / RealValue);
+            if (TrueValue == 0 || double.IsNaN(TrueValue))
+                return double.NaN;
+
+            return (100 * (Value - TrueValue) / TrueValue);
         }
+
         public enum FileSize
         {
             B = 0,
