@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using WinSCP;
 
 namespace EsseivaN.Tools
@@ -92,13 +93,21 @@ usage: <app_name> [BaseConfig path]";
                         PrivateKeyPassphrase = baseConfig.Passphrase,
                         PortNumber = baseConfig.Port,
                         FtpMode = baseConfig.FtpMode,
-
                     };
                 }
 
                 // Open new session
                 using (Session session = new Session())
                 {
+                    // Enable log
+                    string logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "sftp_upload_log");
+                    if (!Directory.Exists(logPath))
+                        Directory.CreateDirectory(logPath);
+
+                    //session.SessionLogPath = (Path.Combine(logPath, "sessionLog.txt"));
+                    session.DebugLogPath = (Path.Combine(logPath, "debugLog.txt"));
+                    session.DebugLogLevel = -1;
+
                     // Connect
                     session.Open(sessionOptions);
 
@@ -107,6 +116,22 @@ usage: <app_name> [BaseConfig path]";
                     foreach (ConfigManager.BaseConfig.Config config in baseConfig.Configs)
                     {
                         Console.WriteLine($"[{DateTime.Now.ToString("yyyy.MM.dd hh.mm.ss")}] Starting new upload");
+
+                        if (config.SyncModeEnabled)
+                            Console.WriteLine($"Synchronize local {config.LocalPath} to remote {config.RemotePath}");
+                        else
+                            Console.WriteLine($"Upload local {config.LocalPath} to remote {config.RemotePath}");
+
+                        if (config.FileMask != string.Empty)
+                            Console.WriteLine("With file mask : \"" + config.FileMask + "\"");
+                        else
+                            Console.WriteLine("Without file mask");
+
+                        if (!config.Enabled)
+                        {
+                            Console.WriteLine("Config disabled");
+                            continue;
+                        }
 
                         if (!config.IsValid())
                         {
@@ -117,53 +142,32 @@ usage: <app_name> [BaseConfig path]";
                         // Upload files
                         TransferOptions transferOptions = new TransferOptions
                         {
-                            TransferMode = config.TransferMode
+                            TransferMode = config.TransferMode,
+                            FileMask = config.FileMask,
                         };
 
-                        Console.WriteLine($"Synchronize local {config.LocalPath} to remote {config.RemotePath}");
+                        if (config.SyncModeEnabled)
+                        {
+                            // Synchronise
+                            SynchronizationResult syncResult = session.SynchronizeDirectories(mode: config.SyncMode,
+                                    localPath: config.LocalPath,
+                                    remotePath: config.RemotePath,
+                                    removeFiles: config.RemoveFiles,
+                                    mirror: config.Mirror,
+                                    criteria: config.SyncCriteria,
+                                    options: transferOptions);
 
-                        SynchronizationResult result = session.SynchronizeDirectories(mode: config.SyncMode,
-                                localPath: config.LocalPath,
+                            WriteResult(syncResult);
+                        }
+                        else
+                        {
+                            // Upload
+                            TransferOperationResult transfResult = session.PutFiles(localPath: config.LocalPath,
                                 remotePath: config.RemotePath,
-                                removeFiles: config.RemoveFiles,
-                                mirror: config.Mirror,
-                                criteria: config.SyncCriteria,
+                                remove: config.RemoveFiles,
                                 options: transferOptions);
 
-                        result.Check();
-                        Console.WriteLine("Failures: " + result.Failures.Count);
-                        if (result.Failures.Count != 0)
-                        {
-                            foreach (SessionRemoteException item in result.Failures)
-                            {
-                                Console.WriteLine("\t" + item.Message);
-                            }
-                        }
-
-                        Console.WriteLine("Downloads: " + result.Downloads.Count);
-                        if (result.Downloads.Count != 0)
-                        {
-                            foreach (TransferEventArgs item in result.Downloads)
-                            {
-                                Console.WriteLine("\t" + item.FileName);
-                            }
-                        }
-                        Console.WriteLine("IsSuccess: " + result.IsSuccess);
-                        Console.WriteLine("Uploads: " + result.Uploads.Count);
-                        if (result.Uploads.Count != 0)
-                        {
-                            foreach (TransferEventArgs item in result.Uploads)
-                            {
-                                Console.WriteLine("\t" + item.FileName);
-                            }
-                        }
-                        Console.WriteLine("Removals: " + result.Removals.Count);
-                        if (result.Removals.Count != 0)
-                        {
-                            foreach (RemovalEventArgs item in result.Removals)
-                            {
-                                Console.WriteLine("\t" + item.FileName);
-                            }
+                            WriteResult(transfResult);
                         }
                     }
                     // Session is automatically closed with the using keyword
@@ -173,10 +177,73 @@ usage: <app_name> [BaseConfig path]";
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine(ex);
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Out.WriteLine(ex);
                 return false;
             }
             return true;
+        }
+
+        private static void WriteResult(TransferOperationResult result)
+        {
+            result.Check();
+            Console.WriteLine("Failures: " + result.Failures.Count);
+            if (result.Failures.Count != 0)
+            {
+                foreach (SessionRemoteException item in result.Failures)
+                {
+                    Console.WriteLine("\t" + item.Message);
+                }
+            }
+
+            Console.WriteLine("Transfers: " + result.Transfers.Count);
+            if (result.Transfers.Count != 0)
+            {
+                foreach (TransferEventArgs item in result.Transfers)
+                {
+                    Console.WriteLine("\t" + item.FileName);
+                }
+            }
+            Console.WriteLine("IsSuccess: " + result.IsSuccess);
+        }
+
+        private static void WriteResult(SynchronizationResult result)
+        {
+            result.Check();
+            Console.WriteLine("Failures: " + result.Failures.Count);
+            if (result.Failures.Count != 0)
+            {
+                foreach (SessionRemoteException item in result.Failures)
+                {
+                    Console.WriteLine("\t" + item.Message);
+                }
+            }
+
+            Console.WriteLine("Downloads: " + result.Downloads.Count);
+            if (result.Downloads.Count != 0)
+            {
+                foreach (TransferEventArgs item in result.Downloads)
+                {
+                    Console.WriteLine("\t" + item.FileName);
+                }
+            }
+            Console.WriteLine("Uploads: " + result.Uploads.Count);
+            if (result.Uploads.Count != 0)
+            {
+                foreach (TransferEventArgs item in result.Uploads)
+                {
+                    Console.WriteLine("\t" + item.FileName);
+                }
+            }
+            Console.WriteLine("Removals: " + result.Removals.Count);
+            if (result.Removals.Count != 0)
+            {
+                foreach (RemovalEventArgs item in result.Removals)
+                {
+                    Console.WriteLine("\t" + item.FileName);
+                }
+            }
+            Console.WriteLine("IsSuccess: " + result.IsSuccess);
         }
 
         /// <summary>

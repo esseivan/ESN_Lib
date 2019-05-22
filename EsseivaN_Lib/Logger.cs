@@ -308,7 +308,7 @@ namespace EsseivaN.Tools
                     outputPath = Path.ChangeExtension(LogToFile_FilePath, null);
                     // Add suffix
                     string previousPath = outputPath + "_previous";
-                    outputPath += "_last";
+                    outputPath += "_current";
                     // Add extension
                     outputPath = Path.ChangeExtension(outputPath, extension);
                     previousPath = Path.ChangeExtension(previousPath, extension);

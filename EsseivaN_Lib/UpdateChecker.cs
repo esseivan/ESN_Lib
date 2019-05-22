@@ -246,6 +246,9 @@ namespace EsseivaN.Tools
         }
     }
 
+    /// <summary>
+    /// Contains predefined methods to ask user what to do. Optionnal use
+    /// </summary>
     public class UpdateChecker_Runner
     {
         private UpdateChecker_Runner() { }

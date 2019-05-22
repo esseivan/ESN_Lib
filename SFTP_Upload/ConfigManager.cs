@@ -105,11 +105,15 @@ namespace EsseivaN
             public class Config : IComparable<Config>
             {
                 /// <summary>
+                /// Is this config enabled
+                /// </summary>
+                public bool Enabled { get; set; } = true;
+                /// <summary>
                 /// Priority to run this config, the higher this value, the higher the priority
                 /// </summary>
                 public int RunPriority { get; set; }
                 /// <summary>
-                /// Determine the synchronization mode. Default : Remote
+                /// Determine the synchronization mode. Default : Remote. Local = 1, Remote = 2, Both = 3
                 /// </summary>
                 public SynchronizationMode SyncMode { get; set; } = SynchronizationMode.Remote;
                 /// <summary>
@@ -125,23 +129,40 @@ namespace EsseivaN
                 /// </summary>
                 public string LocalPath { get; set; }
                 /// <summary>
+                /// FileMask for the transfer
+                /// </summary>
+                public string FileMask { get; set; }
+                /// <summary>
                 /// Remote path
                 /// </summary>
                 public string RemotePath { get; set; }
                 /// <summary>
-                /// Remove files
+                /// Remove files. True to remove, False to keep
                 /// </summary>
                 public bool RemoveFiles { get; set; } = false;
                 /// <summary>
-                /// Mirror
+                /// Mirror mode
                 /// </summary>
                 public bool Mirror { get; set; } = false;
+                /// <summary>
+                /// Is sync mode enabled or are we just uploading files wihout checking. True = sync mode, False = upload mode
+                /// </summary>
+                public bool SyncModeEnabled { get; set; } = true;
 
                 /// <summary>
-                /// Compare according to run priority
+                /// Compare according to run priority (0 is lowest priority, negatives excluded)
                 /// </summary>
                 public int CompareTo(Config other)
                 {
+                    // Negatives numbers are last priority
+                    if(this.RunPriority < 0)
+                    {
+                        // If also last priority, set equal
+                        if (other.RunPriority < 0)
+                            return 0;
+                        return -1;
+                    }
+                    // Priority close to 0 comes first
                     if (this.RunPriority < other.RunPriority)
                         return 1;
                     if (this.RunPriority > other.RunPriority)
