@@ -75,6 +75,18 @@
     <Compile Include="ex_logger.Designer.cs">
       <DependentUpon>ex_logger.cs</DependentUpon>
     </Compile>
+    <Compile Include="ex_math.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ex_math.Designer.cs">
+      <DependentUpon>ex_math.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ex_plugins.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ex_plugins.Designer.cs">
+      <DependentUpon>ex_plugins.cs</DependentUpon>
+    </Compile>
     <Compile Include="ex_settings_manager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,6 +129,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="ex_enumList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ex_enumList.Designer.cs">
+      <DependentUpon>ex_enumList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ex_text_panel.cs">
@@ -131,11 +149,20 @@
     <EmbeddedResource Include="ex_dialogInput.resx">
       <DependentUpon>ex_dialogInput.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ex_enumList.resx">
+      <DependentUpon>ex_enumList.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ex_flags.resx">
       <DependentUpon>ex_flags.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ex_logger.resx">
       <DependentUpon>ex_logger.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ex_math.resx">
+      <DependentUpon>ex_math.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ex_plugins.resx">
+      <DependentUpon>ex_plugins.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ex_settings_manager.resx">
       <DependentUpon>ex_settings_manager.cs</DependentUpon>

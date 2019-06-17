@@ -54,6 +54,9 @@ namespace Examples
                 "Clipboard monitor",    // 9
                 "Logger",               // 10
                 "Tools",                // 11
+                "Math",                 // 12
+                "Enum list",            // 13
+                "Plugin",               // 14
             });
         }
 
@@ -98,6 +101,15 @@ namespace Examples
                     var t = new ex_tools();
                     t.args = args;
                     t.ShowDialog();
+                    break;
+                case 12:
+                    new ex_math().ShowDialog();
+                    break;
+                case 13:
+                    new ex_enumList().ShowDialog();
+                    break;
+                case 14:
+                    new ex_plugins().ShowDialog();
                     break;
                 default:
                     break;
