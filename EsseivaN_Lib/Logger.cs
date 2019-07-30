@@ -256,6 +256,7 @@ namespace EsseivaN.Tools
         public Logger()
         {
             creationTime = DateTime.Now;
+            Enable();
         }
 
         /// <summary>

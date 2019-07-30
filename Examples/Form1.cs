@@ -21,7 +21,8 @@ namespace Examples
             Console.WriteLine("*** Arguments :");
             foreach (string arg in args)
             {
-                MessageBox.Show(arg);
+                //MessageBox.Show(arg);
+                Console.WriteLine(arg);
             }
             Console.WriteLine("End of Arguments");
 
@@ -55,8 +56,7 @@ namespace Examples
                 "Logger",               // 10
                 "Tools",                // 11
                 "Math",                 // 12
-                "Enum list",            // 13
-                "Plugin",               // 14
+                "Plugin",               // 13
             });
         }
 
@@ -106,9 +106,6 @@ namespace Examples
                     new ex_math().ShowDialog();
                     break;
                 case 13:
-                    new ex_enumList().ShowDialog();
-                    break;
-                case 14:
                     new ex_plugins().ShowDialog();
                     break;
                 default:
