@@ -82,6 +82,7 @@
     </Compile>
     <Compile Include="Tools.cs" />
     <Compile Include="UpdateChecker.cs" />
+    <Compile Include="Utils.cs" />
     <Compile Include="Watermark.cs" />
     <Compile Include="TextDialog.cs">
       <SubType>Component</SubType>

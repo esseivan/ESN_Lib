@@ -496,7 +496,5 @@ namespace EsseivaN.Tools
                 throw new ArgumentException("Unsupported stream type : " + streamType);
             }
         }
-
-
     }
 }
