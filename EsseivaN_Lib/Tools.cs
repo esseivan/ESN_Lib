@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -13,6 +14,42 @@ namespace EsseivaN.Tools
 {
     public class Tools
     {
+        private Tools() { }
+
+        public static void SetStartup(string appName, bool runOnStartup)
+        {
+            RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+
+            if (runOnStartup)
+                rk.SetValue(appName, Application.ExecutablePath.ToString());
+            else
+                rk.DeleteValue(appName, false);
+        }
+
+        public static void SetStartup(string appName, bool runOnStartup, string args)
+        {
+            RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+
+            if (runOnStartup)
+                rk.SetValue(appName, $"\"{Application.ExecutablePath}\" {args}");
+            else
+                rk.DeleteValue(appName, false);
+        }
+
+        public static string GetStartupValue(string appName)
+        {
+            RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", false);
+
+            return (string)rk.GetValue(appName, null);
+        }
+
+        public static bool GetStartup(string appName)
+        {
+            RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", false);
+
+            return rk.GetValue(appName, null) != null;
+        }
+
         /// <summary>
         /// 
         /// </summary>
