@@ -65,7 +65,7 @@ namespace Examples
         {
             logger.LogToFile_CustomSuffix = textboxWatermark1.Text;
             logger.LogToFile_FilePath = path;
-            logger.LogToFile_Mode = (Logger.SaveFileMode)comboBox1.SelectedIndex;
+            logger.LogToFile_SaveMode = (Logger.SaveFileMode)comboBox1.SelectedIndex;
             logger.LogToFile_SuffixMode = (Logger.Suffix_mode)comboBox2.SelectedIndex;
             logger.LogToFile_WriteMode = (Logger.WriteMode)comboBox3.SelectedIndex;
 

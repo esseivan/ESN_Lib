@@ -56,73 +56,71 @@ namespace EsseivaN.Tools
         /// <summary>
         /// Write log with custom text
         /// </summary>
-        public override void WriteLog(string data, string log_level)
+        public override bool WriteLog(string data, string log_level)
         {
             if (!Enabled)
-                return;
+                return false;
 
             if (LogToFile_WriteMode == WriteMode.Stream)
             {
                 if (LogToFile_OutputStream == null)
                 {
                     LastException = new Exception("Output stream is not set !");
-                    return;
+                    return false;
                 }
             }
 
-            if (LogToFile_Mode != SaveFileMode.None)
+            var lines = data.Replace("\r", "").Split('\n');
+
+            string output = string.Empty;
+            string suffix = string.Empty;
+            string level = log_level;
+
+            if (level == "None" || level == string.Empty)
             {
-                var lines = data.Replace("\r", "").Split('\n');
-
-                string output = string.Empty;
-                string suffix = string.Empty;
-                string level = log_level;
-
-                if (level == "None" || level == string.Empty)
-                {
-                    level = string.Empty;
-                }
-                else
-                {
-                    level = $"[{level}] ".PadRight(8);
-                }
-
-                switch (LogToFile_SuffixMode)
-                {
-                    case Suffix_mode.None:
-                        break;
-                    case Suffix_mode.RunTime:
-                        suffix = (DateTime.Now - creationTime).TotalSeconds.ToString("000000.000");
-                        break;
-                    case Suffix_mode.CurrentTime:
-                        suffix = DateTime.Now.ToString("hh:mm:ss");
-                        break;
-                    case Suffix_mode.Custom:
-                        suffix = LogToFile_CustomSuffix;
-                        break;
-                    default:
-                        break;
-                }
-
-                if (suffix != string.Empty)
-                {
-                    suffix = $"[{suffix}] ";
-                }
-
-                foreach (var line in lines)
-                {
-                    output += $"{suffix}{level}{line}";
-                }
-
-                if (LogToFile_WriteMode == WriteMode.Stream)
-                {
-                    LogToFile_OutputStream.WriteData(output);
-                }
-                else
-                {
-                    File.AppendAllText(outputPath, output + Environment.NewLine);
-                }
+                level = string.Empty;
             }
+            else
+            {
+                level = $"[{level}] ".PadRight(8);
+            }
+
+            switch (LogToFile_SuffixMode)
+            {
+                case Suffix_mode.None:
+                    break;
+                case Suffix_mode.RunTime:
+                    suffix = (DateTime.Now - creationTime).TotalSeconds.ToString("000000.000");
+                    break;
+                case Suffix_mode.CurrentTime:
+                    suffix = DateTime.Now.ToString("hh:mm:ss");
+                    break;
+                case Suffix_mode.Custom:
+                    suffix = LogToFile_CustomSuffix;
+                    break;
+                default:
+                    break;
+            }
+
+            if (suffix != string.Empty)
+            {
+                suffix = $"[{suffix}] ";
+            }
+
+            foreach (var line in lines)
+            {
+                output += $"{suffix}{level}{line}";
+            }
+
+            if (LogToFile_WriteMode == WriteMode.Stream)
+            {
+                LogToFile_OutputStream.WriteData(output);
+            }
+            if (LogToFile_SaveMode != SaveFileMode.None)
+            {
+                File.AppendAllText(outputPath, output + Environment.NewLine);
+            }
+            return true;
         }
     }
 
@@ -138,7 +136,7 @@ namespace EsseivaN.Tools
         /// <summary>
         /// Log to file mode
         /// </summary>
-        public SaveFileMode LogToFile_Mode { get; set; } = SaveFileMode.FileName_DatePrefix;
+        public SaveFileMode LogToFile_SaveMode { get; set; } = SaveFileMode.FileName_DatePrefix;
         /// <summary>
         /// Suffix of WriteLog text lines
         /// </summary>
@@ -155,6 +153,12 @@ namespace EsseivaN.Tools
         protected bool Enabled = false;
 
         public bool HasError { get; set; }
+
+        public delegate void LoggerEventHandler(object sender, LoggerEventArgs e);
+        /// <summary>
+        /// Called when a text is written to the log
+        /// </summary>
+        public event LoggerEventHandler OnWrite;
 
         public Exception LastException
         {
@@ -242,21 +246,23 @@ namespace EsseivaN.Tools
             /// <summary>
             /// Write over existing file
             /// </summary>
-            Write = 0,
+            Write,
             /// <summary>
             /// Append to exitsing file
             /// </summary>
-            Append = 1,
+            Append,
             /// <summary>
             /// Output to a stream
             /// </summary>
-            Stream = 2,
+            Stream,
         }
 
+        /// <summary>
+        /// Call the Enable function before to write to log
+        /// </summary>
         public Logger()
         {
             creationTime = DateTime.Now;
-            Enable();
         }
 
         /// <summary>
@@ -264,7 +270,7 @@ namespace EsseivaN.Tools
         /// </summary>
         public bool Enable()
         {
-            switch (LogToFile_Mode)
+            switch (LogToFile_SaveMode)
             {
                 case SaveFileMode.None:
                     break;
@@ -346,6 +352,9 @@ namespace EsseivaN.Tools
             return true;
         }
 
+        /// <summary>
+        /// Disable writelog function
+        /// </summary>
         public void Disable()
         {
             Enabled = false;
@@ -357,6 +366,9 @@ namespace EsseivaN.Tools
             {
                 throw new ArgumentException("Invalid write mode. Use Logger<T> for WriteMode.Stream");
             }
+
+            if (path == string.Empty)
+                return path;
 
             // Create directory if not existing
             if (!Directory.Exists(Path.GetDirectoryName(path)))
@@ -390,23 +402,23 @@ namespace EsseivaN.Tools
         /// <summary>
         /// Write log with default level (debug)
         /// </summary>
-        public void WriteLog(string data)
+        public bool WriteLog(string data)
         {
-            WriteLog(data, Log_level.Debug);
+            return WriteLog(data, Log_level.Debug);
         }
 
         /// <summary>
         /// Write log with specified level
         /// </summary>
-        public void WriteLog(string data, Log_level log_Level)
+        public bool WriteLog(string data, Log_level log_Level)
         {
-            WriteLog(data, log_Level.ToString());
+            return WriteLog(data, log_Level.ToString());
         }
 
         /// <summary>
         /// Write log with custom text
         /// </summary>
-        public virtual void WriteLog(string data, string log_level)
+        public virtual bool WriteLog(string data, string log_level)
         {
             if (LogToFile_WriteMode == WriteMode.Stream)
             {
@@ -414,53 +426,64 @@ namespace EsseivaN.Tools
             }
 
             if (!Enabled)
-                return;
+                return false;
 
-            if (LogToFile_Mode != SaveFileMode.None)
+            var lines = data.Replace("\r", "").Split('\n');
+
+            string output = string.Empty;
+            string suffix = string.Empty;
+            string level = log_level;
+
+            if (level == "None" || level == string.Empty)
             {
-                var lines = data.Replace("\r", "").Split('\n');
+                level = string.Empty;
+            }
+            else
+            {
+                level = $"[{level}] ".PadRight(8);
+            }
 
-                string output = string.Empty;
-                string suffix = string.Empty;
-                string level = log_level;
+            switch (LogToFile_SuffixMode)
+            {
+                case Suffix_mode.None:
+                    break;
+                case Suffix_mode.RunTime:
+                    suffix = (DateTime.Now - creationTime).TotalSeconds.ToString("000000.000");
+                    break;
+                case Suffix_mode.CurrentTime:
+                    suffix = DateTime.Now.ToString("hh:mm:ss");
+                    break;
+                case Suffix_mode.Custom:
+                    suffix = LogToFile_CustomSuffix;
+                    break;
+                default:
+                    break;
+            }
 
-                if (level == "None" || level == string.Empty)
-                {
-                    level = string.Empty;
-                }
-                else
-                {
-                    level = $"[{level}] ".PadRight(8);
-                }
+            if (suffix != string.Empty)
+            {
+                suffix = $"[{suffix}] ";
+            }
 
-                switch (LogToFile_SuffixMode)
-                {
-                    case Suffix_mode.None:
-                        break;
-                    case Suffix_mode.RunTime:
-                        suffix = (DateTime.Now - creationTime).TotalSeconds.ToString("000000.000");
-                        break;
-                    case Suffix_mode.CurrentTime:
-                        suffix = DateTime.Now.ToString("hh:mm:ss");
-                        break;
-                    case Suffix_mode.Custom:
-                        suffix = LogToFile_CustomSuffix;
-                        break;
-                    default:
-                        break;
-                }
+            foreach (var line in lines)
+            {
+                output += $"{suffix}{level}{line}\n";
+            }
 
-                if (suffix != string.Empty)
-                {
-                    suffix = $"[{suffix}] ";
-                }
+            OnWrite?.Invoke(this, new LoggerEventArgs(output));
 
-                foreach (var line in lines)
-                {
-                    output += $"{suffix}{level}{line}\n";
-                }
-
+            if (LogToFile_SaveMode != SaveFileMode.None)
                 File.AppendAllText(outputPath, output);
+            return true;
+        }
+
+        public class LoggerEventArgs : EventArgs
+        {
+            public string Text { get; private set; } = string.Empty;
+
+            public LoggerEventArgs(string Text)
+            {
+                this.Text = Text;
             }
         }
     }
