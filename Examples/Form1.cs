@@ -57,6 +57,7 @@ namespace Examples
                 "Tools",                // 11
                 "Math",                 // 12
                 "Plugin",               // 13
+                "Setting Manager",      // 14
             });
         }
 
@@ -107,6 +108,9 @@ namespace Examples
                     break;
                 case 13:
                     new ex_plugins().ShowDialog();
+                    break;
+                case 14:
+                    new ex_setting_manager().ShowDialog();
                     break;
                 default:
                     break;

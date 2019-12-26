@@ -15,7 +15,7 @@ namespace Examples
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var r = flags.getBits((int)numericUpDown1.Value, (int)numericUpDown2.Value);
+            var r = flags.GetBits((int)numericUpDown1.Value, (int)numericUpDown2.Value);
             if (r == -1)
             {
                 MessageBox.Show("Error, no data", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -34,13 +34,13 @@ namespace Examples
 
         private void button2_Click(object sender, EventArgs e)
         {
-            flags.setBits((int)numericUpDown1.Value, (int)numericUpDown2.Value, (int)numericUpDown3.Value);
+            flags.SetBits((int)numericUpDown1.Value, (int)numericUpDown2.Value, (int)numericUpDown3.Value);
             displayBox();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            var r = flags.getBits((int)numericUpDown1.Value);
+            var r = flags.GetBits((int)numericUpDown1.Value, 1);
             if (r == -1)
             {
                 MessageBox.Show("Error, no data", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -54,7 +54,7 @@ namespace Examples
 
         private void button4_Click(object sender, EventArgs e)
         {
-            var r = flags.getBit((int)numericUpDown1.Value) ? 1 : 0;
+            var r = flags.GetBit((int)numericUpDown1.Value) ? 1 : 0;
             if (r == -1)
             {
                 MessageBox.Show("Error, no data", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -68,20 +68,20 @@ namespace Examples
 
         private void button5_Click(object sender, EventArgs e)
         {
-            flags.setBits((int)numericUpDown1.Value, (int)numericUpDown3.Value);
+            flags.SetBits((int)numericUpDown1.Value, (int)numericUpDown3.Value);
             displayBox();
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            flags.setBit((int)numericUpDown1.Value, numericUpDown3.Value > 0);
+            flags.SetBit((int)numericUpDown1.Value, numericUpDown3.Value > 0);
             displayBox();
         }
 
         private void displayBox()
         {
-            textBox1.Text = flags.displayBinary(0);
-            textBox2.Text = flags.displayHex(0);
+            textBox1.Text = flags.DisplayBinary(0);
+            textBox2.Text = flags.DisplayHex(0);
         }
     }
 }

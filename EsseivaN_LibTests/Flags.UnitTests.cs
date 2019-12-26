@@ -11,15 +11,15 @@ namespace EsseivaN.UnitTests
         public void FlagsSetBits_0To32_1FlagAndData()
         {
             // Arrange
-            Flags flags_Infinite = new Flags();
+            Flags flags = new Flags();
             int writeData = 0x55A5A5A5;
 
             // Act
-            flags_Infinite.setBits(0, 32, writeData);
-            int readData = flags_Infinite.FlagList[0];
+            flags.SetBits(0, 32, writeData);
+            int readData = flags.FlagList[0];
 
             // Assert 
-            Assert.IsTrue(flags_Infinite.FlagList.Count == 1);
+            Assert.IsTrue(flags.FlagList.Count == 1);
             Assert.AreEqual(readData, (int)writeData);
         }
 
@@ -27,15 +27,15 @@ namespace EsseivaN.UnitTests
         public void FlagsSetBits_16To32_2FlagAndData()
         {
             // Arrange
-            Flags flags_Infinite = new Flags();
+            Flags flags = new Flags();
             int writeData = 0x55A5A5A5;
 
             // Act
-            flags_Infinite.setBits(16, 32, writeData);
-            int readData = flags_Infinite.getBits(16, 32);
+            flags.SetBits(16, 32, writeData);
+            int readData = flags.GetBits(16, 32);
 
             // Assert
-            Assert.IsTrue(flags_Infinite.FlagList.Count == 2);
+            Assert.IsTrue(flags.FlagList.Count == 2);
             Assert.AreEqual(readData, writeData);
         }
 
@@ -43,15 +43,15 @@ namespace EsseivaN.UnitTests
         public void FlagsSetBits_28To32_2FlagAndData()
         {
             // Arrange
-            Flags flags_Infinite = new Flags();
+            Flags flags = new Flags();
             int writeData = 0x55A5A5A5;
 
             // Act
-            flags_Infinite.setBits(28, 32, writeData);
-            int readData = flags_Infinite.getBits(28, 32);
+            flags.SetBits(28, 32, writeData);
+            int readData = flags.GetBits(28, 32);
             
             // Assert
-            Assert.IsTrue(flags_Infinite.FlagList.Count == 2);
+            Assert.IsTrue(flags.FlagList.Count == 2);
             Assert.AreEqual(readData, writeData);
         }
 
@@ -59,15 +59,15 @@ namespace EsseivaN.UnitTests
         public void FlagsSetBits_68To32_4FlagAndData()
         {
             // Arrange
-            Flags flags_Infinite = new Flags();
+            Flags flags = new Flags();
             int writeData = 0x55A5A5A5;
 
             // Act
-            flags_Infinite.setBits(68, 32, writeData);
-            int readData = flags_Infinite.getBits(68, 32);
+            flags.SetBits(68, 32, writeData);
+            int readData = flags.GetBits(68, 32);
 
             // Assert
-            Assert.IsTrue(flags_Infinite.FlagList.Count == 4);
+            Assert.IsTrue(flags.FlagList.Count == 4);
             Assert.AreEqual(readData, writeData);
         }
 
@@ -75,15 +75,15 @@ namespace EsseivaN.UnitTests
         public void FlagsGetBits_0To32_1FlagAndData()
         {
             // Arrange
-            Flags flags_Infinite = new Flags();
+            Flags flags = new Flags();
             int writeData = 0x55A5A5A5;
 
             // Act
-            flags_Infinite.setBits(0, 32, writeData);
-            int readData = flags_Infinite.getBits(0, 32);
+            flags.SetBits(0, 32, writeData);
+            int readData = flags.GetBits(0, 32);
 
             // Assert
-            Assert.IsTrue(flags_Infinite.FlagList.Count == 1);
+            Assert.IsTrue(flags.FlagList.Count == 1);
             Assert.AreEqual(readData, writeData);
         }
 
@@ -91,15 +91,15 @@ namespace EsseivaN.UnitTests
         public void FlagsGetBits_16To32_2FlagAndData()
         {
             // Arrange
-            Flags flags_Infinite = new Flags();
+            Flags flags = new Flags();
             int writeData = 0x55A5A5A5;
 
             // Act
-            flags_Infinite.setBits(16, 32, writeData);
-            int readData = flags_Infinite.getBits(16, 32);
+            flags.SetBits(16, 32, writeData);
+            int readData = flags.GetBits(16, 32);
 
             // Assert 
-            Assert.IsTrue(flags_Infinite.FlagList.Count == 2);
+            Assert.IsTrue(flags.FlagList.Count == 2);
             Assert.AreEqual(readData, writeData);
         }
 
@@ -107,15 +107,15 @@ namespace EsseivaN.UnitTests
         public void FlagsGetBits_28To32_2FlagAndData()
         {
             // Arrange
-            Flags flags_Infinite = new Flags();
+            Flags flags = new Flags();
             int writeData = 0x55A5A5A5;
 
             // Act
-            flags_Infinite.setBits(28, 32, writeData);
-            int readData = flags_Infinite.getBits(28, 32);
+            flags.SetBits(28, 32, writeData);
+            int readData = flags.GetBits(28, 32);
 
             // Assert 
-            Assert.IsTrue(flags_Infinite.FlagList.Count == 2);
+            Assert.IsTrue(flags.FlagList.Count == 2);
             Assert.AreEqual(readData, writeData);
         }
 
@@ -130,7 +130,7 @@ namespace EsseivaN.UnitTests
             //          5, 8, 0x12345678
             //          13, 3, 0x123
             // Arrange
-            Flags flags_Infinite = new Flags();
+            Flags flags = new Flags();
             int c1,
                 c2,
                 r11,
@@ -141,22 +141,22 @@ namespace EsseivaN.UnitTests
             // Act
             // ##### First order
             // Initialize content
-            flags_Infinite.setBits(0, 3*4, 0x123);
-            flags_Infinite.setBits(3*4, 2*4, 0x12);
-            flags_Infinite.setBits(5*4, 8*4, 0x12345678);
-            flags_Infinite.setBits(13*4, 3*4, 0x123);
-            c1 = flags_Infinite.FlagList.Count;
-            r11 = flags_Infinite.getBits(0, 32);
-            r12 = flags_Infinite.getBits(32, 32);
+            flags.SetBits(0, 3*4, 0x123);
+            flags.SetBits(3*4, 2*4, 0x12);
+            flags.SetBits(5*4, 8*4, 0x12345678);
+            flags.SetBits(13*4, 3*4, 0x123);
+            c1 = flags.FlagList.Count;
+            r11 = flags.GetBits(0, 32);
+            r12 = flags.GetBits(32, 32);
             // ##### Second order
             // Initialize content
-            flags_Infinite.setBits(13*4, 3*4, 0x123);
-            flags_Infinite.setBits(0, 3*4, 0x123);
-            flags_Infinite.setBits(5*4, 8*4, 0x12345678);
-            flags_Infinite.setBits(3*4, 2*4, 0x12);
-            c2 = flags_Infinite.FlagList.Count;
-            r21 = flags_Infinite.getBits(0, 32);
-            r22 = flags_Infinite.getBits(32, 32);
+            flags.SetBits(13*4, 3*4, 0x123);
+            flags.SetBits(0, 3*4, 0x123);
+            flags.SetBits(5*4, 8*4, 0x12345678);
+            flags.SetBits(3*4, 2*4, 0x12);
+            c2 = flags.FlagList.Count;
+            r21 = flags.GetBits(0, 32);
+            r22 = flags.GetBits(32, 32);
 
             // Act
             Assert.IsTrue(c1 == 2);
@@ -175,15 +175,15 @@ namespace EsseivaN.UnitTests
             // wanted pattern :
             // 0x00654300
             // Arrange
-            Flags flags_Infinite = new Flags();
+            Flags flags = new Flags();
 
             // Act
-            flags_Infinite.setBits(0, 6 * 4, 0x87654321);
-            flags_Infinite.setBits(0, 2 * 4, 0);
-            int readData = flags_Infinite.getBits(0, 32);
+            flags.SetBits(0, 6 * 4, 0x87654321);
+            flags.SetBits(0, 2 * 4, 0);
+            int readData = flags.GetBits(0, 32);
 
             // Assert 
-            Assert.IsTrue(flags_Infinite.FlagList.Count == 1);
+            Assert.IsTrue(flags.FlagList.Count == 1);
             Assert.AreEqual(readData, 0x00654300); 
         }
 
@@ -191,7 +191,7 @@ namespace EsseivaN.UnitTests
         public void FlagsSetBits_FullTest_GetEqualsSet()
         {
             // Arrange
-            Flags flags_Infinite = new Flags();
+            Flags flags = new Flags();
             int[] Pattern_index = { 0, 40, 80, 120, 160, 200, 235, 270, 305, 340 };
             Random rnd = new Random();
             int[] writeData = new int[10];
@@ -200,16 +200,16 @@ namespace EsseivaN.UnitTests
             for (int i = 0; i < 10; i++)
             {
                 writeData[i] = (int)(rnd.NextDouble() * int.MaxValue);
-                flags_Infinite.setBits(Pattern_index[i], 32, writeData[i]);
+                flags.SetBits(Pattern_index[i], 32, writeData[i]);
             }
             int[] readData = new int[10];
             for (int i = 0; i < 10; i++)
             {
-                readData[i] = flags_Infinite.getBits(Pattern_index[i], 32);
+                readData[i] = flags.GetBits(Pattern_index[i], 32);
             }
 
             // Assert 
-            Assert.IsTrue(flags_Infinite.FlagList.Count == 12);
+            Assert.IsTrue(flags.FlagList.Count == 12);
             for (int i = 0; i < 10; i++)
             {
                 Assert.AreEqual(readData[i], writeData[i]);
@@ -220,15 +220,15 @@ namespace EsseivaN.UnitTests
         public void FlagsDisplayBinary_Normal_DataValid()
         {
             // Arrange
-            Flags flags_Infinite = new Flags();
+            Flags flags = new Flags();
             int writeData = 0b0110011000111;
 
             // Act
-            flags_Infinite.setBits(28, 11, writeData);
-            string binary = flags_Infinite.displayBinary(28, 11);
+            flags.SetBits(28, 11, writeData);
+            string binary = flags.DisplayBinary(28, 11);
 
             // Assert 
-            Assert.IsTrue(flags_Infinite.FlagList.Count == 2);
+            Assert.IsTrue(flags.FlagList.Count == 2);
             Assert.AreEqual(binary, "10011000111");
         }
 
@@ -237,15 +237,15 @@ namespace EsseivaN.UnitTests
         public void FlagsDisplayHex_Normal_DataValid()
         {
             // Arrange
-            Flags flags_Infinite = new Flags();
+            Flags flags = new Flags();
             int writeData = 0x8563224;
 
             // Act
-            flags_Infinite.setBits(28, 5*4, writeData);
-            string hex = flags_Infinite.displayHex(28, 5*4);
+            flags.SetBits(28, 5*4, writeData);
+            string hex = flags.DisplayHex(28, 5*4);
 
             // Assert 
-            Assert.IsTrue(flags_Infinite.FlagList.Count == 2);
+            Assert.IsTrue(flags.FlagList.Count == 2);
             Assert.AreEqual(hex, "63224");
         }
 

@@ -7,7 +7,7 @@ using System.Linq;
 namespace EsseivaN.Tools
 {
     /// <summary>
-    /// Manage settings using json
+    /// Manage a list of settings using json
     /// </summary>
     public class SettingsManager<T>
     {
@@ -62,9 +62,16 @@ namespace EsseivaN.Tools
         /// <summary>
         /// Save settings to specified file
         /// </summary>
-        public void Save(string Path)
+        public void Save(string path)
         {
-            File.WriteAllText(Path, GenerateFileData());
+            // Make backup
+            string bakPath = path + ".bak";
+            if (File.Exists(bakPath))
+                File.Delete(bakPath);
+            if (File.Exists(path))
+                File.Move(path,bakPath);
+
+            File.WriteAllText(path, GenerateFileData());
         }
 
         /// <summary>
@@ -110,12 +117,18 @@ namespace EsseivaN.Tools
         /// <summary>
         /// Load settings from specified path
         /// </summary>
-        public Dictionary<string, T> Load(string Path)
+        public Dictionary<string, T> Load(string path)
         {
-            if (File.Exists(Path))
+            if (File.Exists(path))
             {
                 // Load settings from raw data
-                settingsJsonList = Deserialize(File.ReadAllText(Path));
+                string fileData = File.ReadAllText(path);
+                if (string.IsNullOrEmpty(fileData))
+                {
+                    throw new FileLoadException("Unable to read data from specified file. Aborting");
+                }
+
+                settingsJsonList = Deserialize(File.ReadAllText(path));
                 settingsList = settingsJsonList.Values.ToList();
 
                 if (settingsList == null)

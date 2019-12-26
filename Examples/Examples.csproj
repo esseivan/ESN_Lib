@@ -87,6 +87,12 @@
     <Compile Include="ex_plugins.Designer.cs">
       <DependentUpon>ex_plugins.cs</DependentUpon>
     </Compile>
+    <Compile Include="ex_setting_manager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ex_setting_manager.Designer.cs">
+      <DependentUpon>ex_setting_manager.cs</DependentUpon>
+    </Compile>
     <Compile Include="ex_settings_manager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -154,6 +160,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ex_plugins.resx">
       <DependentUpon>ex_plugins.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ex_setting_manager.resx">
+      <DependentUpon>ex_setting_manager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ex_settings_manager.resx">
       <DependentUpon>ex_settings_manager.cs</DependentUpon>

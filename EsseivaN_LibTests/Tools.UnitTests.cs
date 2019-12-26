@@ -17,7 +17,7 @@ namespace EsseivaN.UnitTests
             string engineer = Tools.Tools.DecimalToEngineer(dec);
 
             // Assert 
-            Assert.AreEqual(engineer, "36.69k");
+            Assert.AreEqual(engineer, "36,69k");
         }
 
         [TestMethod]
@@ -30,7 +30,7 @@ namespace EsseivaN.UnitTests
             string engineer = Tools.Tools.DecimalToEngineer(dec, 6);
 
             // Assert 
-            Assert.AreEqual(engineer, "36.689877k");
+            Assert.AreEqual(engineer, "36,689877k");
         }
 
         [TestMethod]
@@ -50,7 +50,7 @@ namespace EsseivaN.UnitTests
         public void EngineerToDecimal_Valid_Valid()
         {
             // Arrange
-            string engineer = "36.689k";
+            string engineer = "36,689k";
 
             // Act
             double dec = Tools.Tools.EngineerToDecimal(engineer);
@@ -63,7 +63,7 @@ namespace EsseivaN.UnitTests
         public void EngineerToDecimal_Invalid_NaN()
         {
             // Arrange
-            string engineer = "36.689ke";
+            string engineer = "36,689ke";
 
             // Act
             double dec = Tools.Tools.EngineerToDecimal(engineer);
