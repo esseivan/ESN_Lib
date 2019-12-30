@@ -49,6 +49,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VariablesReplacer", "Variab
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EsseivaN_LibTests", "EsseivaN_LibTests\EsseivaN_LibTests.csproj", "{47EC5AAC-A474-418D-9133-8DEDD733494C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegisterMap", "RegisterMap\RegisterMap.csproj", "{31A15292-CB86-49B6-823C-7BE16E5DD630}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,10 @@ Global
 		{47EC5AAC-A474-418D-9133-8DEDD733494C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47EC5AAC-A474-418D-9133-8DEDD733494C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47EC5AAC-A474-418D-9133-8DEDD733494C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31A15292-CB86-49B6-823C-7BE16E5DD630}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31A15292-CB86-49B6-823C-7BE16E5DD630}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31A15292-CB86-49B6-823C-7BE16E5DD630}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31A15292-CB86-49B6-823C-7BE16E5DD630}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
