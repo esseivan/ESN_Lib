@@ -39,7 +39,7 @@
   <ItemGroup>
     <Reference Include="EsseivaN_Lib, Version=1.3.4.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\EsseivaN\libs\EsseivaN_Lib.dll</HintPath>
+      <HintPath>..\EsseivaN_Lib\bin\Debug\EsseivaN_Lib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
