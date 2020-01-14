@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
@@ -8,6 +9,11 @@ namespace Examples
     public partial class Form1 : Form
     {
         private string[] args;
+
+        public List<Form> WindowsList = new List<Form>()
+        {
+
+        };
 
         public Form1()
         {
@@ -41,6 +47,16 @@ namespace Examples
                 return;
             }
 
+            if (args.Length > 1)
+            {
+                // If arg is number
+                if (int.TryParse(args[1], out int index))
+                {
+                    RunWindow(index);
+                    this.Close();
+                }
+            }
+
             listBox1.Items.AddRange(new string[]
             {
                 "Dialog",               // 0
@@ -58,12 +74,18 @@ namespace Examples
                 "Math",                 // 12
                 "Plugin",               // 13
                 "Setting Manager",      // 14
+                "Round Button",         // 15
             });
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            switch (listBox1.SelectedIndex)
+            RunWindow(listBox1.SelectedIndex);
+        }
+
+        public void RunWindow(int index)
+        {
+            switch (index)
             {
                 case 0:
                     new ex_dialog().ShowDialog();
@@ -111,6 +133,9 @@ namespace Examples
                     break;
                 case 14:
                     new ex_setting_manager().ShowDialog();
+                    break;
+                case 15:
+                    new ex_RoundButton().ShowDialog();
                     break;
                 default:
                     break;
