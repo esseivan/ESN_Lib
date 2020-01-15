@@ -13,12 +13,14 @@ namespace EsseivaN
     public partial class TimePicker_2 : UserControl
     {
         public Color ItemColor { get; set; } = Color.LightBlue;
-        public int ItemRadius { get; set; } = 20;
+        public int ItemRadius { get; set; } = 10;
         public int ItemCount { get; set; } = 12;
 
-        List<ItemPair> Pairs = new List<ItemPair>();
+        public List<ItemPair> Pairs = new List<ItemPair>();
 
         private const double Deg2Rad = Math.PI / 180;
+
+        private int lastIndex = -1;
 
         public TimePicker_2()
         {
@@ -33,13 +35,22 @@ namespace EsseivaN
             {
                 Graphics g = e.Graphics;
                 Pen pen = new Pen(ItemColor);
+                Pen textPen = new Pen(ForeColor);
                 Point mid = new Point(Width / 2, Height / 2);
+                StringFormat format = new StringFormat()
+                {
+                    Alignment = StringAlignment.Center,
+                    LineAlignment = StringAlignment.Center,
+                };
+
                 foreach (var item in Pairs)
                 {
                     Point pt = item.location;
-                    g.FillEllipse(pen.Brush, pt.X + mid.X, pt.Y + mid.Y, ItemRadius, ItemRadius);
+                    g.FillEllipse(pen.Brush, pt.X + mid.X, pt.Y + mid.Y, ItemRadius * 2, ItemRadius* 2);
+                    g.DrawString(item.text, this.Font, textPen.Brush, pt.X + mid.X + ItemRadius, pt.Y + mid.Y + ItemRadius, format);
                 }
                 pen.Dispose();
+                textPen.Dispose();
             }
         }
 
@@ -68,6 +79,42 @@ namespace EsseivaN
                 angle += AngleStep;
             }
             Invalidate();
+        }
+
+        public void SetTexts(string[] texts, int startAt = 0)
+        {
+            if (startAt < 0)
+                return;
+
+            for (int i = 0; i < Pairs.Count && i < texts.Length; i++)
+            {
+                var t = Pairs[i + startAt];
+                t.text = texts[i];
+                Pairs[i + startAt] = t;
+            }
+            Invalidate();
+        }
+
+        public void SetTextNext(string text, int index = -1)
+        {
+            int thisIndex;
+            if(index == -1)
+            {
+                lastIndex++;
+                thisIndex = lastIndex;
+            }
+            else
+            {
+                thisIndex = index;
+            }
+
+            if (thisIndex >= Pairs.Count)
+                thisIndex = 0;
+
+            var t = Pairs[thisIndex];
+            t.text = text;
+            Pairs[thisIndex] = t;
+            lastIndex = thisIndex;
         }
 
         public struct ItemPair

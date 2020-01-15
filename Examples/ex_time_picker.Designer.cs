@@ -33,8 +33,8 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.timePicker_21 = new EsseivaN.TimePicker_2();
             this.button4 = new System.Windows.Forms.Button();
+            this.timePicker_21 = new EsseivaN.TimePicker_2();
             this.SuspendLayout();
             // 
             // textBox1
@@ -83,19 +83,6 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
-            // timePicker_21
-            // 
-            this.timePicker_21.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.timePicker_21.ItemColor = System.Drawing.Color.LightBlue;
-            this.timePicker_21.ItemCount = 12;
-            this.timePicker_21.ItemRadius = 20;
-            this.timePicker_21.Location = new System.Drawing.Point(12, 44);
-            this.timePicker_21.Name = "timePicker_21";
-            this.timePicker_21.Size = new System.Drawing.Size(1030, 619);
-            this.timePicker_21.TabIndex = 5;
-            // 
             // button4
             // 
             this.button4.Location = new System.Drawing.Point(575, 12);
@@ -105,6 +92,19 @@
             this.button4.Text = "Auto";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // timePicker_21
+            // 
+            this.timePicker_21.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.timePicker_21.ItemColor = System.Drawing.Color.LightBlue;
+            this.timePicker_21.ItemCount = 12;
+            this.timePicker_21.ItemRadius = 10;
+            this.timePicker_21.Location = new System.Drawing.Point(12, 44);
+            this.timePicker_21.Name = "timePicker_21";
+            this.timePicker_21.Size = new System.Drawing.Size(1030, 619);
+            this.timePicker_21.TabIndex = 5;
             // 
             // ex_time_picker
             // 

@@ -38,6 +38,11 @@ namespace Examples
             timePicker_21.Populate(12, 80);
             timePicker_21.Populate(12, 105);
 
+            for (int i = 0; i < 24; i++)
+            {
+                timePicker_21.SetTextNext(i.ToString("00"));
+            }
+
             // Minutes
             //timePicker_21.Populate(12, 105);
         }
