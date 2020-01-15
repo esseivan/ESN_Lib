@@ -10,9 +10,25 @@ namespace Examples
     {
         private string[] args;
 
-        public List<Form> WindowsList = new List<Form>()
+        public List<Type> WindowsList = new List<Type>()
         {
-
+            typeof(ex_dialog),
+            typeof(ex_dialogInput),
+            typeof(ex_settings_manager),
+            typeof(ex_textbox_watermark),
+            typeof(ex_text_dialog),
+            typeof(ex_text_panel),
+            typeof(ex_update_checker),
+            typeof(ex_watermark),
+            typeof(ex_flags),
+            typeof(ex_clipboard_monitor),
+            typeof(ex_logger),
+            typeof(ex_tools),
+            typeof(ex_math),
+            typeof(ex_plugins),
+            typeof(ex_setting_manager),
+            typeof(ex_RoundButton),
+            typeof(ex_time_picker),
         };
 
         public Form1()
@@ -75,6 +91,7 @@ namespace Examples
                 "Plugin",               // 13
                 "Setting Manager",      // 14
                 "Round Button",         // 15
+                "Time Picker",          // 16
             });
         }
 
@@ -85,61 +102,11 @@ namespace Examples
 
         public void RunWindow(int index)
         {
-            switch (index)
-            {
-                case 0:
-                    new ex_dialog().ShowDialog();
-                    break;
-                case 1:
-                    new ex_dialogInput().ShowDialog();
-                    break;
-                case 2:
-                    new ex_settings_manager().ShowDialog();
-                    break;
-                case 3:
-                    new ex_textbox_watermark().ShowDialog();
-                    break;
-                case 4:
-                    new ex_text_dialog().ShowDialog();
-                    break;
-                case 5:
-                    new ex_text_panel().ShowDialog();
-                    break;
-                case 6:
-                    new ex_update_checker().ShowDialog();
-                    break;
-                case 7:
-                    new ex_watermark().ShowDialog();
-                    break;
-                case 8:
-                    new ex_flags().ShowDialog();
-                    break;
-                case 9:
-                    new ex_clipboard_monitor().ShowDialog();
-                    break;
-                case 10:
-                    new ex_logger().ShowDialog();
-                    break;
-                case 11:
-                    var t = new ex_tools();
-                    t.args = args;
-                    t.ShowDialog();
-                    break;
-                case 12:
-                    new ex_math().ShowDialog();
-                    break;
-                case 13:
-                    new ex_plugins().ShowDialog();
-                    break;
-                case 14:
-                    new ex_setting_manager().ShowDialog();
-                    break;
-                case 15:
-                    new ex_RoundButton().ShowDialog();
-                    break;
-                default:
-                    break;
-            }
+            if (index >= WindowsList.Count)
+                return;
+
+            Form frm = (Form)Activator.CreateInstance(WindowsList[index]);
+            frm.ShowDialog();
         }
 
         private void listBox1_DoubleClick(object sender, EventArgs e)

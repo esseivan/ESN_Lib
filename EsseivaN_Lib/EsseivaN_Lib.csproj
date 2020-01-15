@@ -59,6 +59,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CircleControlPlacer.cs" />
     <Compile Include="ClipboardMonitor.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -89,6 +90,12 @@
     </Compile>
     <Compile Include="TimePicker.Designer.cs">
       <DependentUpon>TimePicker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TimePicker_2.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TimePicker_2.Designer.cs">
+      <DependentUpon>TimePicker_2.cs</DependentUpon>
     </Compile>
     <Compile Include="Tools.cs" />
     <Compile Include="UpdateChecker.cs" />

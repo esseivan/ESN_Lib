@@ -1,6 +1,6 @@
 ﻿namespace EsseivaN
 {
-    partial class TimePicker
+    partial class TimePicker_2
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,21 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.mainPanel = new System.Windows.Forms.Panel();
-            this.SuspendLayout();
-            // 
-            // mainPanel
-            // 
-            this.mainPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.mainPanel.Location = new System.Drawing.Point(0, 0);
-            this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(350, 350);
-            this.mainPanel.TabIndex = 1;
-            this.ResumeLayout(false);
-
+            components = new System.ComponentModel.Container();
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         }
 
         #endregion
-        private System.Windows.Forms.Panel mainPanel;
     }
 }

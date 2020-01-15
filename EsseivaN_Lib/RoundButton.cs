@@ -30,6 +30,8 @@ namespace EsseivaN
 
         public RoundButton()
         {
+            this.KeepRound = true;
+            this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             this.BackColor = Color.LightBlue;
             this.Width = this.Height = 50;
             this.ForeColor = Color.Black;
