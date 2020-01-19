@@ -15,6 +15,7 @@ namespace Examples
         public ex_time_picker()
         {
             InitializeComponent();
+			test
         }
 
         private void button1_Click(object sender, EventArgs e)
