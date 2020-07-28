@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
@@ -8,6 +9,27 @@ namespace Examples
     public partial class Form1 : Form
     {
         private string[] args;
+
+        public List<Type> WindowsList = new List<Type>()
+        {
+            typeof(ex_dialog),
+            typeof(ex_dialogInput),
+            typeof(ex_settings_manager),
+            typeof(ex_textbox_watermark),
+            typeof(ex_text_dialog),
+            typeof(ex_text_panel),
+            typeof(ex_update_checker),
+            typeof(ex_watermark),
+            typeof(ex_flags),
+            typeof(ex_clipboard_monitor),
+            typeof(ex_logger),
+            typeof(ex_tools),
+            typeof(ex_math),
+            typeof(ex_plugins),
+            typeof(ex_setting_manager),
+            typeof(ex_RoundButton),
+            typeof(ex_time_picker),
+        };
 
         public Form1()
         {
@@ -41,6 +63,16 @@ namespace Examples
                 return;
             }
 
+            if (args.Length > 1)
+            {
+                // If arg is number
+                if (int.TryParse(args[1], out int index))
+                {
+                    RunWindow(index);
+                    this.Close();
+                }
+            }
+
             listBox1.Items.AddRange(new string[]
             {
                 "Dialog",               // 0
@@ -58,63 +90,23 @@ namespace Examples
                 "Math",                 // 12
                 "Plugin",               // 13
                 "Setting Manager",      // 14
+                "Round Button",         // 15
+                "Time Picker",          // 16
             });
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            switch (listBox1.SelectedIndex)
-            {
-                case 0:
-                    new ex_dialog().ShowDialog();
-                    break;
-                case 1:
-                    new ex_dialogInput().ShowDialog();
-                    break;
-                case 2:
-                    new ex_settings_manager().ShowDialog();
-                    break;
-                case 3:
-                    new ex_textbox_watermark().ShowDialog();
-                    break;
-                case 4:
-                    new ex_text_dialog().ShowDialog();
-                    break;
-                case 5:
-                    new ex_text_panel().ShowDialog();
-                    break;
-                case 6:
-                    new ex_update_checker().ShowDialog();
-                    break;
-                case 7:
-                    new ex_watermark().ShowDialog();
-                    break;
-                case 8:
-                    new ex_flags().ShowDialog();
-                    break;
-                case 9:
-                    new ex_clipboard_monitor().ShowDialog();
-                    break;
-                case 10:
-                    new ex_logger().ShowDialog();
-                    break;
-                case 11:
-                    var t = new ex_tools();
-                    t.args = args;
-                    t.ShowDialog();
-                    break;
-                case 12:
-                    new ex_math().ShowDialog();
-                    break;
-                case 13:
-                    new ex_plugins().ShowDialog();
-                    break;
-                case 14:
-                    new ex_setting_manager().ShowDialog();
-                    break;
-                default:
-                    break;
-            }
+            RunWindow(listBox1.SelectedIndex);
+        }
+
+        public void RunWindow(int index)
+        {
+            if (index >= WindowsList.Count)
+                return;
+
+            Form frm = (Form)Activator.CreateInstance(WindowsList[index]);
+            frm.ShowDialog();
         }
 
         private void listBox1_DoubleClick(object sender, EventArgs e)

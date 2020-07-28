@@ -87,6 +87,12 @@
     <Compile Include="ex_plugins.Designer.cs">
       <DependentUpon>ex_plugins.cs</DependentUpon>
     </Compile>
+    <Compile Include="ex_RoundButton.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ex_RoundButton.Designer.cs">
+      <DependentUpon>ex_RoundButton.cs</DependentUpon>
+    </Compile>
     <Compile Include="ex_setting_manager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -143,6 +149,12 @@
     <Compile Include="ex_text_panel.Designer.cs">
       <DependentUpon>ex_text_panel.cs</DependentUpon>
     </Compile>
+    <Compile Include="ex_time_picker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ex_time_picker.Designer.cs">
+      <DependentUpon>ex_time_picker.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="ex_dialog.resx">
       <DependentUpon>ex_dialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -161,6 +173,9 @@
     <EmbeddedResource Include="ex_plugins.resx">
       <DependentUpon>ex_plugins.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ex_RoundButton.resx">
+      <DependentUpon>ex_RoundButton.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ex_setting_manager.resx">
       <DependentUpon>ex_setting_manager.cs</DependentUpon>
     </EmbeddedResource>
@@ -175,6 +190,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ex_text_panel.resx">
       <DependentUpon>ex_text_panel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ex_time_picker.resx">
+      <DependentUpon>ex_time_picker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ex_tools.resx">
       <DependentUpon>ex_tools.cs</DependentUpon>

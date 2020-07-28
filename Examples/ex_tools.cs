@@ -18,6 +18,7 @@ namespace Examples
         public ex_tools()
         {
             InitializeComponent();
+            args = Environment.GetCommandLineArgs();
         }
 
         public string GetAppPath()
