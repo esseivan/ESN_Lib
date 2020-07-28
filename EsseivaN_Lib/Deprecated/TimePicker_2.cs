@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.CompilerServices;
 
 namespace EsseivaN
 {
@@ -46,7 +47,7 @@ namespace EsseivaN
                 foreach (var item in Pairs)
                 {
                     Point pt = item.location;
-                    g.FillEllipse(pen.Brush, pt.X + mid.X, pt.Y + mid.Y, ItemRadius * 2, ItemRadius* 2);
+                    g.FillEllipse(pen.Brush, pt.X + mid.X, pt.Y + mid.Y, ItemRadius * 2, ItemRadius * 2);
                     g.DrawString(item.text, this.Font, textPen.Brush, pt.X + mid.X + ItemRadius, pt.Y + mid.Y + ItemRadius, format);
                 }
                 pen.Dispose();
@@ -75,7 +76,7 @@ namespace EsseivaN
                 // Calculer x et y
                 int x = (int)Math.Round(radius * (float)Math.Sin(angle * Deg2Rad));
                 int y = -(int)Math.Round(radius * (float)Math.Cos(angle * Deg2Rad));
-                Pairs.Add(new ItemPair("?", new Point(x, y)));
+                Pairs.Add(new ItemPair("?", new Point(x, y), ItemRadius));
                 angle += AngleStep;
             }
             Invalidate();
@@ -98,7 +99,7 @@ namespace EsseivaN
         public void SetTextNext(string text, int index = -1)
         {
             int thisIndex;
-            if(index == -1)
+            if (index == -1)
             {
                 lastIndex++;
                 thisIndex = lastIndex;
@@ -120,14 +121,41 @@ namespace EsseivaN
         public struct ItemPair
         {
             public string text;
-            public Point location;
+            public System.Drawing.Point location;
+            public int radius;
 
-            public ItemPair(string text, Point location)
+            public ItemPair(string text, Point location, int radius)
             {
                 this.text = text;
                 this.location = location;
+                this.radius = radius;
             }
         }
 
+        private void TimePicker_2_MouseClick(object sender, MouseEventArgs e)
+        {
+            Point clickPos = new Point(e.Location.X - Width / 2, e.Location.Y - Height / 2);
+
+            Pen pen = new Pen(Color.Crimson);
+            Point mid = new Point(Width / 2, Height / 2);
+            StringFormat format = new StringFormat()
+            {
+                Alignment = StringAlignment.Center,
+                LineAlignment = StringAlignment.Center,
+            };
+
+            Point pt = clickPos;
+            this.CreateGraphics().FillEllipse(pen.Brush, pt.X + mid.X, pt.Y + mid.Y, 6, 6);
+
+
+            foreach (var item in Pairs)
+            {
+                System.Windows.Vector delta = new System.Windows.Vector(clickPos.X - item.location.X - item.radius, clickPos.Y - item.location.Y - item.radius);
+                if (delta.Length <= item.radius)
+                {
+                    Console.WriteLine(item.text);
+                }
+            }
+        }
     }
 }

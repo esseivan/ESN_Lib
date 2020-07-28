@@ -28,8 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // TimePicker_2
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Name = "TimePicker_2";
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.TimePicker_2_MouseClick);
+            this.ResumeLayout(false);
+
         }
 
         #endregion

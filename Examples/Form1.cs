@@ -102,7 +102,7 @@ namespace Examples
 
         public void RunWindow(int index)
         {
-            if (index >= WindowsList.Count)
+            if (index >= WindowsList.Count || index == -1)
                 return;
 
             Form frm = (Form)Activator.CreateInstance(WindowsList[index]);

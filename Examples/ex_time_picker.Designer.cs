@@ -39,17 +39,19 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 12);
+            this.textBox1.Location = new System.Drawing.Point(8, 8);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 26);
+            this.textBox1.Size = new System.Drawing.Size(68, 20);
             this.textBox1.TabIndex = 2;
             this.textBox1.Text = "12";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(224, 12);
+            this.button1.Location = new System.Drawing.Point(151, 6);
+            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 26);
+            this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 3;
             this.button1.Text = "Go";
             this.button1.UseVisualStyleBackColor = true;
@@ -57,17 +59,19 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(118, 12);
+            this.textBox2.Location = new System.Drawing.Point(79, 8);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 26);
+            this.textBox2.Size = new System.Drawing.Size(68, 20);
             this.textBox2.TabIndex = 4;
             this.textBox2.Text = "80";
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(386, 12);
+            this.button2.Location = new System.Drawing.Point(309, 6);
+            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 26);
+            this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 6;
             this.button2.Text = "Clear";
             this.button2.UseVisualStyleBackColor = true;
@@ -75,9 +79,10 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(305, 12);
+            this.button3.Location = new System.Drawing.Point(230, 6);
+            this.button3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 26);
+            this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 7;
             this.button3.Text = "Refresh";
             this.button3.UseVisualStyleBackColor = true;
@@ -85,9 +90,10 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(575, 12);
+            this.button4.Location = new System.Drawing.Point(388, 6);
+            this.button4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 26);
+            this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 8;
             this.button4.Text = "Auto";
             this.button4.UseVisualStyleBackColor = true;
@@ -101,16 +107,17 @@
             this.timePicker_21.ItemColor = System.Drawing.Color.LightBlue;
             this.timePicker_21.ItemCount = 12;
             this.timePicker_21.ItemRadius = 10;
-            this.timePicker_21.Location = new System.Drawing.Point(12, 44);
+            this.timePicker_21.Location = new System.Drawing.Point(8, 29);
+            this.timePicker_21.Margin = new System.Windows.Forms.Padding(2);
             this.timePicker_21.Name = "timePicker_21";
-            this.timePicker_21.Size = new System.Drawing.Size(1030, 619);
+            this.timePicker_21.Size = new System.Drawing.Size(687, 402);
             this.timePicker_21.TabIndex = 5;
             // 
             // ex_time_picker
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1054, 675);
+            this.ClientSize = new System.Drawing.Size(703, 439);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
@@ -118,6 +125,7 @@
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "ex_time_picker";
             this.Text = "Time_Picker";
             this.ResumeLayout(false);
