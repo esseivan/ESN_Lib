@@ -35,7 +35,7 @@ namespace Examples
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 settingManager = new SettingManager<Setting>();
-                setting = settingManager.Load(openFileDialog1.FileName);
+                settingManager.Load(openFileDialog1.FileName, out setting);
 
                 btnGetAll.PerformClick();
             }

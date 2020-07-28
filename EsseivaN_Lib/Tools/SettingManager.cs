@@ -17,6 +17,16 @@ namespace EsseivaN.Tools
         private T setting;
 
         /// <summary>
+        /// Indique si le fichier est indenté
+        /// </summary>
+        public bool Indent { get; set; } = true;
+
+        /// <summary>
+        /// Indique si un backup est créée avant la sauvegarde
+        /// </summary>
+        public bool Backup { get; set; } = true;
+
+        /// <summary>
         /// Create a new settings manager with default getName function (Not recommended)
         /// </summary>
         public SettingManager() { }
@@ -27,13 +37,25 @@ namespace EsseivaN.Tools
         public void Save(string path)
         {
             // Make backup
-            string bakPath = path + ".bak";
-            if (File.Exists(bakPath))
-                File.Delete(bakPath);
-            if (File.Exists(path))
-                File.Move(path,bakPath);
+            if (Backup)
+            {
+                string bakPath = path + ".bak";
+                if (File.Exists(bakPath))
+                    File.Delete(bakPath);
+                if (File.Exists(path))
+                    File.Move(path, bakPath);
+            }
 
             File.WriteAllText(path, GenerateFileData());
+        }
+
+        /// <summary>
+        /// Save settings to specified file
+        /// </summary>
+        public void Save(string path, T setting)
+        {
+            SetSetting(setting);
+            Save(path);
         }
 
         /// <summary>
@@ -41,13 +63,13 @@ namespace EsseivaN.Tools
         /// </summary>
         public string GenerateFileData()
         {
-            return Serialize(setting);
+            return Serialize(setting, Indent);
         }
 
         /// <summary>
         /// Load settings from specified path
         /// </summary>
-        public T Load(string path)
+        public bool Load(string path, out T output)
         {
             if (File.Exists(path))
             {
@@ -58,12 +80,14 @@ namespace EsseivaN.Tools
                     throw new FileLoadException("Unable to read data from specified file. Aborting");
                 }
 
-                setting = Deserialize(File.ReadAllText(path));
-                return setting;
+                setting = Deserialize(fileData);
+                output = setting;
+                return true;
             }
             else
             {
-                return default;
+                output = default;
+                return false;
             }
         }
 
@@ -102,9 +126,9 @@ namespace EsseivaN.Tools
         /// <summary>
         /// serialize data
         /// </summary>
-        private static string Serialize(T data)
+        private static string Serialize(T data, bool indent)
         {
-            return JsonConvert.SerializeObject(data, Formatting.Indented);
+            return JsonConvert.SerializeObject(data, indent ? Formatting.Indented : Formatting.None);
         }
     }
 }

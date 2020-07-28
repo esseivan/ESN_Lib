@@ -19,7 +19,7 @@ usage: <app_name> [BaseConfig path]";
                 Session temp = new Session();
                 temp.Dispose();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Console.Error.WriteLine("WinSCP not available ! Check if it is installer or install from the official website :\nwinscp.net");
                 Console.ReadLine();
