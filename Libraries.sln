@@ -51,6 +51,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EsseivaN_LibTests", "Esseiv
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegisterMap", "RegisterMap\RegisterMap.csproj", "{31A15292-CB86-49B6-823C-7BE16E5DD630}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FTP_Upload", "FTP_Upload\FTP_Upload.csproj", "{5C22753A-8F34-4F27-91A1-97FB9E1409EC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -103,6 +105,10 @@ Global
 		{31A15292-CB86-49B6-823C-7BE16E5DD630}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31A15292-CB86-49B6-823C-7BE16E5DD630}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31A15292-CB86-49B6-823C-7BE16E5DD630}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C22753A-8F34-4F27-91A1-97FB9E1409EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C22753A-8F34-4F27-91A1-97FB9E1409EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C22753A-8F34-4F27-91A1-97FB9E1409EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C22753A-8F34-4F27-91A1-97FB9E1409EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

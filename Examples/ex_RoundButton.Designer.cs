@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
-            this.roundButton1 = new EsseivaN.RoundButton();
+            this.roundButton1 = new EsseivaN.Deprecated.RoundButton();
             this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // propertyGrid1
             // 
-            this.propertyGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.propertyGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.propertyGrid1.Location = new System.Drawing.Point(529, 12);
             this.propertyGrid1.Name = "propertyGrid1";
@@ -85,7 +85,7 @@
         #endregion
 
         private System.Windows.Forms.PropertyGrid propertyGrid1;
-        private EsseivaN.RoundButton roundButton1;
+        private EsseivaN.Deprecated.RoundButton roundButton1;
         private System.Windows.Forms.Label label1;
     }
 }

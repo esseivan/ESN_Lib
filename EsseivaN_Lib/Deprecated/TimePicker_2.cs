@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.CompilerServices;
 
-namespace EsseivaN
+namespace EsseivaN.Deprecated
 {
     public partial class TimePicker_2 : UserControl
     {

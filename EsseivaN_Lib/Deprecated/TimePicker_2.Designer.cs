@@ -1,4 +1,4 @@
-﻿namespace EsseivaN
+﻿namespace EsseivaN.Deprecated
 {
     partial class TimePicker_2
     {

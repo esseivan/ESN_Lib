@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.CodeDom.Compiler;
 using System.IO;
 
 namespace EsseivaN.Tools
@@ -6,22 +7,12 @@ namespace EsseivaN.Tools
     public class SettingManager_Fast
     {
         /// <summary>
-        /// Indique si le fichier est indenté
-        /// </summary>
-        public static bool Indent { get; set; } = true;
-
-        /// <summary>
-        /// Indique si un backup est créée avant la sauvegarde
-        /// </summary>
-        public static bool Backup { get; set; } = true;
-
-        /// <summary>
         /// Save settings to specified file
         /// </summary>
-        public static void Save<T>(string path, T setting)
+        public static void Save<T>(string path, T setting, bool backup = true, bool indent = true)
         {
             // Make backup
-            if (Backup)
+            if (backup)
             {
                 string bakPath = path + ".bak";
                 if (File.Exists(bakPath))
@@ -30,7 +21,7 @@ namespace EsseivaN.Tools
                     File.Move(path, bakPath);
             }
 
-            File.WriteAllText(path, Serialize(setting, Indent));
+            File.WriteAllText(path, Serialize(setting, indent));
         }
 
         /// <summary>

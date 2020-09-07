@@ -43,7 +43,7 @@ usage: <app_name> [BaseConfig path]";
                 }
 
                 Dictionary<string, ConfigManager.BaseConfig> configs = ConfigManager.ImportConfig(args[0]);
-                if (configs.Count == 0)
+                if (configs == null || configs.Count == 0)
                 {
                     Console.WriteLine("Invalid config file");
                     Environment.Exit(2);
