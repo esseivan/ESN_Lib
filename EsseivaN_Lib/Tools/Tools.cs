@@ -135,15 +135,15 @@ namespace EsseivaN.Tools
         /// <summary>
         /// Convert decimal format to engineer format
         /// </summary>
-        public static string DecimalToEngineer(double Value)
+        public static string DecimalToEngineer(double Value, bool space = false)
         {
-            return DecimalToEngineer(Value, 3);
+            return DecimalToEngineer(Value, 3, space);
         }
 
         /// <summary>
         /// Convert decimal format to engineer format
         /// </summary>
-        public static string DecimalToEngineer(double Value, int Digits)
+        public static string DecimalToEngineer(double Value, int Digits, bool space = false)
         {
             if (double.IsInfinity(Value) || double.IsNaN(Value))
                 return null;
@@ -158,7 +158,7 @@ namespace EsseivaN.Tools
 
             if (Value == 0)
             {
-                return "0";
+                return $"0{(space ? " " : "")}";
             }
 
             string Output = "";
@@ -181,58 +181,58 @@ namespace EsseivaN.Tools
             switch (PowS)
             {
                 case -8:
-                    Output = $"{Value}y";
+                    Output = $"{Value}{(space ? " " : "")}y";
                     break;
                 case -7:
-                    Output = $"{Value}z";
+                    Output = $"{Value}{(space ? " " : "")}z";
                     break;
                 case -6:
-                    Output = $"{Value}a";
+                    Output = $"{Value}{(space ? " " : "")}a";
                     break;
                 case -5:
-                    Output = $"{Value}f";
+                    Output = $"{Value}{(space ? " " : "")}f";
                     break;
                 case -4:
-                    Output = $"{Value}p";
+                    Output = $"{Value}{(space ? " " : "")}p";
                     break;
                 case -3:
-                    Output = $"{Value}n";
+                    Output = $"{Value}{(space ? " " : "")}n";
                     break;
                 case -2:
-                    Output = $"{Value}μ";
+                    Output = $"{Value}{(space ? " " : "")}μ";
                     break;
                 case -1:
-                    Output = $"{Value}m";
+                    Output = $"{Value}{(space ? " " : "")}m";
                     break;
                 case 0:
-                    Output = $"{Value}";
+                    Output = $"{Value}{(space ? " " : "")}";
                     break;
                 case 1:
-                    Output = $"{Value}k";
+                    Output = $"{Value}{(space ? " " : "")}k";
                     break;
                 case 2:
-                    Output = $"{Value}M";
+                    Output = $"{Value}{(space ? " " : "")}M";
                     break;
                 case 3:
-                    Output = $"{Value}G";
+                    Output = $"{Value}{(space ? " " : "")}G";
                     break;
                 case 4:
-                    Output = $"{Value}T";
+                    Output = $"{Value}{(space ? " " : "")}T";
                     break;
                 case 5:
-                    Output = $"{Value}P";
+                    Output = $"{Value}{(space ? " " : "")}P";
                     break;
                 case 6:
-                    Output = $"{Value}E";
+                    Output = $"{Value}{(space ? " " : "")}E";
                     break;
                 case 7:
-                    Output = $"{Value}Z";
+                    Output = $"{Value}{(space ? " " : "")}Z";
                     break;
                 case 8:
-                    Output = $"{Value}Y";
+                    Output = $"{Value}{(space ? " " : "")}Y";
                     break;
                 default:
-                    Output = $"{Value} * 10^{PowS}";
+                    Output = $"{Value}E{PowS}{(space ? " " : "")}";
                     break;
             }
 

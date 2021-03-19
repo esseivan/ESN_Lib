@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.CodeDom.Compiler;
 using System.IO;
 
@@ -6,6 +7,11 @@ namespace EsseivaN.Tools
 {
     public class SettingManager_Fast
     {
+        public static string GetDefaultPath(string appName)
+        {
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EsseivaN", appName);
+        }
+
         /// <summary>
         /// Save settings to specified file
         /// </summary>
@@ -47,6 +53,22 @@ namespace EsseivaN.Tools
                 output = default;
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Save settings to specified file
+        /// </summary>
+        public static void SaveAppName<T>(string appName, T setting, bool backup = true, bool indent = true)
+        {
+            Save(GetDefaultPath(appName), setting, backup, indent);
+        }
+
+        /// <summary>
+        /// Load settings from specified path
+        /// </summary>
+        public static bool LoadAppName<T>(string appName, out T output)
+        {
+            return Load(GetDefaultPath(appName), out output);
         }
 
         /// <summary>
